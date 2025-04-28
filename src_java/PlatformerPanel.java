@@ -1,3 +1,4 @@
+package src_java;
 import javax.swing.*;
 import javax.swing.Timer;
 import java.awt.*;
