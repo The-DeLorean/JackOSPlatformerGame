@@ -22,6 +22,12 @@ class GameObject {
         return;
     }
 
+    // Collision logic for all GameObjects.  Hitbox is 8x8, regardless of whether there is something rendered.  E.g. spikes are really square.
+    method boolean collides(GameObject o){
+        
+        return false;
+    }
+
     // Getter methods
     method int getX() {
         return xpos;

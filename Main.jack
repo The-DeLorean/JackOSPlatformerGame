@@ -2,7 +2,7 @@
 // and the book "The Elements of Computing Systems"
 // by Nisan and Schocken, MIT Press.
 /**
- * Main class of the Pong game.
+ * Main class of the Platformer game.
  */
 class Main {
 
