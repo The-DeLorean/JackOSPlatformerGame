@@ -58,6 +58,9 @@ class PlatformerGame {
                     if (key = 140) { let exit = true; }
 		        }
             }
+            //if(key = 131){ // Up Arrow
+            //    do player1.jump(); //Mkaing the player jump if up arrow is pressed
+            //}
             do renderGame(); // render game graphics after move to help with collisions
             do Sys.wait(50);// wait to slow down game 
         }
