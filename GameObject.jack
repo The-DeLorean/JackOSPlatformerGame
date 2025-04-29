@@ -1,233 +1,38 @@
-// This file is part of www.nand2tetris.org
-// and the book "The Elements of Computing Systems"
-// by Nisan and Schocken, MIT Press.
-// File name: projects/12/Math.jack
+// This file is part of JackOSPlatformerGame
+// by Dorian Quimby
 /**
- *  A library of commonly used mathematical functions.
- *  All functions runs in O(n), where n is the number of bits used
- *  for representing a two's complement integer value (16 in the Hack computer). 
- *  Note: Jack compilers implement multiplication and division
- *  using calls to OS functions in this class.
+ *  A general GameObject that stores data/methods necessary for map rendering and game physics
+ *  Used to simulate inheritance, using the "Has-A" paradigm.  
+ *  I.e. "children" classes will contain a GameObject field and call its methods.
+ *  They will have their own implementations for unique functionality
  */
-class Math {
-    static Array powersOfTwo; // Stores 2^0, 2^1, 2^2,..., 2^(n-1)
-    static int n;             // Number of bits used for representing a two's complement integer
+class GameObject {
+    field int xpos, ypos; //the object's pixel location
 
-    // Initializes the Math library.
-    function void init() {
-        var int i;
-        // In Hack computer, we use 16 bits for integers
-        let n = 16;
-        
-        // Initialize powersOfTwo array with known values
-		let powersOfTwo = Array.new(16);
-		let powersOfTwo[0] = 1;
-		let i = 1;
-		while(i < 16){
-            // current value = 2 * previous
-		    let powersOfTwo[i] = powersOfTwo[i-1] +  powersOfTwo[i-1];
-			let i = i + 1; //increment i
-		}        
+
+    constructor GameObject new(int xin, int yin) {
+        let xpos = xin;
+        let ypos = yin;
+        return this;
+    }
+
+    // Getter methods
+    method int getX() {
+        return xpos;
+    }
+
+    method int getY() {
+        return ypos;
+    }
+
+    //Setter methods
+    method void setX(int xin) {
+        let xpos = xin;
         return;
     }
 
-    /** Helper function that binary place value for a given decimal one */
-    function boolean bit(int x, int j) {
-        // Check if the j-th bit of x is set
-        if ((x & powersOfTwo[j]) = 0) {
-            return false;
-        }
-        else {
-            return true;
-        }
-    }
-
-    /** Returns the product of x and y. 
-     *  When a Jack compiler detects the multiplication operator '*'
-     *  in an expression, it handles it by invoking this method. 
-     *  Thus, in Jack, x * y and Math.multiply(x,y) return the same value. */
-    function int multiply(int x, int y) {
-        var int sum, shiftedX, i;
-        var boolean negResult;
-        
-        // Handle the sign of the result
-        if (((x < 0) & (y > 0)) | ((x > 0) & (y < 0))) {
-            let negResult = true;
-        }
-        else {
-            let negResult = false;
-        }
-        
-        // Use absolute values for calculation
-        if (x < 0) { let x = -x; }
-        if (y < 0) { let y = -y; }
-        
-        let sum = 0;
-        let shiftedX = x;
-        let i = 0;
-        
-        // Use bit operations with the powers of two array
-        while (i < n) {
-            // If the current bit of y is 1, add shiftedX to the sum
-            if (Math.bit(y, i)) {
-                let sum = sum + shiftedX;
-            }
-            
-            // Double shiftedX (left shift)
-            let shiftedX = shiftedX + shiftedX;
-            let i = i + 1;
-        }
-        
-        // Apply sign to result
-        if (negResult) {
-            let sum = -sum;
-        }
-        
-        return sum; // Result
-    }
-
-    /** Returns the integer part of x / y.
-     *  When a Jack compiler detects the division operator '/'
-     *  in an expression, it handles it by invoking this method.
-     *  Thus, x/y and Math.divide(x,y) return the same value. */
-    function int divide(int x, int y) {
-        var int q;
-        var boolean negResult;
-        
-        // Handle division by zero
-        if (y = 0) {
-            do Sys.error(3); // Division by zero error
-            return 0;
-        }
-        
-        // Handle the sign of the result
-        if (((x < 0) & (y > 0)) | ((x > 0) & (y < 0))) {
-            let negResult = true;
-        }
-        else {
-            let negResult = false;
-        }
-        
-        // Use absolute values for calculation
-        if (x < 0) { let x = -x; }
-        if (y < 0) { let y = -y; }
-        
-        // Implement division algorithm
-        if (y > x) {
-            return 0;
-        }
-        
-        let q = Math.dividePositive(x, y);
-        
-        // Apply sign to result
-        if (negResult) {
-            let q = -q;
-        }
-        
-        return q;
-    }
-    
-    /** Internal helper function for division of positive numbers */
-    function int dividePositive(int x, int y) {
-        var int q, doubledY;
-        
-        // Base case
-        if (y > x) {
-            return 0;
-        }
-        
-        // Double y (y << 1) by adding y to itself
-        let doubledY = y + y;
-        
-        // Check for overflow
-        if (doubledY < 0) { 
-            // If doubling y causes overflow, just try q=1
-            if (x - y < y) {
-                return 1;
-            }
-            else {
-                return 2;
-            }
-        }
-        
-        // Recursive call with y doubled
-        let q = Math.dividePositive(x, doubledY);
-        let q = q + q; // Double the result (q << 1)
-        
-        // Final adjustment
-        if ((x - (q * y)) < y) {
-            return q;
-        }
-        else {
-            return q + 1;
-        }
-    }
-
-    /** Returns the integer part of the square root of x. */
-    function int sqrt(int x) {
-		var int start, end, mid, value;
-
-        // Handle negative case
-		if(x < 0){
-			do Sys.error(4);
-		}
-        // Zero case
-		if(x = 0){
-			return 0;
-		}
-		let start = 0;
-		let end = x;
-
-        //Main sqrt algorithm loop using binary search
-		while(start < end){
-
-            // Check left branch
-			if(start = (end - 1)){
-				return start;
-			}
-			let mid = start + ((end - start)/2);
-			let value = mid * mid;
-			
-            // Check if current node is right
-			if(value = x){
-				return mid;
-			} 
-            //Right branch
-            else {
-				if((value > x) | value < 0){
-					let end = mid;
-				} else {
-					let start = mid;
-				}
-			}
-		}
-		return mid;
-    }
-
-    /** Returns the maximum of two integers */
-    function int max(int a, int b) {
-        if (a > b) {
-            return a;
-        } else {
-            return b;
-        }
-    }
-
-    /** Returns the minimum of two integers */
-    function int min(int a, int b) {
-        if (a < b) {
-            return a;
-        } else {
-            return b;
-        }
-    }
-
-    /** Returns the absolute value of an integer */
-    function int abs(int x) {
-        if (x < 0) {
-            return -x;
-        } else {
-            return x;
-        }
+    method void setY(int yin) {
+        let xpos = yin;
+        return;
     }
 }
