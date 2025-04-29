@@ -6,22 +6,16 @@
  */
 class PlatformerGame {
     static PlatformerGame instance; // A Platformer game     
-        field boolean exit;       // true when the game is over
-
+    field boolean exit;       // true when the game is over
+    field Player player1;
 
 
     /** Constructs a new Platformer game. */
     constructor PlatformerGame new() {
-	    do Screen.clearScreen();
-
-        do Screen.drawRectangle(0, 238, 511, 240);
-	    do Output.moveCursor(22,0);
-	    do Output.printString("Score: 0");
+        //Player init
+        let player1 = Player.new(253, 222);
 
         let exit = false;
-
-	
-
         return this;
     }
 
@@ -50,18 +44,29 @@ class PlatformerGame {
 
         while (~exit) {
             // waits for a key to be pressed.
+            do renderGame();
+
             while ((key = 0) & (~exit)) {
                 let key = Keyboard.keyPressed();
-                //player movement
-                do Sys.wait(50);
+                do Sys.wait(50); //maybe change to have a quicker game?
             }
 
-            //game logic gets called
+            //player movement logic logic gets called
+            if (key = 130) { // leftArrow
+                do player1.move(-1, 0); 
+            }
+	        else {
+	            if (key = 132) { // rightArrow
+                    do player1.move(1, 0); 
+                }
+		        else {
+                    if (key = 140) { let exit = true; }
+		        }
+            }
 
             // Waits for the key to be released.
             while ((~(key = 0)) & (~exit)) {
                 let key = Keyboard.keyPressed();
-                //player.move
                 do Sys.wait(50);
             }
         }
@@ -81,37 +86,21 @@ class PlatformerGame {
      * and shrinks the bat's size, to make the game more challenging. 
      */
     method void movePlayers() {
+        
+        return;
+    }
 
-        /*
-        let wall = ball.move();
+    //called every "cycle" to draw the game
+    method void renderGame(){
+        do Screen.clearScreen();
 
-        if ((wall > 0) & (~(wall = lastWall))) {
-            let lastWall = wall;
-            let bouncingDirection = 0;
-            let batLeft = bat.getLeft();
-            let batRight = bat.getRight();
-            let ballLeft = ball.getLeft();
-            let ballRight = ball.getRight();
-  
-            if (wall = 4) {
-                let exit = (batLeft > ballRight) | (batRight < ballLeft);
-                if (~exit) {
-                    if (ballRight < (batLeft + 10)) { let bouncingDirection = -1; }
-                    else {
-                        if (ballLeft > (batRight - 10)) { let bouncingDirection = 1; }
-                    }
+        //Scoreboard drawing
+        do Screen.setColor(true);
+        do Screen.drawRectangle(0, 238, 511, 240);
+	    do Output.moveCursor(22,0);
+	    do Output.printString("Score: 0");
 
-                    let batWidth = batWidth - 2;
-                    do bat.setWidth(batWidth);      
-                    let score = score + 1;
-                    do Output.moveCursor(22,7);
-                    do Output.printInt(score);
-                }
-            }
-            do ball.bounce(bouncingDirection);
-        }
-
-        */
+        do player1.draw();
         return;
     }
 }

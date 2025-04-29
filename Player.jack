@@ -7,16 +7,31 @@
 class Player {
     field GameObject myParent; //pointer to parent, used for rendering and collisions
     field int livesRemaining; //keeps track of deaths, will work with spikeblock
+    static int speed; //
 
     constructor Player new(int xin, int yin) {
         //Compose a child member data into parent game object
         let myParent = GameObject.new(xin, yin);
+
+        let speed = 5;
         return this;
     }
 
     // Players can move
     method void move(int dx, int dy) {
-        //use GameObject setter methods
+        do myParent.move((speed*dx), (speed*dy));
+        return;
+    }
+
+    // Renders the player
+    method void draw() {
+        var int x, y;
+        do Screen.setColor(true);
+
+        let x = myParent.getX();
+        let y = myParent.getY();
+
+        do Screen.drawRectangle(x, y, x + 10, y + 10);
         return;
     }
 
