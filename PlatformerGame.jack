@@ -100,6 +100,9 @@ class PlatformerGame {
 	    do Output.moveCursor(22,0);
 	    do Output.printString("Score: 0");
 
+        // Map drawing
+
+        //Player drawing
         do player1.draw();
         return;
     }
