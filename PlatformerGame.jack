@@ -8,6 +8,8 @@ class PlatformerGame {
     static PlatformerGame instance; // A Platformer game     
     field boolean exit;       // true when the game is over
     field Player player1;
+    field Array gameLevels;
+    field GameMap level0;
 
 
     /** Constructs a new Platformer game. */
@@ -40,7 +42,19 @@ class PlatformerGame {
     /** Starts the game, and handles inputs from the user that control
      *  the bat's movement direction. */
     method void run() {
+        //Variable to hold key pressed
         var char key;
+        //variable to use in gravity looop
+        var int gravityLoop, jumpLoop;
+        var int number, tick, jump;
+
+        //Initalizing variables
+        let gravityLoop = 0;
+        let jumpLoop = 0;
+        let number = 0;
+        let tick = 0;
+        let jump = 0;
+
         //Main loop that runs until the game is over
         while (~exit) {
             //Checking to see what key is pressed continually
@@ -58,9 +72,63 @@ class PlatformerGame {
                     if (key = 140) { let exit = true; }
 		        }
             }
-            //if(key = 131 & NOT_ON_IN_AIR){ // Up Arrow
-            //    do player1.jump(); //Mkaing the player jump if up arrow is pressed
-            //}
+            
+            //Checking to see if player 1 is on the ground if so checking to see if the jump key is pressed
+            if(player1.isOnGround(level0)){
+                if(key = 131){ // Up Arrow
+                    //Store jump value and reset number
+                    let jump = 70;
+                    let number=1;
+                }
+                //If up arrow is not pressed on ground reset tick and number
+                else{
+                    let number = 1;
+                    let tick = 0;
+                }
+            }
+            else{//If not on ground run gravity logic
+                //If the player hits cieling kill jump momentum
+                if(player1.hitsCieling(level0)){
+                    let jump=0;
+                }
+                //Resetting the gravity loop variable before it is run
+                let gravityLoop = 0;
+                //Gravity moves player down number * 1 pixels
+                while(gravityLoop < number){
+                    //moving the player down
+                    do player1.move(0, 1);
+                    //incrementing through the gravity loop
+                    let gravityLoop = gravityLoop + 1;
+                }
+            }
+
+            //Checking to see if the jump ahs been triggered
+            if(jump > 0){
+                //Jumping a certain amount each time.
+                while(jumpLoop < (jump/10)){
+                    //moving the player up
+                    do player1.move(0, -1);
+                    //incrementing through the jump loop
+                    let jumpLoop = jumpLoop + 1;
+                }
+                //Making the player move up less as jump decreases
+                let jump = jump - 1;
+            }
+
+            //Cycling every 20 ticks to make player fall back down more and more  adding in acceleration
+            if(tick =20)
+            {
+                //Increasing the speed the palyer falls each 20 ticks
+                let tick =1;
+                if(number < 8){
+                    let number = number + 1;
+                }
+            }
+            else{
+                //Counting the ticks
+                let tick = tick + 1;
+            }
+
             do renderGame(); // render game graphics after move to help with collisions
             do Sys.wait(50);// wait to slow down game 
         }

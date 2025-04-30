@@ -27,6 +27,7 @@ class Player {
         return;
     }
 
+
     // Renders the player
     method void draw() {
         var int x, y;
@@ -40,16 +41,38 @@ class Player {
     }
 
     //method to check if the player is on the ground
-    method boolean isOnGround(Array map){
+    method boolean isOnGround(GameMap map){
         //creating a check variable
         var boolean check;
         //intializing check to false
         let check =false;
          //incrementing the y value after move
         do myParent.move(0, (speed* 1));
+        //checking with the map
         let check = collides(map);
         //decrementing the y value after move to move player back
         do myParent.move(0, (speed* -1)); 
+        //Cecking whether to see if the collision was true or not returning the respective varaiable
+        if(check = true){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    //Checking to see if the player hits the ceiling
+    method boolean hitsCieling(GameMap map){
+        //creating a check variable
+        var boolean check;
+        //intializing check to false
+        let check =false;
+        //decrementing the y to check 1 ahead
+        do myParent.move(0, (speed* -1));
+        //checking with the map
+        let check = collides(map);
+        //Incrementing the y value after move to move player back
+        do myParent.move(0, (speed* 1)); 
         //Cecking whether to see if the collision was true or not returning the respective varaiable
         if(check = true){
             return true;

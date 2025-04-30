@@ -14,11 +14,11 @@ class Main {
 
         let gameMap = GameMap.new();
 
-        do gameMap.printMap();
-        //do PlatformerGame.newInstance();
-        //let game = PlatformerGame.getInstance();
-        //do game.run();
-        //do game.dispose();
+        //do gameMap.printMap();
+        do PlatformerGame.newInstance();
+        let game = PlatformerGame.getInstance();
+        do game.run();
+        do game.dispose();
         return;
     }
 }
