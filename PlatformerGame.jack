@@ -58,7 +58,7 @@ class PlatformerGame {
                     if (key = 140) { let exit = true; }
 		        }
             }
-            //if(key = 131){ // Up Arrow
+            //if(key = 131 & NOT_ON_IN_AIR){ // Up Arrow
             //    do player1.jump(); //Mkaing the player jump if up arrow is pressed
             //}
             do renderGame(); // render game graphics after move to help with collisions
@@ -69,17 +69,6 @@ class PlatformerGame {
             do Output.moveCursor(10,27);
 	        do Output.printString("Game Over");
 	    }
-        return;
-    }
-
-    /**
-     * Handles ball movement, including bouncing.
-     * If the ball bounces off a wall, finds its new direction.
-     * If the ball bounces off the bat, increases the score by one
-     * and shrinks the bat's size, to make the game more challenging. 
-     */
-    method void movePlayers() {
-        
         return;
     }
 
