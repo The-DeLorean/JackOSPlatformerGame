@@ -1,0 +1,88 @@
+class GameMap
+{
+    field Array map;
+    field int rows;
+    field int columns;
+
+    constructor GameMap new() {
+        let rows = 24;
+        let columns = 32;
+        let map= Array.new(rows*columns);
+        do fillMap();
+        return this;
+    }
+
+    method void fillMap()
+    {   
+        //x is rows, y is columns
+        var int row,column, index;
+        let column = 0;  //height set to 0
+        //while we have less than 30 rows
+        while(column < columns)
+        {
+            //set the rows to be 0
+            let row = 0;
+            //while we are less than 30 columns
+            while(row < rows)
+            {
+                //formula to translate x and y coordinate into 1d array space
+                let index = (row*columns) + column;
+                //if it is on a border -- set it to solid
+                if((row = 0) | (column = 0) | (column = (columns - 1)) | (row = (rows - 1)) )
+                {
+                    //solid
+                    let map[index] = 1;
+                }
+                else
+                {
+                    //clear
+                    let map[index] = 0;
+                }
+                //increment x
+                let row = row + 1;
+            }
+            //increment y
+            let column = column + 1;
+        }
+        do setTile(35, 21, 1);
+        do setTile(35, 22, 1);
+        do setTile(35, 22, 1);
+        return;
+    }
+    //direct access to tile
+    method void setTile(int rowPos, int colPos, int index)
+    {
+        let map[index] = (rowPos*columns) + colPos;
+        return;
+    }
+    
+    //plug in the x, y position to get the position in the array
+    method int getTile(int xIn, int yIn)
+    {
+        //equation to translate 1d array into 2d position
+        return map[(xIn*columns) + yIn];
+    }
+        /** Prints the entire map to the screen */
+    method void printMap() {
+        var int x, y, index, value;
+
+        let y = 0;
+        while (y < rows) {
+            let x = 0;
+            while (x < columns) {
+                let index = getTile(y, x);
+                let value = getTile(y, x);
+
+                do Output.printInt(value);
+                do Output.printChar(32); // space
+
+                let x = x + 1;
+            }
+            do Output.println(); // new line at end of row
+            let y = y + 1;
+        }
+        return;
+    }
+
+
+}

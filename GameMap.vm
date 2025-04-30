@@ -1,0 +1,196 @@
+function GameMap.new 0
+    push constant 3
+    call Memory.alloc 1
+    pop pointer 0
+    push constant 24
+    pop this 1
+    push constant 32
+    pop this 2
+    push this 1
+    push this 2
+    call Math.multiply 2
+    call Array.new 1
+    pop this 0
+    push pointer 0
+    call GameMap.fillMap 1
+    pop temp 0
+    push pointer 0
+    return
+function GameMap.fillMap 3
+    push argument 0
+    pop pointer 0
+    push constant 0
+    pop local 1
+label GameMap_0
+    push local 1
+    push this 2
+    lt
+    not
+    if-goto GameMap_1
+    push constant 0
+    pop local 0
+label GameMap_2
+    push local 0
+    push this 1
+    lt
+    not
+    if-goto GameMap_3
+    push local 0
+    push this 2
+    call Math.multiply 2
+    push local 1
+    add
+    pop local 2
+    push local 0
+    push constant 0
+    eq
+    push local 1
+    push constant 0
+    eq
+    or
+    push local 1
+    push this 2
+    push constant 1
+    sub
+    eq
+    or
+    push local 0
+    push this 1
+    push constant 1
+    sub
+    eq
+    or
+    not
+    if-goto GameMap_5
+    push local 2
+    push this 0
+    add
+    push constant 1
+    pop temp 0
+    pop pointer 1
+    push temp 0
+    pop that 0
+    goto GameMap_4
+label GameMap_5
+    push local 2
+    push this 0
+    add
+    push constant 0
+    pop temp 0
+    pop pointer 1
+    push temp 0
+    pop that 0
+label GameMap_4
+    push local 0
+    push constant 1
+    add
+    pop local 0
+    goto GameMap_2
+label GameMap_3
+    push local 1
+    push constant 1
+    add
+    pop local 1
+    goto GameMap_0
+label GameMap_1
+    push pointer 0
+    push constant 35
+    push constant 21
+    push constant 1
+    call GameMap.setTile 4
+    pop temp 0
+    push pointer 0
+    push constant 35
+    push constant 22
+    push constant 1
+    call GameMap.setTile 4
+    pop temp 0
+    push pointer 0
+    push constant 35
+    push constant 22
+    push constant 1
+    call GameMap.setTile 4
+    pop temp 0
+    push constant 0
+    return
+function GameMap.setTile 0
+    push argument 0
+    pop pointer 0
+    push argument 3
+    push this 0
+    add
+    push argument 1
+    push this 2
+    call Math.multiply 2
+    push argument 2
+    add
+    pop temp 0
+    pop pointer 1
+    push temp 0
+    pop that 0
+    push constant 0
+    return
+function GameMap.getTile 0
+    push argument 0
+    pop pointer 0
+    push argument 1
+    push this 2
+    call Math.multiply 2
+    push argument 2
+    add
+    push this 0
+    add
+    pop pointer 1
+    push that 0
+    return
+function GameMap.printMap 4
+    push argument 0
+    pop pointer 0
+    push constant 0
+    pop local 1
+label GameMap_6
+    push local 1
+    push this 1
+    lt
+    not
+    if-goto GameMap_7
+    push constant 0
+    pop local 0
+label GameMap_8
+    push local 0
+    push this 2
+    lt
+    not
+    if-goto GameMap_9
+    push pointer 0
+    push local 1
+    push local 0
+    call GameMap.getTile 3
+    pop local 2
+    push pointer 0
+    push local 1
+    push local 0
+    call GameMap.getTile 3
+    pop local 3
+    push local 3
+    call Output.printInt 1
+    pop temp 0
+    push constant 32
+    call Output.printChar 1
+    pop temp 0
+    push local 0
+    push constant 1
+    add
+    pop local 0
+    goto GameMap_8
+label GameMap_9
+    call Output.println 0
+    pop temp 0
+    push local 1
+    push constant 1
+    add
+    pop local 1
+    goto GameMap_6
+label GameMap_7
+    push constant 0
+    return

@@ -1,0 +1,167 @@
+function PlatformerGame.new 0
+    push constant 2
+    call Memory.alloc 1
+    pop pointer 0
+    push constant 253
+    push constant 222
+    call Player.new 2
+    pop this 1
+    push constant 0
+    pop this 0
+    push pointer 0
+    return
+function PlatformerGame.dispose 0
+    push argument 0
+    pop pointer 0
+    push pointer 0
+    call Memory.deAlloc 1
+    pop temp 0
+    push constant 0
+    return
+function PlatformerGame.newInstance 0
+    call PlatformerGame.new 0
+    pop static 0
+    push constant 0
+    return
+function PlatformerGame.getInstance 0
+    push static 0
+    return
+function PlatformerGame.run 1
+    push argument 0
+    pop pointer 0
+label PlatformerGame_0
+    push this 0
+    not
+    not
+    if-goto PlatformerGame_1
+    call Keyboard.keyPressed 0
+    pop local 0
+    push local 0
+    push constant 130
+    eq
+    not
+    if-goto PlatformerGame_3
+    push this 1
+    push constant 1
+    neg
+    push constant 0
+    call Player.move 3
+    pop temp 0
+    goto PlatformerGame_2
+label PlatformerGame_3
+    push local 0
+    push constant 132
+    eq
+    not
+    if-goto PlatformerGame_5
+    push this 1
+    push constant 1
+    push constant 0
+    call Player.move 3
+    pop temp 0
+    goto PlatformerGame_4
+label PlatformerGame_5
+    push local 0
+    push constant 140
+    eq
+    not
+    if-goto PlatformerGame_7
+    push constant 1
+    neg
+    pop this 0
+    goto PlatformerGame_6
+label PlatformerGame_7
+label PlatformerGame_6
+label PlatformerGame_4
+label PlatformerGame_2
+    push pointer 0
+    call PlatformerGame.renderGame 1
+    pop temp 0
+    push constant 50
+    call Sys.wait 1
+    pop temp 0
+    goto PlatformerGame_0
+label PlatformerGame_1
+    push this 0
+    not
+    if-goto PlatformerGame_9
+    push constant 10
+    push constant 27
+    call Output.moveCursor 2
+    pop temp 0
+    push constant 9
+    call String.new 1
+    push constant 71
+    call String.appendChar 2
+    push constant 97
+    call String.appendChar 2
+    push constant 109
+    call String.appendChar 2
+    push constant 101
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 79
+    call String.appendChar 2
+    push constant 118
+    call String.appendChar 2
+    push constant 101
+    call String.appendChar 2
+    push constant 114
+    call String.appendChar 2
+    call Output.printString 1
+    pop temp 0
+    goto PlatformerGame_8
+label PlatformerGame_9
+label PlatformerGame_8
+    push constant 0
+    return
+function PlatformerGame.movePlayers 0
+    push argument 0
+    pop pointer 0
+    push constant 0
+    return
+function PlatformerGame.renderGame 0
+    push argument 0
+    pop pointer 0
+    call Screen.clearScreen 0
+    pop temp 0
+    push constant 1
+    neg
+    call Screen.setColor 1
+    pop temp 0
+    push constant 0
+    push constant 238
+    push constant 511
+    push constant 240
+    call Screen.drawRectangle 4
+    pop temp 0
+    push constant 22
+    push constant 0
+    call Output.moveCursor 2
+    pop temp 0
+    push constant 8
+    call String.new 1
+    push constant 83
+    call String.appendChar 2
+    push constant 99
+    call String.appendChar 2
+    push constant 111
+    call String.appendChar 2
+    push constant 114
+    call String.appendChar 2
+    push constant 101
+    call String.appendChar 2
+    push constant 58
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 48
+    call String.appendChar 2
+    call Output.printString 1
+    pop temp 0
+    push this 1
+    call Player.draw 1
+    pop temp 0
+    push constant 0
+    return

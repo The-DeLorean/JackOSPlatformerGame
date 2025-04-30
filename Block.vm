@@ -1,0 +1,56 @@
+function Block.new 0
+    push constant 1
+    call Memory.alloc 1
+    pop pointer 0
+    push argument 0
+    push argument 1
+    call GameObject.new 2
+    pop this 0
+    push pointer 0
+    return
+function Block.draw 2
+    push argument 0
+    pop pointer 0
+    push constant 1
+    neg
+    call Screen.setColor 1
+    pop temp 0
+    push this 0
+    call GameObject.getX 1
+    pop local 0
+    push this 0
+    call GameObject.getY 1
+    pop local 1
+    push local 0
+    push local 1
+    push local 0
+    push constant 8
+    add
+    push local 1
+    push constant 8
+    add
+    call Screen.drawRectangle 4
+    pop temp 0
+    push constant 0
+    return
+function Block.getParent 0
+    push argument 0
+    pop pointer 0
+    push this 0
+    return
+function Block.instanceof 0
+    push argument 0
+    pop pointer 0
+    push constant 5
+    call String.new 1
+    push constant 66
+    call String.appendChar 2
+    push constant 108
+    call String.appendChar 2
+    push constant 111
+    call String.appendChar 2
+    push constant 99
+    call String.appendChar 2
+    push constant 107
+    call String.appendChar 2
+    return

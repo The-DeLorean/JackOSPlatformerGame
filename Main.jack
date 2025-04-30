@@ -9,10 +9,16 @@ class Main {
     /** Initializes a Pong game and starts running it. */
     function void main() {
         var PlatformerGame game;
-        do PlatformerGame.newInstance();
-        let game = PlatformerGame.getInstance();
-        do game.run();
-        do game.dispose();
+        var GameMap gameMap;
+
+
+        let gameMap = GameMap.new();
+
+        do gameMap.printMap();
+        //do PlatformerGame.newInstance();
+        //let game = PlatformerGame.getInstance();
+        //do game.run();
+        //do game.dispose();
         return;
     }
 }
