@@ -8,6 +8,9 @@ class Player {
     field GameObject myParent; //pointer to parent, used for rendering and collisions
     field int livesRemaining; //keeps track of deaths, will work with spikeblock
     static int speed; //
+    field boolean win;
+    field boolean death;
+    field boolean key;
 
     constructor Player new(int xin, int yin) {
         //Compose a child member data into parent game object
@@ -19,7 +22,7 @@ class Player {
 
     // Players can move
     method void move(int dx, int dy) {
-        do myParent.move((speed*dx), (speed*dy));
+        do myParent.move((speed*dx), (speed*dy)); 
         return;
     }
 
@@ -35,6 +38,105 @@ class Player {
         return;
     }
 
+    //method to check if the player is on the ground
+    method boolean isOnGround(Array map){
+        //creating a check variable
+        var boolean check;
+        //intializing check to false
+        let check =false;
+         //incrementing the y value after move
+        do myParent.move(0, (speed* 1));
+        let check = collides(map);
+        //decrementing the y value after move to move player back
+        do myParent.move(0, (speed* -1)); 
+        //Cecking whether to see if the collision was true or not returning the respective varaiable
+        if(check = true){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    method boolean collides(Array map){
+        //variables to count loop iterations
+        var int rowSize;
+        var int columnSize;
+        var int i;
+        var int j;
+        //Variable to hold the specific row of 2D array
+        var Array row;
+        //Variable to hold the collision flag
+        var boolean collision;
+        //variable to hold the gameObject from the array
+        var GameObject gameObj;
+
+        //initalizing loop variables.
+        let rowSize= 24;
+        let columnSize=32;
+        let i=0;
+        let j=0;
+
+        while(i < rowSize)
+        {
+            //Accessing the spcific row in the 2d array map
+            let row= map[i]; 
+            //looping through the specific column
+            while (j < columnSize){
+                let gameObj = row[j];
+                //variable to hold the individual collision
+                let collision = gameObj.collides(this);
+                if(collision)
+                {
+                    /** Checking to see if the collision is with the victory block
+                    if(gameObj.getType() = 2)
+                    {
+                        let win = true;
+                    }
+                    //Checking to see if the collision is with the key block
+                    if(gameObj.getType() = 3)
+                    {
+                        let key = true;
+                    }
+                    //checking to see if the collisiton is with a spike
+                    if(gameObj.getType() = 4)
+                    {
+                        let death = true;
+                    }
+                    */
+                    //returning true if a collision has occured
+                    return true; 
+                }
+                //incrementing the column position
+                let j = j + 1;
+            }
+            //incrementing the row position
+            let i = i + 1;
+        }
+        return false;
+    }
+
+    //Accessor for the win boolean variable
+    method boolean won()
+    {
+        return win;
+    }
+    //Accessor for the win boolean variable
+    method boolean died()
+    {
+        return death;
+    }
+    //Accessor for the win boolean variable
+    method boolean hasKey()
+    {
+        return key;
+    }
+
+    //a method to create a new life
+    method void newLife(){
+        let death = false;
+        return;
+    }
 
     // Accessor for parent object ("has-a" relationship)
     method GameObject getParent(){
