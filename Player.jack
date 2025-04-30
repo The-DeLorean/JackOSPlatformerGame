@@ -11,6 +11,7 @@ class Player {
     field boolean win;
     field boolean death;
     field boolean key;
+    field int xpos, ypos;
 
     constructor Player new(int xin, int yin) {
         //Compose a child member data into parent game object
@@ -58,7 +59,7 @@ class Player {
         }
     }
 
-    method boolean collides(Array map){
+    method boolean collides(GameMap map){
         //variables to count loop iterations
         var int rowSize;
         var int columnSize;
@@ -114,6 +115,20 @@ class Player {
             let i = i + 1;
         }
         return false;
+    }
+
+    // Collision logic for all GameObjects.  Hitbox is 8x8, regardless of whether there is something rendered.  E.g. spikes are really square.
+    method boolean overlap(GameObject o){
+        if(this = o)
+        {
+            return false;
+        }
+        if((ypos + 4 < o.getY()-4) | (ypos - 4 > o.getY()+4) | (xpos - 4 < o.getX()+ 4) | (xpos + 4 < o.getX() - 4)){
+            return true;
+        }
+        else{
+            return true;
+        }
     }
 
     //Accessor for the win boolean variable
