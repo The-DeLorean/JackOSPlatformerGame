@@ -26,19 +26,18 @@ class Player {
         let prevXPos = xpos;
         let prevYPos = ypos;
         let xpos = (xpos + dx);
-        let ypos = (ypos + dy);
-        //updating the player block each time its moved
-       
         let check = collides(map);
         if(check = true){
-            let xpos = (xpos - dx);
-            let ypos = (ypos - dy);
+            let xpos = prevXPos;
         }
-        else{
-            //Redrawing the player
-            do draw();
+        let ypos = (ypos + dy);
+        //updating the player block each time its moved
+        let check = collides(map);
+        if(check = true){
+            let ypos = prevYPos;
         }
         
+        do draw();
         return;
     }
 
@@ -46,9 +45,9 @@ class Player {
     // Renders the player
     method void draw() {
         do Screen.setColor(false);
-        do Screen.drawRectangle(prevXPos, prevYPos, prevXPos + 15, prevYPos + 15);
+        do Screen.drawRectangle(prevXPos, prevYPos, prevXPos + 7, prevYPos + 7);
         do Screen.setColor(true);
-        do Screen.drawRectangle(xpos, ypos, xpos + 15, ypos + 15);
+        do Screen.drawRectangle(xpos, ypos, xpos + 7, ypos + 7);
         return;
     }
 
@@ -65,42 +64,28 @@ class Player {
         //decrementing the y value after move to move player back
         let ypos = ypos - 1;
         //Cecking whether to see if the collision was true or not returning the respective varaiable
-        if(check = true){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return check;
     }
 
     //Checking to see if the player hits the ceiling
     method boolean hitsCieling(GameMap map){
         //creating a check variable
         var boolean check;
-        return false;
-        /**Initalizing check to false
+        //Initalizing check to false
         let check = false;
         //decrementing the y to check 1 ahead
         let ypos = ypos - 1;
         //checking with the map
-        //let check = collides(map);
+        let check = collides(map);
         //Incrementing the y value after move to move player back
         let ypos = ypos + 1;
         //Cecking whether to see if the collision was true or not returning the respective varaiable
-        if(check = true){
-            return true;
-        }
-        else{
-            return false;
-        }*/
+        return check;
     }
 
     method boolean collides(GameMap map){
         //variables to count loop iterations
-        var int rowSize;
-        var int columnSize;
         var int i;
-        var int j;
         var int numberOfBlocks;
         //Variable to hold the collision flag
         var boolean collision;
@@ -126,50 +111,11 @@ class Player {
         }
         //If we don't overlap return false no collision
         return false;
-        
-
-        /**
-        while(i < rowSize)
-        {
-            let j = 0;
-            //looping through the specific column
-            while (j < columnSize){
-                let gameObj = map.getTileAtBlock(i,j);
-                //variable to hold the individual collision
-                let collision = overlap(gameObj);
-                if(collision = true)
-                {
-                    /** Checking to see if the collision is with the victory block
-                    if(gameObj.instanceof() = "vicBlock")
-                    {
-                        let win = true;
-                    }
-                    //Checking to see if the collision is with the key block
-                    if(gameObj.getType() = 3)
-                    {
-                        let key = true;
-                    }
-                    //checking to see if the collisiton is with a spike
-                    if(gameObj.getType() = "spike")
-                    {
-                        let death = true;
-                    }
-                    /
-                    //returning true if a collision has occured
-                    return true; 
-                }
-                //incrementing the column position
-                let j = j + 1;
-            }
-            //incrementing the row position
-            let i = i + 1;
-        }
-        return false;*/
     }
 
     // Collision logic for all GameObjects.  Hitbox is 8x8, regardless of whether there is something rendered.  E.g. spikes are really square.
     method boolean overlap(GameObject o){
-        if ((xpos < (o.getX() + 15)) & ((xpos + 15) > o.getX()) & (ypos < (o.getY() + 15)) & ((ypos + 15) > o.getY()))
+        if ((xpos < (o.getX() + 8)) & ((xpos + 8 ) > o.getX()) & (ypos < (o.getY() +8)) & ((ypos + 8) > o.getY()))
         {
             return true;
         }

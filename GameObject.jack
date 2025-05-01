@@ -8,7 +8,6 @@
  */
 class GameObject {
     field int xpos, ypos; //the object's pixel location
-
     field String myType; // Block, Spike, Key, Victory
 
 
@@ -19,18 +18,11 @@ class GameObject {
         return this;
     }
 
-    //Method to move the game object in this case player
-    /**method void move(int dx, int dy) {
-        let xpos = (xpos+ dx);
-        let ypos = (ypos+ dy);
-        return;
-    }*/
-
     // Renders the block
     method void draw() {
         
         do Screen.setColor(true);
-        do Screen.drawRectangle(xpos, ypos, xpos + 8, ypos + 8);
+        do Screen.drawRectangle(xpos, ypos, xpos + 7, ypos + 7);
         return;
     }
 

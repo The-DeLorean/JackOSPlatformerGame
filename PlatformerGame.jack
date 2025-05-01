@@ -14,7 +14,7 @@ class PlatformerGame {
     /** Constructs a new Platformer game. */
     constructor PlatformerGame new() {
         //Player init
-        let player1 = Player.new(253, 200);
+        let player1 = Player.new(253, 100);
 
         let gameMap = GameMap.new();
 
@@ -83,23 +83,22 @@ class PlatformerGame {
             //Checking to see if player 1 is on the ground if so checking to see if the jump key is pressed
             let p1OnGround = player1.isOnGround(gameMap);
 
-            if(key = 131){ // Up Arrow
+            if(key = 131 & p1OnGround){ // Up Arrow
                 //Store jump value and reset number
-                if(p1OnGround = true){
-                    let jump = 100;
-                    let number = 1;
-                }
+                let jump = 200;
+                let number = 1;
+                let jumpLoop = 0;
             }
 
             //If up arrow is not pressed on ground reset tick and number
-            if (p1OnGround =true){
+            if (p1OnGround = true){
                 let number = 1;
                 let tick = 0;
             }
 
             if(p1OnGround = false) {//If not on ground run gravity logic
                 //If the player hits cieling kill jump momentum
-                if(player1.hitsCieling(gameMap)){
+                if(player1.hitsCieling(gameMap) = true){
                     let jump=0;
                 }
                 //Resetting the gravity loop variable before it is run
@@ -115,6 +114,7 @@ class PlatformerGame {
 
             //Checking to see if the jump ahs been triggered
             if(jump > 0){
+            
                 //Jumping a certain amount each time.
                 while(jumpLoop < (jump/10)){
                     //moving the player up
