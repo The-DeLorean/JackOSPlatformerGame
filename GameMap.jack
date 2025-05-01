@@ -1,3 +1,10 @@
+// This file is part of JackOSPlatformerGame
+// by Dorian Quimby
+/**
+ *  A custom Abstract Data Type to store 
+ *  Implemented as a faux "2d Array" with rows "stacked" on each other in a normal 1D Array
+ *  Responsible for populating the game map with level data, via loadLevel()
+ */
 class GameMap
 {
     field Array map;       // 1D array to store GameObjects
@@ -90,7 +97,7 @@ class GameMap
     }
 
 
-/** Returns a level design based on the level number */
+    // Returns a level design based on the level number
     method void loadLevel(int levelNumber) {
         var int row;
         
@@ -150,7 +157,7 @@ class GameMap
         return;
     }
     
-    /** Processes a single row of level data */
+    // Processes a single row of level data
     method void processLevelRow(int rowNum, String rowData) {
         var int col, index, pixelX, pixelY;
         var char tileChar;
