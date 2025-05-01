@@ -22,16 +22,18 @@ class Player {
 
     // Players can move
     method void move(int dx, int dy, GameMap map) {
-        let xpos = (xpos+ dx);
-        let ypos = (ypos+ dy);
-        if(collides(map) = true){
+        let prevXPos = xpos;
+        let prevYPos = ypos;
+        let xpos = (xpos + dx);
+        let ypos = (ypos + dy);
+        /**if(collides(map) = true){
             let xpos = (xpos - dx);
             let ypos = (ypos - dy);
         }
         else{
             let prevXPos = xpos;
             let prevYPos = ypos;
-        }
+        }*/
         return;
     }
 
@@ -107,7 +109,7 @@ class Player {
                 let gameObj = map.getTileAtBlock(i,j);
                 //variable to hold the individual collision
                 let collision = overlap(gameObj);
-                if(collision)
+                if(collision = true)
                 {
                     /** Checking to see if the collision is with the victory block
                     if(gameObj.instanceof() = "vicBlock")
@@ -139,22 +141,16 @@ class Player {
 
     // Collision logic for all GameObjects.  Hitbox is 8x8, regardless of whether there is something rendered.  E.g. spikes are really square.
     method boolean overlap(GameObject o){
-        /**if(((ypos + 4) < (o.getY())) | ((ypos - 4) > (o.getY() + 8)) | ((xpos - 4) > (o.getX() + 8)) | ((xpos + 4) < (o.getX()))){
-            return false;
-        }
-        else{
-            return true;
-        }*/
         if(o = null){
             return false;
         }
-        return ((xpos < (o.getX() + 8)) & ((xpos + 8) > o.getX()) & (ypos < (o.getY() + 8)) & ((ypos + 8) > o.getY()));
-        /**{
+        if ((xpos < (o.getX() + 8)) & ((xpos + 8) > o.getX()) & (ypos < (o.getY() + 8)) & ((ypos + 8) > o.getY()))
+        {
             return true;
         }
         else{
             return false;
-        }*/
+        }
     }
 
     //Accessor for the win boolean variable
