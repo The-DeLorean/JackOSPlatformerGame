@@ -5,8 +5,8 @@ class GameMap
     field int columns;
 
     constructor GameMap new() {
-        let rows = 24;
-        let columns = 32;
+        let rows = 30;
+        let columns = 64;
         let map= Array.new(rows*columns);
         do fillMap();
         return this;
