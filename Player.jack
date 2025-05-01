@@ -5,37 +5,36 @@
  *  Players can move, collect KeyBlocks, die when the touch spikeblocks, and reach the VictoryBlock
  */
 class Player {
-    field GameObject myParent; //pointer to parent, used for rendering and collisions
     field int livesRemaining; //keeps track of deaths, will work with spikeblock
     static int speed; //
     field boolean win;
     field boolean death;
     field boolean key;
-    field int xpos, ypos;
+    field int xpos, ypos, prevXPos, prevYPos;
 
     constructor Player new(int xin, int yin) {
         //Compose a child member data into parent game object
-        let myParent = GameObject.new(xin, yin);
-
+        let xpos = xin;
+        let ypos = yin;
         let speed = 5;
         return this;
     }
 
     // Players can move
     method void move(int dx, int dy) {
-        do myParent.move((speed*dx), (speed*dy)); 
+        let prevXPos = xpos;
+        let prevYPos = ypos;
+        let xpos = (xpos+ dx);
+        let ypos = (ypos+ dy);
         return;
     }
 
     // Renders the player
     method void draw() {
-        var int x, y;
+        do Screen.setColor(false);
+        do Screen.drawRectangle(prevXPos, prevYPos, prevXPos + 8, prevYPos + 8);
         do Screen.setColor(true);
-
-        let x = myParent.getX();
-        let y = myParent.getY();
-
-        do Screen.drawRectangle(x, y, x + 8, y + 8);
+        do Screen.drawRectangle(xpos, ypos, xpos + 8, ypos + 8);
         return;
     }
 
@@ -46,10 +45,10 @@ class Player {
         //intializing check to false
         let check =false;
          //incrementing the y value after move
-        do myParent.move(0, (speed* 1));
+        do move(0, (speed* 1));
         let check = collides(map);
         //decrementing the y value after move to move player back
-        do myParent.move(0, (speed* -1)); 
+        do move(0, (speed* -1)); 
         //Cecking whether to see if the collision was true or not returning the respective varaiable
         if(check = true){
             return true;
@@ -151,11 +150,6 @@ class Player {
     method void newLife(){
         let death = false;
         return;
-    }
-
-    // Accessor for parent object ("has-a" relationship)
-    method GameObject getParent(){
-        return myParent;
     }
 
     method String instanceof()

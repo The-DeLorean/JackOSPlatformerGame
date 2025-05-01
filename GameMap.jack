@@ -1,88 +1,202 @@
 class GameMap
 {
-    field Array map;
-    field int rows;
-    field int columns;
+    field Array map;       // 1D array to store GameObjects
+    field int rows;        // Height of map in blocks (30)
+    field int columns;     // Width of map in blocks (64)
+    field int blockSize;   // Size of each block in pixels (8)
+  
 
     constructor GameMap new() {
-        let rows = 24;
-        let columns = 32;
-        let map= Array.new(rows*columns);
-        do fillMap();
+        let rows = 30;            // 240 pixels / 8 pixels per block = 30 blocks tall
+        let columns = 64;         // 512 pixels / 8 pixels per block = 64 blocks wide
+        let blockSize = 8;        // Each block is 8x8 pixels
+        let map = Array.new(rows * columns);  // Create 1D array to represent 2D space
+        
+        // Initialize map with null values
+        do clearMap();
+        
         return this;
     }
 
-    method void fillMap()
-    {   
-        //x is rows, y is columns
-        var int row,column, index;
-        let column = 0;  //height set to 0
-        //while we have less than 30 rows
-        while(column < columns)
-        {
-            //set the rows to be 0
-            let row = 0;
-            //while we are less than 30 columns
-            while(row < rows)
-            {
-                //formula to translate x and y coordinate into 1d array space
-                let index = (row*columns) + column;
-                //if it is on a border -- set it to solid
-                if((row = 0) | (column = 0) | (column = (columns - 1)) | (row = (rows - 1)) )
-                {
-                    //solid
-                    let map[index] = 1;
-                }
-                else
-                {
-                    //clear
-                    let map[index] = 0;
-                }
-                //increment x
-                let row = row + 1;
-            }
-            //increment y
-            let column = column + 1;
+    // Sets all map positions to null
+    method void clearMap() {
+        var int i;
+        
+        let i = 0;
+        while (i < (rows * columns)) {
+            let map[i] = null;
+            let i = i + 1;
         }
-        do setTile(35, 21, 1);
-        do setTile(35, 22, 1);
-        do setTile(35, 22, 1);
-        return;
-    }
-    //direct access to tile
-    method void setTile(int rowPos, int colPos, int index)
-    {
-        let map[index] = (rowPos*columns) + colPos;
         return;
     }
     
-    //plug in the x, y position to get the position in the array
-    method int getTile(int xIn, int yIn)
-    {
-        //equation to translate 1d array into 2d position
-        return map[(xIn*columns) + yIn];
+    // Converts pixel coordinates to block coordinates
+    method int pixelToBlock(int pixelCoord) {
+        return pixelCoord / blockSize;
     }
-        /** Prints the entire map to the screen */
-    method void printMap() {
-        var int x, y, index, value;
+    
+    // Sets a GameObject at the given block coordinates
+    method void setTileAtBlock(int row, int col, GameObject gameObj) {
+        var int index;
+        let index = (row * columns) + col;
+        let map[index] = gameObj;
+        return;
+    }
+    
+    // Gets the GameObject at the specified block coordinates
+    method GameObject getTileAtBlock(int row, int col) {
+        var int index;
+        let index = (row * columns) + col;
+        return map[index];
+    }
 
-        let y = 0;
-        while (y < rows) {
-            let x = 0;
-            while (x < columns) {
-                let index = getTile(y, x);
-                let value = getTile(y, x);
+    // Gets the GameObject at the specified pixel coordinates
+    method GameObject getTileAtPixel(int pixelX, int pixelY) {
+        var int blockRow, blockCol;
+        
+        let blockRow = pixelToBlock(pixelY);
+        let blockCol = pixelToBlock(pixelX);
+        
+        return getTileAtBlock(blockRow, blockCol);
+    }
 
-                do Output.printInt(value);
-                do Output.printChar(32); // space
-
-                let x = x + 1;
+    // Draws the entire map to the screen
+    method void drawMap() {
+        var int row, col;
+        var GameObject currentObj;
+        
+        let row = 0;
+        while (row < rows) {
+            let col = 0;
+            while (col < columns) {
+                let currentObj = getTileAtBlock(row, col);
+                
+                // Only try to draw if object exists
+                if (~(currentObj = null)) {
+                    do currentObj.draw();
+                }
+                
+                let col = col + 1;
             }
-            do Output.println(); // new line at end of row
-            let y = y + 1;
+            let row = row + 1;
         }
+        return;
+    }
+    
+    // Disposes of the GameMap and its resources
+    method void dispose() {
+        //need implementation if doing multiple levels
         return;
     }
 
 
+/** Returns a level design based on the level number */
+    method void loadLevel(int levelNumber) {
+        var int row;
+        
+        // First clear any existing objects
+        do clearMap();
+        
+        // Process level based on level number
+        if (levelNumber = 1) {
+            // Process row by row
+            // Row 0 - Top border
+            do processLevelRow(0, "1111111111111111111111111111111111111111111111111111111111111111");
+            
+            // Row 1-4 - Empty area with borders
+            do processLevelRow(1, "1000000000000000000000000000000000000000000000000000000000000001");
+            do processLevelRow(2, "1000000000000000000000000000000000000000000000000000000000000001");
+            do processLevelRow(3, "1000000000000000000000000000000000000000000000000000000000000001");
+            do processLevelRow(4, "1000000000000000000000000000000000000000000000000000000000000001");
+            
+            // Row 5-9 - Some platforms
+            do processLevelRow(5, "1000000000000000000000000000000000000000000000000000000000000001");
+            do processLevelRow(6, "1000000000000000000110000000000000000000000000000000000000000001");
+            do processLevelRow(7, "1000000000000000000110000000000000000000000000000000000000000001");
+            do processLevelRow(8, "1000000000000000000000000000000000000000000000000000000000000001");
+            do processLevelRow(9, "1000000000000000000000000000000000000000000000000000000000000001");
+            
+            // Row 10-14 - More obstacles
+            do processLevelRow(10, "1000000000000000000000000000000000000000000000000000000000000001");
+            do processLevelRow(11, "1000000000000200000000000000000000000000000000110000000000000001");
+            do processLevelRow(12, "1000000000000000000000000000000000000000000000110000000000000001");
+            do processLevelRow(13, "1000000000000000000000000000000000000000000000000000000000000001");
+            do processLevelRow(14, "1000000000000000000000000002222200000000000000000000000000000001");
+            
+            // Row 15-19 - More platforms
+            do processLevelRow(15, "1000000000000000000000000000000000000000000000000000000000000001");
+            do processLevelRow(16, "1000000000000001111100000000000000000001111100000000000000000001");
+            do processLevelRow(17, "1000000000000000000000000000000000000000000000000000000000000001");
+            do processLevelRow(18, "1000020000000000000000000000000000000000000000000000000002000001");
+            do processLevelRow(19, "1000000000000000000001111100000000000000000000000000000000000001");
+            
+            // Row 20-24 - More obstacles
+            do processLevelRow(20, "1000000000000000000000000000000000000000000000000000000000000001");
+            do processLevelRow(21, "1000000000022222000000000000000000000000000000002222200000000001");
+            do processLevelRow(22, "1000000000000000000000000000000000000000000000000000000000000001");
+            do processLevelRow(23, "1000000000000000000000000011111000000000000000000000000000000001");
+            do processLevelRow(24, "1000000000000000000000000000000000000000000000000000000000000001");
+            
+            // Row 25-29 - Bottom area and border
+            do processLevelRow(25, "1000000000000000000000000000000000000000000000000000000000000001");
+            do processLevelRow(26, "1000000000000000000000000000000000000000000000000000000000000001");
+            do processLevelRow(27, "1000000000000000000000000000000000000000000000000000000000000001");
+            do processLevelRow(28, "1000000000000000000000000000000000000000000000000000000000000001");
+            do processLevelRow(29, "1111111111111111111111111111111111111111111111111111111111111111");
+        }
+        
+        // Add more levels as needed by checking levelNumber
+        
+        return;
+    }
+    
+    /** Processes a single row of level data */
+    method void processLevelRow(int rowNum, String rowData) {
+        var int col, index, pixelX, pixelY;
+        var char tileChar;
+        var String tileType;
+        var GameObject newObject;
+        
+        let col = 0;
+        while (col < columns) {
+            // Make sure we don't read past the string length
+            if (col < rowData.length()) {
+                // Get the character at this position
+                let tileChar = rowData.charAt(col);
+                
+                // Calculate pixel coordinates
+                let pixelX = col * blockSize;
+                let pixelY = rowNum * blockSize;
+                
+                // Convert character to type and create appropriate object
+                if (tileChar = 48) {  // '0' - Empty space
+                    let newObject = null; // No object for empty space
+                }
+                else {
+                    if (tileChar = 49) {  // '1' - Wall
+                        let tileType = "wall";
+                        let newObject = GameObject.new(pixelX, pixelY, tileType);
+                    }
+                    else {
+                        if (tileChar = 50) {  // '2' - Spike
+                            let tileType = "spike";
+                            let newObject = GameObject.new(pixelX, pixelY, tileType);
+                        }
+                        else {
+                            // Default to empty space for unknown characters
+                            let newObject = null;
+                        }
+                    }
+                }
+                
+                // Store the object in the map
+                let index = (rowNum * columns) + col;
+                let map[index] = newObject;
+            }
+            
+            let col = col + 1;
+        }
+        
+        return;
+    }
 }

@@ -9,10 +9,13 @@
 class GameObject {
     field int xpos, ypos; //the object's pixel location
 
+    field String myType; // Block, Spike, Key, Victory
 
-    constructor GameObject new(int xin, int yin) {
+
+    constructor GameObject new(int xin, int yin, String myType_in) {
         let xpos = xin;
         let ypos = yin;
+        let myType = myType_in;
         return this;
     }
 
@@ -37,6 +40,14 @@ class GameObject {
         }
     }
 
+    // Renders the block
+    method void draw() {
+        
+        do Screen.setColor(true);
+        do Screen.drawRectangle(xpos, ypos, xpos + 8, ypos + 8);
+        return;
+    }
+
     // Getter methods
     method int getX() {
         return xpos;
@@ -54,6 +65,16 @@ class GameObject {
 
     method void setY(int yin) {
         let xpos = yin;
+        return;
+    }
+
+    method String instanceof()
+    {
+        return myType;
+    }
+
+    method void dispose() {
+        //need implementation if doing multiple levels
         return;
     }
 }

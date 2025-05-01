@@ -8,12 +8,20 @@ class PlatformerGame {
     static PlatformerGame instance; // A Platformer game     
     field boolean exit;       // true when the game is over
     field Player player1;
+    field GameMap gameMap;
 
 
     /** Constructs a new Platformer game. */
     constructor PlatformerGame new() {
         //Player init
         let player1 = Player.new(253, 222);
+
+        let gameMap = GameMap.new();
+
+        // Map drawing
+        do gameMap.clearMap();
+        do gameMap.loadLevel(1);
+        do gameMap.drawMap();
 
         let exit = false;
         return this;
@@ -62,7 +70,7 @@ class PlatformerGame {
             //    do player1.jump(); //Mkaing the player jump if up arrow is pressed
             //}
             do renderGame(); // render game graphics after move to help with collisions
-            do Sys.wait(50);// wait to slow down game 
+            do Sys.wait(5);// wait to slow down game 
         }
 
 	    if (exit) {
@@ -74,7 +82,7 @@ class PlatformerGame {
 
     //called every "cycle" to draw the game
     method void renderGame(){
-        do Screen.clearScreen();
+        //do Screen.clearScreen();
 
         //Scoreboard drawing
         do Screen.setColor(true);
@@ -82,8 +90,7 @@ class PlatformerGame {
 	    do Output.moveCursor(22,0);
 	    do Output.printString("Score: 0");
 
-        // Map drawing
-
+        
         //Player drawing
         do player1.draw();
         return;
