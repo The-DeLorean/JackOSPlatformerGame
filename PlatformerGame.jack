@@ -14,7 +14,7 @@ class PlatformerGame {
     /** Constructs a new Platformer game. */
     constructor PlatformerGame new() {
         //Player init
-        let player1 = Player.new(253, 222);
+        let player1 = Player.new(253, 200);
 
         let gameMap = GameMap.new();
 
@@ -68,11 +68,15 @@ class PlatformerGame {
 
             //player movement logic logic gets called
             if (key = 130) { // leftArrow
-                do player1.move(-1, 0); 
+                do player1.move(-1, 0, gameMap);
+                //updating the player block each time its moved
+                do player1.draw();
             }
 	        else {
 	            if (key = 132) { // rightArrow
-                    do player1.move(1, 0); 
+                    do player1.move(1, 0, gameMap);
+                    //updating the player block each time its moved
+                    do player1.draw();
                 }
 		        else {
                     if (key = 140) { let exit = true; }
@@ -102,7 +106,9 @@ class PlatformerGame {
                 //Gravity moves player down number * 1 pixels
                 while(gravityLoop < number){
                     //moving the player down
-                    do player1.move(0, 1);
+                    do player1.move(0, 1, gameMap);
+                    //updating the player block each time its moved
+                    do player1.draw();
                     //incrementing through the gravity loop
                     let gravityLoop = gravityLoop + 1;
                 }
@@ -113,7 +119,9 @@ class PlatformerGame {
                 //Jumping a certain amount each time.
                 while(jumpLoop < (jump/10)){
                     //moving the player up
-                    do player1.move(0, -1);
+                    do player1.move(0, -1, gameMap);
+                    //updating the player block each time its moved
+                    do player1.draw();
                     //incrementing through the jump loop
                     let jumpLoop = jumpLoop + 1;
                 }
@@ -148,8 +156,6 @@ class PlatformerGame {
 
     //called every "cycle" to draw the game
     method void renderGame(){
-        //do Screen.clearScreen();
-
         //Scoreboard drawing
         do Screen.setColor(true);
         do Screen.drawRectangle(0, 238, 511, 240);
