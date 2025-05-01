@@ -80,7 +80,7 @@ class PlatformerGame {
             }
             
             //Checking to see if player 1 is on the ground if so checking to see if the jump key is pressed
-            if(player1.isOnGround(level0)){
+            if(player1.isOnGround(gameMap)){
                 if(key = 131){ // Up Arrow
                     //Store jump value and reset number
                     let jump = 70;
@@ -94,7 +94,7 @@ class PlatformerGame {
             }
             else{//If not on ground run gravity logic
                 //If the player hits cieling kill jump momentum
-                if(player1.hitsCieling(level0)){
+                if(player1.hitsCieling(gameMap)){
                     let jump=0;
                 }
                 //Resetting the gravity loop variable before it is run
