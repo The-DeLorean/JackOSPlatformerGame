@@ -161,7 +161,7 @@ class GameMap
     method void processLevelRow(int rowNum, String rowData) {
         var int col, index, pixelX, pixelY;
         var char tileChar;
-        var String tileType;
+        var int tileType;
         var GameObject newObject;
         
         let col = 0;
@@ -180,13 +180,13 @@ class GameMap
                     let newObject = null; // No object for empty space
                 }
                 else {
-                    if (tileChar = 49) {  // '1' - Wall
-                        let tileType = "wall";
+                    if (tileChar = 49) {  // '1' - Block
+                        let tileType = 1;
                         let newObject = GameObject.new(pixelX, pixelY, tileType);
                     }
                     else {
                         if (tileChar = 50) {  // '2' - Spike
-                            let tileType = "spike";
+                            let tileType = 2;
                             let newObject = GameObject.new(pixelX, pixelY, tileType);
                         }
                         else {

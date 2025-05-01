@@ -9,7 +9,7 @@
 class GameObject {
     field int xpos, ypos; //the object's pixel location
 
-    field String myType; // Block, Spike, Key, Victory
+    field int myType; // block, spike, key, victory
 
 
     constructor GameObject new(int xin, int yin, String myType_in) {
@@ -43,9 +43,22 @@ class GameObject {
     // Renders the block
     method void draw() {
         
-        do Screen.setColor(true);
-        do Screen.drawRectangle(xpos, ypos, xpos + 8, ypos + 8);
+        if (myType = 1)
+        {
+            do Screen.setColor(true);
+            do Screen.drawRectangle(xpos, ypos, xpos + 8, ypos + 8);
+            return;
+        }
+        if (myType = 2)
+        {
+            
+            do Screen.drawCircle(xpos+4, ypos+4, 2);
+            return;
+        }
+
+
         return;
+        
     }
 
     // Getter methods
