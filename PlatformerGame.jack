@@ -53,6 +53,7 @@ class PlatformerGame {
         //variable to use in gravity looop
         var int gravityLoop, jumpLoop;
         var int number, tick, jump;
+        var boolean p1OnGround;
 
         //Initalizing variables
         let gravityLoop = 0;
@@ -69,14 +70,10 @@ class PlatformerGame {
             //player movement logic logic gets called
             if (key = 130) { // leftArrow
                 do player1.move(-1, 0, gameMap);
-                //updating the player block each time its moved
-                do player1.draw();
             }
 	        else {
 	            if (key = 132) { // rightArrow
                     do player1.move(1, 0, gameMap);
-                    //updating the player block each time its moved
-                    do player1.draw();
                 }
 		        else {
                     if (key = 140) { let exit = true; }
@@ -84,19 +81,23 @@ class PlatformerGame {
             }
             
             //Checking to see if player 1 is on the ground if so checking to see if the jump key is pressed
-            if(player1.isOnGround(gameMap)){
-                if(key = 131){ // Up Arrow
-                    //Store jump value and reset number
-                    let jump = 70;
-                    let number=1;
-                }
-                //If up arrow is not pressed on ground reset tick and number
-                else{
+            let p1OnGround = player1.isOnGround(gameMap);
+
+            if(key = 131){ // Up Arrow
+                //Store jump value and reset number
+                if(p1OnGround = true){
+                    let jump = 100;
                     let number = 1;
-                    let tick = 0;
                 }
             }
-            else{//If not on ground run gravity logic
+
+            //If up arrow is not pressed on ground reset tick and number
+            if (p1OnGround =true){
+                let number = 1;
+                let tick = 0;
+            }
+
+            if(p1OnGround = false) {//If not on ground run gravity logic
                 //If the player hits cieling kill jump momentum
                 if(player1.hitsCieling(gameMap)){
                     let jump=0;
@@ -107,8 +108,6 @@ class PlatformerGame {
                 while(gravityLoop < number){
                     //moving the player down
                     do player1.move(0, 1, gameMap);
-                    //updating the player block each time its moved
-                    do player1.draw();
                     //incrementing through the gravity loop
                     let gravityLoop = gravityLoop + 1;
                 }
@@ -120,8 +119,6 @@ class PlatformerGame {
                 while(jumpLoop < (jump/10)){
                     //moving the player up
                     do player1.move(0, -1, gameMap);
-                    //updating the player block each time its moved
-                    do player1.draw();
                     //incrementing through the jump loop
                     let jumpLoop = jumpLoop + 1;
                 }

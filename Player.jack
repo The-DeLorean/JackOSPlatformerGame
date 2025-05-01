@@ -22,18 +22,23 @@ class Player {
 
     // Players can move
     method void move(int dx, int dy, GameMap map) {
+        var boolean check;
         let prevXPos = xpos;
         let prevYPos = ypos;
         let xpos = (xpos + dx);
         let ypos = (ypos + dy);
-        /**if(collides(map) = true){
+        //updating the player block each time its moved
+       
+        let check = collides(map);
+        if(check = true){
             let xpos = (xpos - dx);
             let ypos = (ypos - dy);
         }
         else{
-            let prevXPos = xpos;
-            let prevYPos = ypos;
-        }*/
+            //Redrawing the player
+            do draw();
+        }
+        
         return;
     }
 
@@ -41,9 +46,9 @@ class Player {
     // Renders the player
     method void draw() {
         do Screen.setColor(false);
-        do Screen.drawRectangle(prevXPos, prevYPos, prevXPos + 8, prevYPos + 8);
+        do Screen.drawRectangle(prevXPos, prevYPos, prevXPos + 15, prevYPos + 15);
         do Screen.setColor(true);
-        do Screen.drawRectangle(xpos, ypos, xpos + 8, ypos + 8);
+        do Screen.drawRectangle(xpos, ypos, xpos + 15, ypos + 15);
         return;
     }
 
@@ -51,6 +56,8 @@ class Player {
     method boolean isOnGround(GameMap map){
         //creating a check variable
         var boolean check;
+        //Intailiing check to false
+        let check =false;
         //incrementing the y value after move
         let ypos = ypos + 1;
         //checking with the map
@@ -70,10 +77,13 @@ class Player {
     method boolean hitsCieling(GameMap map){
         //creating a check variable
         var boolean check;
+        return false;
+        /**Initalizing check to false
+        let check = false;
         //decrementing the y to check 1 ahead
         let ypos = ypos - 1;
         //checking with the map
-        let check = collides(map);
+        //let check = collides(map);
         //Incrementing the y value after move to move player back
         let ypos = ypos + 1;
         //Cecking whether to see if the collision was true or not returning the respective varaiable
@@ -82,7 +92,7 @@ class Player {
         }
         else{
             return false;
-        }
+        }*/
     }
 
     method boolean collides(GameMap map){
@@ -91,16 +101,34 @@ class Player {
         var int columnSize;
         var int i;
         var int j;
+        var int numberOfBlocks;
         //Variable to hold the collision flag
         var boolean collision;
+        var Array blocks;
         //variable to hold the gameObject from the array
         var GameObject gameObj;
 
         //initalizing loop variables.
-        let rowSize = 30;
-        let columnSize = 64;
+        //let rowSize = 30;
+        //let columnSize = 64;
         let i=0;
+        let blocks = map.getGameBlocks();
+        let numberOfBlocks = map.getNumOfBlocks();
 
+        while(i < numberOfBlocks){
+            let gameObj = blocks[i];
+            let collision = overlap(gameObj);
+            if(collision = true)
+            {
+                return true;
+            }
+            let i = i + 1 ;
+        }
+        //If we don't overlap return false no collision
+        return false;
+        
+
+        /**
         while(i < rowSize)
         {
             let j = 0;
@@ -126,7 +154,7 @@ class Player {
                     {
                         let death = true;
                     }
-                    */
+                    /
                     //returning true if a collision has occured
                     return true; 
                 }
@@ -136,15 +164,12 @@ class Player {
             //incrementing the row position
             let i = i + 1;
         }
-        return false;
+        return false;*/
     }
 
     // Collision logic for all GameObjects.  Hitbox is 8x8, regardless of whether there is something rendered.  E.g. spikes are really square.
     method boolean overlap(GameObject o){
-        if(o = null){
-            return false;
-        }
-        if ((xpos < (o.getX() + 8)) & ((xpos + 8) > o.getX()) & (ypos < (o.getY() + 8)) & ((ypos + 8) > o.getY()))
+        if ((xpos < (o.getX() + 15)) & ((xpos + 15) > o.getX()) & (ypos < (o.getY() + 15)) & ((ypos + 15) > o.getY()))
         {
             return true;
         }
