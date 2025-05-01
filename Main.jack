@@ -10,7 +10,6 @@ class Main {
     function void main() {
         var PlatformerGame game;
 
-
         do PlatformerGame.newInstance();
         let game = PlatformerGame.getInstance();
         do game.run();
