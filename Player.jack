@@ -21,11 +21,23 @@ class Player {
     }
 
     // Players can move
-    method void move(int dx, int dy) {
+    method void move(int dx, int dy, GameMap map) {
+        var boolean check;
         let prevXPos = xpos;
         let prevYPos = ypos;
-        let xpos = (xpos+ dx);
-        let ypos = (ypos+ dy);
+        let xpos = (xpos + dx);
+        let check = collides(map);
+        if(check = true){
+            let xpos = prevXPos;
+        }
+        let ypos = (ypos + dy);
+        //updating the player block each time its moved
+        let check = collides(map);
+        if(check = true){
+            let ypos = prevYPos;
+        }
+        
+        do draw();
         return;
     }
 
@@ -33,9 +45,9 @@ class Player {
     // Renders the player
     method void draw() {
         do Screen.setColor(false);
-        do Screen.drawRectangle(prevXPos, prevYPos, prevXPos + 8, prevYPos + 8);
+        do Screen.drawRectangle(prevXPos, prevYPos, prevXPos + 7, prevYPos + 7);
         do Screen.setColor(true);
-        do Screen.drawRectangle(xpos, ypos, xpos + 8, ypos + 8);
+        do Screen.drawRectangle(xpos, ypos, xpos + 7, ypos + 7);
         return;
     }
 
@@ -43,113 +55,72 @@ class Player {
     method boolean isOnGround(GameMap map){
         //creating a check variable
         var boolean check;
-        //intializing check to false
+        //Intailiing check to false
         let check =false;
-         //incrementing the y value after move
-        do move(0, (speed* 1));
+        //incrementing the y value after move
+        let ypos = ypos + 1;
         //checking with the map
         let check = collides(map);
         //decrementing the y value after move to move player back
-        do move(0, (speed* -1)); 
+        let ypos = ypos - 1;
         //Cecking whether to see if the collision was true or not returning the respective varaiable
-        if(check = true){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return check;
     }
 
     //Checking to see if the player hits the ceiling
     method boolean hitsCieling(GameMap map){
         //creating a check variable
         var boolean check;
-        //intializing check to false
-        let check =false;
+        //Initalizing check to false
+        let check = false;
         //decrementing the y to check 1 ahead
-        do move(0, (speed* -1));
+        let ypos = ypos - 1;
         //checking with the map
         let check = collides(map);
         //Incrementing the y value after move to move player back
-        do move(0, (speed* 1)); 
+        let ypos = ypos + 1;
         //Cecking whether to see if the collision was true or not returning the respective varaiable
-        if(check = true){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return check;
     }
 
     method boolean collides(GameMap map){
         //variables to count loop iterations
-        var int rowSize;
-        var int columnSize;
         var int i;
-        var int j;
-        //Variable to hold the specific row of 2D array
-        var Array row;
+        var int numberOfBlocks;
         //Variable to hold the collision flag
         var boolean collision;
+        var Array blocks;
         //variable to hold the gameObject from the array
         var GameObject gameObj;
 
         //initalizing loop variables.
-        let rowSize= 24;
-        let columnSize=32;
+        //let rowSize = 30;
+        //let columnSize = 64;
         let i=0;
-        let j=0;
+        let blocks = map.getGameBlocks();
+        let numberOfBlocks = map.getNumOfBlocks();
 
-        while(i < rowSize)
-        {
-            //Accessing the spcific row in the 2d array map
-            let row= map[i]; 
-            //looping through the specific column
-            while (j < columnSize){
-                let gameObj = row[j];
-                //variable to hold the individual collision
-                let collision = gameObj.collides(this);
-                if(collision)
-                {
-                    /** Checking to see if the collision is with the victory block
-                    if(gameObj.getType() = 2)
-                    {
-                        let win = true;
-                    }
-                    //Checking to see if the collision is with the key block
-                    if(gameObj.getType() = 3)
-                    {
-                        let key = true;
-                    }
-                    //checking to see if the collisiton is with a spike
-                    if(gameObj.getType() = 4)
-                    {
-                        let death = true;
-                    }
-                    */
-                    //returning true if a collision has occured
-                    return true; 
-                }
-                //incrementing the column position
-                let j = j + 1;
+        while(i < numberOfBlocks){
+            let gameObj = blocks[i];
+            let collision = overlap(gameObj);
+            if(collision = true)
+            {
+                return true;
             }
-            //incrementing the row position
-            let i = i + 1;
+            let i = i + 1 ;
         }
+        //If we don't overlap return false no collision
         return false;
     }
 
     // Collision logic for all GameObjects.  Hitbox is 8x8, regardless of whether there is something rendered.  E.g. spikes are really square.
     method boolean overlap(GameObject o){
-        if(this = o)
+        if ((xpos < (o.getX() + 8)) & ((xpos + 8 ) > o.getX()) & (ypos < (o.getY() +8)) & ((ypos + 8) > o.getY()))
         {
-            return false;
-        }
-        if((ypos + 4 < o.getY()-4) | (ypos - 4 > o.getY()+4) | (xpos - 4 < o.getX()+ 4) | (xpos + 4 < o.getX() - 4)){
             return true;
         }
         else{
-            return true;
+            return false;
         }
     }
 

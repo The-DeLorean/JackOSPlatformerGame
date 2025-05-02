@@ -14,7 +14,7 @@ class PlatformerGame {
     /** Constructs a new Platformer game. */
     constructor PlatformerGame new() {
         //Player init
-        let player1 = Player.new(253, 222);
+        let player1 = Player.new(253, 100);
 
         let gameMap = GameMap.new();
 
@@ -53,6 +53,7 @@ class PlatformerGame {
         //variable to use in gravity looop
         var int gravityLoop, jumpLoop;
         var int number, tick, jump;
+        var boolean p1OnGround;
 
         //Initalizing variables
         let gravityLoop = 0;
@@ -68,11 +69,11 @@ class PlatformerGame {
 
             //player movement logic logic gets called
             if (key = 130) { // leftArrow
-                do player1.move(-1, 0); 
+                do player1.move(-1, 0, gameMap);
             }
 	        else {
 	            if (key = 132) { // rightArrow
-                    do player1.move(1, 0); 
+                    do player1.move(1, 0, gameMap);
                 }
 		        else {
                     if (key = 140) { let exit = true; }
@@ -80,21 +81,24 @@ class PlatformerGame {
             }
             
             //Checking to see if player 1 is on the ground if so checking to see if the jump key is pressed
-            if(player1.isOnGround(gameMap)){
-                if(key = 131){ // Up Arrow
-                    //Store jump value and reset number
-                    let jump = 70;
-                    let number=1;
-                }
-                //If up arrow is not pressed on ground reset tick and number
-                else{
-                    let number = 1;
-                    let tick = 0;
-                }
+            let p1OnGround = player1.isOnGround(gameMap);
+
+            if(key = 131 & p1OnGround){ // Up Arrow
+                //Store jump value and reset number
+                let jump = 200;
+                let number = 1;
+                let jumpLoop = 0;
             }
-            else{//If not on ground run gravity logic
+
+            //If up arrow is not pressed on ground reset tick and number
+            if (p1OnGround = true){
+                let number = 1;
+                let tick = 0;
+            }
+
+            if(p1OnGround = false) {//If not on ground run gravity logic
                 //If the player hits cieling kill jump momentum
-                if(player1.hitsCieling(gameMap)){
+                if(player1.hitsCieling(gameMap) = true){
                     let jump=0;
                 }
                 //Resetting the gravity loop variable before it is run
@@ -102,7 +106,7 @@ class PlatformerGame {
                 //Gravity moves player down number * 1 pixels
                 while(gravityLoop < number){
                     //moving the player down
-                    do player1.move(0, 1);
+                    do player1.move(0, 1, gameMap);
                     //incrementing through the gravity loop
                     let gravityLoop = gravityLoop + 1;
                 }
@@ -110,10 +114,11 @@ class PlatformerGame {
 
             //Checking to see if the jump ahs been triggered
             if(jump > 0){
+            
                 //Jumping a certain amount each time.
                 while(jumpLoop < (jump/10)){
                     //moving the player up
-                    do player1.move(0, -1);
+                    do player1.move(0, -1, gameMap);
                     //incrementing through the jump loop
                     let jumpLoop = jumpLoop + 1;
                 }
@@ -148,8 +153,6 @@ class PlatformerGame {
 
     //called every "cycle" to draw the game
     method void renderGame(){
-        //do Screen.clearScreen();
-
         //Scoreboard drawing
         do Screen.setColor(true);
         do Screen.drawRectangle(0, 238, 511, 240);
