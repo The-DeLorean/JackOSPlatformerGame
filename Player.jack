@@ -20,27 +20,34 @@ class Player {
         return this;
     }
 
-    // Players can move
+    // Players can move with improved collision handling
     method void move(int dx, int dy, GameMap map) {
         var boolean check;
+        
+        // Store previous position
         let prevXPos = xpos;
         let prevYPos = ypos;
-        let xpos = (xpos + dx);
+        
+        // First move horizontally and check collision
+        let xpos = xpos + dx;
         let check = collides(map);
-        if(check = true){
+        if(check = true) {
+            // Restore previous x position if collision detected
             let xpos = prevXPos;
         }
-        let ypos = (ypos + dy);
-        //updating the player block each time its moved
+        
+        // Then move vertically and check collision
+        let ypos = ypos + dy;
         let check = collides(map);
-        if(check = true){
+        if(check = true) {
+            // Restore previous y position if collision detected
             let ypos = prevYPos;
         }
         
+        // Draw player at new position
         do draw();
         return;
     }
-
 
     // Renders the player
     method void draw() {
@@ -53,101 +60,158 @@ class Player {
 
     //method to check if the player is on the ground
     method boolean isOnGround(GameMap map){
-        //creating a check variable
         var boolean check;
-        //Intailiing check to false
-        let check =false;
-        //incrementing the y value after move
+        var int originalY;
+        
+        // Save original position
+        let originalY = ypos;
+        
+        // Check one pixel below the player's feet
         let ypos = ypos + 1;
-        //checking with the map
         let check = collides(map);
-        //decrementing the y value after move to move player back
-        let ypos = ypos - 1;
-        //Cecking whether to see if the collision was true or not returning the respective varaiable
+        
+        // Restore original position
+        let ypos = originalY;
+        
         return check;
     }
 
     //Checking to see if the player hits the ceiling
     method boolean hitsCieling(GameMap map){
-        //creating a check variable
         var boolean check;
-        //Initalizing check to false
-        let check = false;
-        //decrementing the y to check 1 ahead
+        var int originalY;
+        
+        // Save original position
+        let originalY = ypos;
+        
+        // Check one pixel above the player's head
         let ypos = ypos - 1;
-        //checking with the map
         let check = collides(map);
-        //Incrementing the y value after move to move player back
-        let ypos = ypos + 1;
-        //Cecking whether to see if the collision was true or not returning the respective varaiable
+        
+        // Restore original position
+        let ypos = originalY;
+        
         return check;
     }
 
-    method boolean collides(GameMap map){
-        //variables to count loop iterations
-        var int i;
-        var int numberOfBlocks;
-        //Variable to hold the collision flag
-        var boolean collision;
-        var Array blocks;
-        //variable to hold the gameObject from the array
-        var GameObject gameObj;
+    // Check for collisions using block-based approach
+    //this method calculate the four corners of the player and checks to see if there is a tile at that location
+    method boolean collides(GameMap map) {
+        var int blockRow, blockCol; //used to store the row and column of the block that we are checking the player against
+        var GameObject gameObj;     //gameobject that is used as the comparison value against which player is checked
+        var String objType;         //if there is a tile or spike, collide -- if null then let player pass
+        
+        // Calculate the blocks that the player is currently occupying
+        // Check each corner of the player's 8x8 hitbox
+        
+        // Top-left corner
+        let blockRow = ypos/8;
+        let blockCol = xpos/8;
 
-        //initalizing loop variables.
-        //let rowSize = 30;
-        //let columnSize = 64;
-        let i=0;
-        let blocks = map.getGameBlocks();
-        let numberOfBlocks = map.getNumOfBlocks();
-
-        while(i < numberOfBlocks){
-            let gameObj = blocks[i];
-            let collision = overlap(gameObj);
-            if(collision = true)
-            {
-                return true;
+        //get the tile at that blockRow and block col -- getTileAtBlock returns the gameobject
+        let gameObj = map.getTileAtBlock(blockRow, blockCol);
+        //if there is a wall or a spike, collide with the player
+        if (~(gameObj = null)) {
+            //get the type of tile that the object is
+            let objType = gameObj.instanceof();
+            //if it is a spike, kill the player
+            if (objType = "spike") {
+                let death = true;
             }
-            let i = i + 1 ;
-        }
-        //If we don't overlap return false no collision
-        return false;
-    }
-
-    // Collision logic for all GameObjects.  Hitbox is 8x8, regardless of whether there is something rendered.  E.g. spikes are really square.
-    method boolean overlap(GameObject o){
-        if ((xpos < (o.getX() + 8)) & ((xpos + 8 ) > o.getX()) & (ypos < (o.getY() +8)) & ((ypos + 8) > o.getY()))
-        {
+            //if it is a win, set win to true
+            if (objType = "win") {
+                let win = true;
+            }
             return true;
         }
-        else{
-            return false;
+        
+        // Top-right corner
+        let blockRow = ypos/8;
+        let blockCol = (xpos + 7)/8;
+        //get the tile at that blockRow and block col -- getTileAtBlock returns the gameobject
+        let gameObj = map.getTileAtBlock(blockRow, blockCol);
+        //if there is a wall or a spike, collide with the player
+        if (~(gameObj = null)) {
+            //get the type of tile that the object is
+            let objType = gameObj.instanceof();
+            //if it is a spike, kill the player
+            if (objType = "spike") {
+                let death = true;
+            }
+            //if it is a win, set win to true
+            if (objType = "win") {
+                let win = true;
+            }
+            return true;
         }
+        
+        // Bottom-left corner
+        let blockRow = (ypos + 7)/8;
+        let blockCol = xpos/8;
+        //get the tile at that blockRow and block col -- getTileAtBlock returns the gameobject
+        let gameObj = map.getTileAtBlock(blockRow, blockCol);
+        //if there is a wall or a spike, collide with the player
+        if (~(gameObj = null)) {
+            //get the type of tile that the object is
+            let objType = gameObj.instanceof();
+            //if it is a spike, kill the player
+            if (objType = "spike") {
+                let death = true;
+            }
+            //if it is a win, set win to true
+            if (objType = "win") {
+                let win = true;
+            }
+            return true;
+        }
+        
+        // Bottom-right corner
+        let blockRow = (ypos + 7)/ 8;
+        let blockCol = (xpos + 7)/8;
+        //get the tile at that blockRow and block col -- getTileAtBlock returns the gameobject
+        let gameObj = map.getTileAtBlock(blockRow, blockCol);
+        //if there is a wall or a spike, collide with the player
+        if (~(gameObj = null)) {
+            //get the type of tile that the object is
+            let objType = gameObj.instanceof();
+            //if it is a spike, kill the player
+            if (objType = "spike") {
+                let death = true;
+            }
+            //if it is a win, set win to true
+            if (objType = "win") {
+                let win = true;
+            }
+            return true;
+        }
+        
+        // No collision detected
+        return false;
     }
+    
 
     //Accessor for the win boolean variable
-    method boolean won()
-    {
+    method boolean won() {
         return win;
     }
-    //Accessor for the win boolean variable
-    method boolean died()
-    {
+    
+    //Accessor for the death boolean variable
+    method boolean died() {
         return death;
     }
-    //Accessor for the win boolean variable
-    method boolean hasKey()
-    {
+    
+    //Accessor for the key boolean variable
+    method boolean hasKey() {
         return key;
     }
 
     //a method to create a new life
-    method void newLife(){
+    method void newLife() {
         let death = false;
         return;
     }
 
-    method String instanceof()
-    {
+    method String instanceof() {
         return "Player";
     }
 }
