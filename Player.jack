@@ -9,15 +9,77 @@ class Player {
     static int speed; //
     field boolean win;
     field boolean death;
-    field boolean key;
+    field boolean key, dir;
     field int xpos, ypos, prevXPos, prevYPos;
+    field int gravityLoop, jumpLoop, number, tick, jump;
 
     constructor Player new(int xin, int yin) {
         //Compose a child member data into parent game object
         let xpos = xin;
         let ypos = yin;
         let speed = 5;
+        //Intailizing loop variables
+        let gravityLoop = 0;
+        let jumpLoop = 0; 
+        let number = 0; 
+        let tick = 0;
+        let jump = 0;
         return this;
+    }
+
+    //Accessor and setter for gravity variable
+    method int getGravity(){
+        return gravityLoop;
+    }
+    method void setGravity(int gIn){
+        let gravityLoop = gIn;
+        return;
+    }
+
+    //Accessor and setter for jump variable
+    method int getJump(){
+        return jump;
+    }
+    method void setJump(int jIn){
+        let jump = jIn;
+        return;
+    }
+
+    //Accessor and setter for jumpLoop variable
+    method int getJumpLoop(){
+        return jumpLoop;
+    }
+    method void setJumpLoop(int jLIn){
+        let jumpLoop = jLIn;
+        return;
+    }
+
+    //Accessor and setter for number variable
+    method int getNumber(){
+        return number;
+    }
+    method void setNumber(int nIn){
+        let number = nIn;
+        return;
+    }
+
+    //Accessor and setter for tick variable
+    method int getTick(){
+        return tick;
+    }
+    method void setTick(int tIn){
+        let tick = tIn;
+        return;
+    }
+
+    //Accessor and settet for direction variable
+    method boolean getDir(){
+        return dir;
+    }
+
+     method void setDir(boolean dIn){
+        let dir = dIn;
+        return;
     }
 
     // Players can move with improved collision handling

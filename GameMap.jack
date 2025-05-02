@@ -13,7 +13,7 @@ class GameMap
         let columns = 64;         // 512 pixels / 8 pixels per block = 64 blocks wide
         let blockSize = 8;        // Each block is 8x8 pixels
         let numOfBlocks = 0;
-        let gameBlocks= Array.new(1000);
+        let gameBlocks= Array.new(800);
         let map = Array.new(rows * columns);  // Create 1D array to represent 2D space
         
         // Initialize map with null values
