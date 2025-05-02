@@ -97,7 +97,7 @@ class GameMap
 /** Returns a level design based on the level number */
     method void loadLevel(int levelNumber) {
         var int row;
-        
+        let row = 0;
         // First clear any existing objects
         do clearMap();
         
@@ -106,47 +106,77 @@ class GameMap
             // Process row by row
             // Row 0 - Top border
             do processLevelRow(0, "1111111111111111111111111111111111111111111111111111111111111111");
-            
+            let row = row + 1;
             // Row 1-4 - Empty area with borders
             do processLevelRow(1, "1000000000000000000000000000000000000000000000000000000000000001");
+            let row = row + 1;
             do processLevelRow(2, "1000000000000000000000000000000000000000000000000000000000000001");
+            let row = row + 1;
             do processLevelRow(3, "1000000000000000000000000000000000000000000000000000000000000001");
+            let row = row + 1;
             do processLevelRow(4, "1000000000000000000000000000000000000000000000000000000000000001");
+            let row = row + 1;
             
             // Row 5-9 - Some platforms
             do processLevelRow(5, "1000000000000000000000000000000000000000000000000000000000000001");
+            let row = row + 1;
             do processLevelRow(6, "1000000000000000000110000000000000000000000000000000000000000001");
+            let row = row + 1;
             do processLevelRow(7, "1000000000000000000110000000000000000000000000000000000000000001");
+            let row = row + 1;
             do processLevelRow(8, "1000000000000000000000000000000000000000000000000000000000000001");
+            let row = row + 1;
             do processLevelRow(9, "1000000000000000000000000000000000000000000000000000000000000001");
+            let row = row + 1;
             
             // Row 10-14 - More obstacles
             do processLevelRow(10, "1000000000000000000000000000000000000000000000000000000000000001");
+            let row = row + 1;
             do processLevelRow(11, "1000000000000200000000000000000000000000000000110000000000000001");
+            let row = row + 1;
             do processLevelRow(12, "1000000000000000000000000000000000000000000000110000000000000001");
+            let row = row + 1;
             do processLevelRow(13, "1000000000000000000000000000000000000000000000000000000000000001");
+            let row = row + 1;
             do processLevelRow(14, "1000000000000000000000000002222200000000000000000000000000000001");
+            let row = row + 1;
             
             // Row 15-19 - More platforms
             do processLevelRow(15, "1000000000000000000000000000000000000000000000000000000000000001");
+            let row = row + 1;
             do processLevelRow(16, "1000000000000001111100000000000000000001111100000000000000000001");
+            let row = row + 1;
             do processLevelRow(17, "1000000000000000000000000000000000000000000000000000000000000001");
+            let row = row + 1;
             do processLevelRow(18, "1000020000000000000000000000000000000000000000000000000002000001");
+            let row = row + 1;
             do processLevelRow(19, "1000000000000000000001111100000000000000000000000000000000000001");
+            let row = row + 1;
             
             // Row 20-24 - More obstacles
             do processLevelRow(20, "1000000000000000000000000000000000000000000000000000000000000001");
+            let row = row + 1;
             do processLevelRow(21, "1000000000022222000000000000000000000000000000002222200000000001");
+            let row = row + 1;
             do processLevelRow(22, "1000000000000000000000000000000000000000000000000000000000000001");
+            let row = row + 1;
             do processLevelRow(23, "1000000000000000000000000011111000000000000000000000000000000001");
+            let row = row + 1;
             do processLevelRow(24, "1000000000000000000000000000000000000000000000000000000000000001");
+            let row = row + 1;
             
             // Row 25-29 - Bottom area and border
             do processLevelRow(25, "1000000000000000000000000000000000000000000000000000000000000001");
-            do processLevelRow(26, "1000000000000000000000000000000000000000000000000000000000000001");
-            do processLevelRow(27, "1000000000000000000000000000000000110001000000000000000000000001");
-            do processLevelRow(28, "1000000000000000000000000000000000000000000000000000000000000001");
+            let row = row + 1;
+            do processLevelRow(26, "1000000000000000000000000000000000000000000001110000000000000001");
+            let row = row + 1;
+            do processLevelRow(27, "1000000000000000000000000000011000000000000000000000000000000001");
+            let row = row + 1;
+            do processLevelRow(28, "1000000000000000000002222100000000110001010000000000000000000001");
+            let row = row + 1;
             do processLevelRow(29, "1111111111111111111111111111111111111111111111111111111111111111");
+            
+            let row = row + 1;
         }
         
         // Add more levels as needed by checking levelNumber
@@ -191,10 +221,20 @@ class GameMap
                             let gameBlocks[numOfBlocks]= newObject; // storing the object in the gameBlocks Array
                             let numOfBlocks = numOfBlocks + 1;
                         }
-                        else {
-                            // Default to empty space for unknown characters
-                            let newObject = null;
+                        else
+                        {
+                            if (tileChar = 51) {  // '3' - win
+                                let tileType = "win";
+                                let newObject = GameObject.new(pixelX, pixelY, tileType);
+                                let gameBlocks[numOfBlocks]= newObject; // storing the object in the gameBlocks Array
+                                let numOfBlocks = numOfBlocks + 1;
+                            }
+                            else {
+                                // Default to empty space for unknown characters
+                                let newObject = null;
+                            }
                         }
+  
                     }
                 }
                 // Store the object in the map
