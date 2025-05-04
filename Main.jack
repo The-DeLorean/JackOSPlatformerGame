@@ -250,7 +250,19 @@ class Main {
             }
             //*************************END OF PLAYER 2 LOGIC****************************************************************
             
-            //do renderGame(); // render game graphics after move to help with collisions
+            //*************************START OF IF A PLAYER HITS A SPIKE MOVE BACK TO SPAWN*********************************
+            if(player1.died())
+            {
+                do player1.reSpawn(1);
+                do player1.newLife();
+            }
+            if(player2.died())
+            {
+                do player2.reSpawn(2);
+                do player2.newLife();
+            }
+            //*************************END OF IF A PLAYER HITS A SPIKE MOVE BACK TO SPAWN*********************************
+
             //*****************************GAME RENDER logic outside of function call:**************************************
             //Scoreboard drawing for player 1 and 2
             do Screen.setColor(true);
@@ -266,6 +278,7 @@ class Main {
             do player2.draw(2);
             //****************************END OF RENDER GAME**********************************
             
+            //***************************SUBTRACTING PLAYER SCORE UNTIL THEY REACH THE END****
             //Reduce score by 1 for player 1 and 2 until either player has won
             if(player1.won() = false){
                 let p1ScoreInt = p1ScoreInt -1;
@@ -273,6 +286,7 @@ class Main {
             if(player2.won() = false){
                 let p2ScoreInt = p2ScoreInt -1;
             }
+            //***************************END of Subtract Score********************************
             
             //Checking to see if both players have one. If so exiting the game and displaying who won.
             if(player1.won() & player2.won()){
@@ -286,6 +300,7 @@ class Main {
 
         //If the game ended
 	    if (exit) {
+            //************************************DRAWING END SCREEN**********************************
             // Drawing victory blocks around words
             do gameMap.loadLevel(9);//Loading cool box around game over screen
             do gameMap.drawMap();
@@ -300,7 +315,7 @@ class Main {
                 do Output.moveCursor(12,22);
 	            do Output.printString(player1Name);
                 do Output.printString("     Wins!!");
-                do Output.moveCursor(14,30);
+                do Output.moveCursor(14,24);
                 do Output.printString("Score: ");
                 do Output.moveCursor(14,34);
                 do Output.printInt(p2ScoreInt);
@@ -314,21 +329,23 @@ class Main {
                 do Output.moveCursor(14,34);
                 do Output.printInt(p2ScoreInt);
             }
+            //************************************END OF DRAW END SCREEN*******************************
 	    }
         
         return;
     }
 
+    //*****************************************START OF DRAWING THE START SCREEN**********************
     function boolean drawStartScreen() {
         var char key;   //store the value read in from the keybaord to allow the user to select to state the game, quit or choose player names
 
         //outprint statementes to draw the screen to welcome the user        
-        do Output.moveCursor(4, 20);
-        do Output.printString("=========================");
+        //do Output.moveCursor(4, 20);
+        //do Output.printString("=========================");
         do Output.moveCursor(5, 20);
         do Output.printString("=== JackOS Platformer ===");
-        do Output.moveCursor(6,20);
-        do Output.printString("=========================");
+        //do Output.moveCursor(6,20);
+        //do Output.printString("=========================");
         do Output.moveCursor(7,18);
         do Output.printString("By: Jacob Novak, Kyle Dramov");
         do Output.moveCursor(8,23);
@@ -376,8 +393,7 @@ class Main {
 
                 //move to the row below the displayed names and prompt user input
                 do Output.moveCursor(19, 21);
-                //let c = Keyboard.readChar();
-
+                
                 //prompt user to enter player 1 name
                 let player1Name = Keyboard.readLine("Enter Player 1 name: ");
 
@@ -385,12 +401,12 @@ class Main {
                 do Output.moveCursor(19, 21);
 
                 //clear by printing blank spaces
-                do Output.printString("                                         ");
+                do Output.printString("                                            ");
 
 
                 // Clear the player1 display line
                 do Output.moveCursor(16, 24);
-                do Output.printString("                                         ");
+                do Output.printString("                                            ");
                 do Output.moveCursor(16, 24);
                 do Output.printString("Player 1: ");
                 do Output.printString(player1Name);
@@ -412,11 +428,11 @@ class Main {
 
                 //clear by printing blank spaces
                 do Output.printString("                                         ");
-
+ 
 
                 // Clear the player1 display line
                 do Output.moveCursor(17, 24);
-                do Output.printString("                                         ");
+                do Output.printString("                                       ");
                 do Output.moveCursor(17, 24);
                 do Output.printString("Player 2: ");
                 do Output.printString(player2Name);
@@ -428,4 +444,5 @@ class Main {
         
         return false;
     }
+    //*****************************************END OF DRAWING THE START SCREEN**********************
 }

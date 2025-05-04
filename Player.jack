@@ -10,11 +10,13 @@ class Player {
     field boolean win;
     field boolean death;
     field boolean key, dir;
-    field int xpos, ypos, prevXPos, prevYPos;
+    field int xpos, ypos, prevXPos, prevYPos, spawnX, spawnY;
     field int gravityLoop, jumpLoop, number, tick, jump;
 
     constructor Player new(int xin, int yin) {
         //Compose a child member data into parent game object
+        let spawnX = xin;
+        let spawnY = yin;
         let xpos = xin;
         let ypos = yin;
         let speed = 5;
@@ -79,6 +81,18 @@ class Player {
 
      method void setDir(boolean dIn){
         let dir = dIn;
+        return;
+    }
+
+    //Function to reSpawn the player at its inital position
+    method void reSpawn(int playerNumber)
+    {
+        //Storing Prvious position and changing it to the spawn position
+        let prevXPos = xpos;
+        let prevYPos = ypos;
+        let xpos = spawnX;
+        let ypos = spawnY;
+        do draw(playerNumber);
         return;
     }
 
@@ -207,12 +221,17 @@ class Player {
         //if there is a wall or a spike, collide with the player
         if (~(gameObj = null)) {
             //if it is a spike, kill the player
-            if (gameObj = 2 | gameObj = 3) {
+            if (gameObj = 2) {
+                let death = true;
+            }
+            if (gameObj = 3) {
                 let death = true;
             }
             //if it is a win, set win to true
             if (gameObj = 4) {
-                let win = true;
+                if(key){
+                    let win = true;
+                }
             }
             if (gameObj = 5) {
                 let key = true;
@@ -228,12 +247,17 @@ class Player {
         //if there is a wall or a spike, collide with the player
         if (~(gameObj = null)) {
             //if it is a spike, kill the player
-            if (gameObj = 2 | gameObj = 3) {
+            if (gameObj = 2 ) {
+                let death = true;
+            }
+            if (gameObj = 3) {
                 let death = true;
             }
             //if it is a win, set win to true
             if (gameObj = 4) {
-                let win = true;
+                if(key){
+                    let win = true;
+                }
             }
             if (gameObj = 5) {
                 let key = true;
@@ -249,12 +273,17 @@ class Player {
         //if there is a wall or a spike, collide with the player
         if (~(gameObj = null)) {
             //if it is a spike, kill the player
-            if (gameObj = 2| gameObj = 3) {
+            if (gameObj = 2) {
+                let death = true;
+            }
+            if (gameObj = 3) {
                 let death = true;
             }
             //if it is a win, set win to true
             if (gameObj = 4) {
-                let win = true;
+                if(key){
+                    let win = true;
+                }
             }
             if (gameObj = 5) {
                 let key = true;
@@ -270,12 +299,17 @@ class Player {
         //if there is a wall or a spike, collide with the player
         if (~(gameObj = null)) {
             //if it is a spike, kill the player
-            if (gameObj = 2| gameObj = 3) {
+            if (gameObj = 2 ) {
+                let death = true;
+            }
+            if (gameObj = 3) {
                 let death = true;
             }
             //if it is a win, set win to true
             if (gameObj = 4) {
-                let win = true;
+                if(key){
+                    let win = true;
+                }
             }
             if (gameObj = 5) {
                 let key = true;
