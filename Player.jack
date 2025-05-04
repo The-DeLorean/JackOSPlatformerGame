@@ -107,7 +107,13 @@ class Player {
         }
         
         // Draw player at new position
-        do draw();
+        //do draw();
+        //***********************DRAWING PLAYER LOGIC OUTSIDE OF FUNCTION CALL*****************
+        do Screen.setColor(false);
+        do Screen.drawRectangle(prevXPos, prevYPos, prevXPos + 7, prevYPos + 7);
+        do Screen.setColor(true);
+        do Screen.drawRectangle(xpos, ypos, xpos + 7, ypos + 7);
+        //**********************END OF DRAWING PLAYER LOGIC ****************************************
         return;
     }
 
@@ -160,7 +166,7 @@ class Player {
     //this method calculate the four corners of the player and checks to see if there is a tile at that location
     method boolean collides(GameMap map) {
         var int blockRow, blockCol; //used to store the row and column of the block that we are checking the player against
-        var GameObject gameObj;     //gameobject that is used as the comparison value against which player is checked
+        var int gameObj;     //gameobject that is used as the comparison value against which player is checked
         var String objType;         //if there is a tile or spike, collide -- if null then let player pass
         
         // Calculate the blocks that the player is currently occupying
@@ -174,14 +180,12 @@ class Player {
         let gameObj = map.getTileAtBlock(blockRow, blockCol);
         //if there is a wall or a spike, collide with the player
         if (~(gameObj = null)) {
-            //get the type of tile that the object is
-            let objType = gameObj.instanceof();
             //if it is a spike, kill the player
-            if (objType = "spike") {
+            if (gameObj = 2) {
                 let death = true;
             }
             //if it is a win, set win to true
-            if (objType = "win") {
+            if (gameObj = 3) {
                 let win = true;
             }
             return true;
@@ -194,14 +198,12 @@ class Player {
         let gameObj = map.getTileAtBlock(blockRow, blockCol);
         //if there is a wall or a spike, collide with the player
         if (~(gameObj = null)) {
-            //get the type of tile that the object is
-            let objType = gameObj.instanceof();
             //if it is a spike, kill the player
-            if (objType = "spike") {
+            if (gameObj = 2) {
                 let death = true;
             }
             //if it is a win, set win to true
-            if (objType = "win") {
+            if (gameObj = 3) {
                 let win = true;
             }
             return true;
@@ -214,14 +216,12 @@ class Player {
         let gameObj = map.getTileAtBlock(blockRow, blockCol);
         //if there is a wall or a spike, collide with the player
         if (~(gameObj = null)) {
-            //get the type of tile that the object is
-            let objType = gameObj.instanceof();
             //if it is a spike, kill the player
-            if (objType = "spike") {
+            if (gameObj = 2) {
                 let death = true;
             }
             //if it is a win, set win to true
-            if (objType = "win") {
+            if (gameObj = 3) {
                 let win = true;
             }
             return true;
@@ -234,14 +234,12 @@ class Player {
         let gameObj = map.getTileAtBlock(blockRow, blockCol);
         //if there is a wall or a spike, collide with the player
         if (~(gameObj = null)) {
-            //get the type of tile that the object is
-            let objType = gameObj.instanceof();
             //if it is a spike, kill the player
-            if (objType = "spike") {
+            if (gameObj = 2) {
                 let death = true;
             }
             //if it is a win, set win to true
-            if (objType = "win") {
+            if (gameObj = 3) {
                 let win = true;
             }
             return true;
@@ -250,7 +248,6 @@ class Player {
         // No collision detected
         return false;
     }
-    
 
     //Accessor for the win boolean variable
     method boolean won() {

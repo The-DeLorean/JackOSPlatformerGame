@@ -40,7 +40,7 @@ class GameMap
     }
     
     // Sets a GameObject at the given block coordinates
-    method void setTileAtBlock(int row, int col, GameObject gameObj) {
+    method void setTileAtBlock(int row, int col, int gameObj) {
         var int index;
         let index = (row * columns) + col;
         let map[index] = gameObj;
@@ -48,14 +48,14 @@ class GameMap
     }
     
     // Gets the GameObject at the specified block coordinates
-    method GameObject getTileAtBlock(int row, int col) {
+    method int getTileAtBlock(int row, int col) {
         var int index;
         let index = (row * columns) + col;
         return map[index];
     }
 
     // Gets the GameObject at the specified pixel coordinates
-    method GameObject getTileAtPixel(int pixelX, int pixelY) {
+    method int getTileAtPixel(int pixelX, int pixelY) {
         var int blockRow, blockCol;
         
         let blockRow = pixelToBlock(pixelY);
@@ -66,8 +66,8 @@ class GameMap
 
     // Draws the entire map to the screen
     method void drawMap() {
-        var int row, col;
-        var GameObject currentObj;
+        var int row, col, pixelX, pixelY;
+        var int currentObj;
         
         let row = 0;
         while (row < rows) {
@@ -77,7 +77,26 @@ class GameMap
                 
                 // Only try to draw if object exists
                 if (~(currentObj = null)) {
-                    do currentObj.draw();
+                    //Pixels for drawing
+                    let pixelX = col * blockSize;
+                    let pixelY = row * blockSize;
+                    if(currentObj = 1)
+                    {
+                        do Screen.setColor(true);
+                        do Screen.drawRectangle(pixelX, pixelY, pixelX + 7, pixelY + 7);
+                    }
+                    //Drawing the Spike
+                    if(currentObj = 2)
+                    {
+                        do Screen.setColor(true);
+                        do Screen.drawRectangle(pixelX, pixelY, pixelX + 7, pixelY + 7);
+                    }
+                    //Drawing the Vic Block
+                    if(currentObj = 3)
+                    {
+                        do Screen.setColor(true);
+                        do Screen.drawRectangle(pixelX, pixelY, pixelX + 7, pixelY + 7);
+                    }
                 }
                 
                 let col = col + 1;
@@ -180,7 +199,6 @@ class GameMap
         }
         
         // Add more levels as needed by checking levelNumber
-        
         return;
     }
     
@@ -189,7 +207,7 @@ class GameMap
         var int col, index, pixelX, pixelY;
         var char tileChar;
         var String tileType;
-        var GameObject newObject;
+        var int newObject;
         
         let col = 0;
         let numOfBlocks = 0;
@@ -210,23 +228,23 @@ class GameMap
                 else {
                     if (tileChar = 49) {  // '1' - Wall
                         let tileType = "wall";
-                        let newObject = GameObject.new(pixelX, pixelY, tileType);
-                        let gameBlocks[numOfBlocks]= newObject; // storing the object in the gameBlocks Array
+                        let newObject = 1; //GameObject.new(pixelX, pixelY, tileType);
+                        let gameBlocks[numOfBlocks]= 1; // storing the object in the gameBlocks Array
                         let numOfBlocks = numOfBlocks + 1;
                     }
                     else {
                         if (tileChar = 50) {  // '2' - Spike
                             let tileType = "spike";
-                            let newObject = GameObject.new(pixelX, pixelY, tileType);
-                            let gameBlocks[numOfBlocks]= newObject; // storing the object in the gameBlocks Array
+                            let newObject = 2; //GameObject.new(pixelX, pixelY, tileType);
+                            let gameBlocks[numOfBlocks]= 2; // storing the object in the gameBlocks Array
                             let numOfBlocks = numOfBlocks + 1;
                         }
                         else
                         {
                             if (tileChar = 51) {  // '3' - win
                                 let tileType = "win";
-                                let newObject = GameObject.new(pixelX, pixelY, tileType);
-                                let gameBlocks[numOfBlocks]= newObject; // storing the object in the gameBlocks Array
+                                let newObject = 3;//GameObject.new(pixelX, pixelY, tileType);
+                                let gameBlocks[numOfBlocks]= 3; // storing the object in the gameBlocks Array
                                 let numOfBlocks = numOfBlocks + 1;
                             }
                             else {
