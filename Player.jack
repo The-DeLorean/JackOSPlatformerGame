@@ -181,14 +181,14 @@ class Player {
         //if there is a wall or a spike, collide with the player
         if (~(gameObj = null)) {
             //if it is a spike, kill the player
-            if (gameObj = 2) {
+            if (gameObj = 2 | gameObj = 3) {
                 let death = true;
             }
             //if it is a win, set win to true
-            if (gameObj = 3) {
+            if (gameObj = 4) {
                 let win = true;
             }
-            if (gameObj = 4) {
+            if (gameObj = 5) {
                 let key = true;
             }
             return true;
@@ -202,14 +202,14 @@ class Player {
         //if there is a wall or a spike, collide with the player
         if (~(gameObj = null)) {
             //if it is a spike, kill the player
-            if (gameObj = 2) {
+            if (gameObj = 2 | gameObj = 3) {
                 let death = true;
             }
             //if it is a win, set win to true
-            if (gameObj = 3) {
+            if (gameObj = 4) {
                 let win = true;
             }
-            if (gameObj = 4) {
+            if (gameObj = 5) {
                 let key = true;
             }
             return true;
@@ -223,14 +223,14 @@ class Player {
         //if there is a wall or a spike, collide with the player
         if (~(gameObj = null)) {
             //if it is a spike, kill the player
-            if (gameObj = 2) {
+            if (gameObj = 2| gameObj = 3) {
                 let death = true;
             }
             //if it is a win, set win to true
-            if (gameObj = 3) {
+            if (gameObj = 4) {
                 let win = true;
             }
-            if (gameObj = 4) {
+            if (gameObj = 5) {
                 let key = true;
             }
             return true;
@@ -244,14 +244,14 @@ class Player {
         //if there is a wall or a spike, collide with the player
         if (~(gameObj = null)) {
             //if it is a spike, kill the player
-            if (gameObj = 2) {
+            if (gameObj = 2| gameObj = 3) {
                 let death = true;
             }
             //if it is a win, set win to true
-            if (gameObj = 3) {
+            if (gameObj = 4) {
                 let win = true;
             }
-            if (gameObj = 4) {
+            if (gameObj = 5) {
                 let key = true;
             }
             return true;
