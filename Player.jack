@@ -188,6 +188,9 @@ class Player {
             if (gameObj = 3) {
                 let win = true;
             }
+            if (gameObj = 4) {
+                let key = true;
+            }
             return true;
         }
         
@@ -205,6 +208,9 @@ class Player {
             //if it is a win, set win to true
             if (gameObj = 3) {
                 let win = true;
+            }
+            if (gameObj = 4) {
+                let key = true;
             }
             return true;
         }
@@ -224,6 +230,9 @@ class Player {
             if (gameObj = 3) {
                 let win = true;
             }
+            if (gameObj = 4) {
+                let key = true;
+            }
             return true;
         }
         
@@ -241,6 +250,9 @@ class Player {
             //if it is a win, set win to true
             if (gameObj = 3) {
                 let win = true;
+            }
+            if (gameObj = 4) {
+                let key = true;
             }
             return true;
         }

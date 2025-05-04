@@ -263,26 +263,31 @@ class Main {
 
         //If the game ended
 	    if (exit) {
+            // Drawing victory blocks around words
+            do gameMap.clearMap();
+            do gameMap.loadLevel(9);//Loading cool box around game over screen
+            do gameMap.drawMap();
+
             //printing game over
             do Screen.setColor(true);
-            do Output.moveCursor(12,27);
+            do Output.moveCursor(10,27);
 	        do Output.printString("GAME OVER");
 
             //Determining who got the higher score and saying that player won
             if(p1ScoreInt > p2ScoreInt){
-                do Output.moveCursor(14,24);
+                do Output.moveCursor(12,24);
 	            do Output.printString("Player 1 Wins!!");
-                do Output.moveCursor(16,24);
+                do Output.moveCursor(14,24);
                 do Output.printString("Score: ");
-                do Output.moveCursor(16,34);
+                do Output.moveCursor(14,34);
                 do Output.printInt(p2ScoreInt);
             }
             else{
-                do Output.moveCursor(14,24);
+                do Output.moveCursor(12,24);
 	            do Output.printString("Player 2 Wins!!");
-                do Output.moveCursor(16,24);
+                do Output.moveCursor(14,24);
                 do Output.printString("Score: ");
-                do Output.moveCursor(16,34);
+                do Output.moveCursor(14,34);
                 do Output.printInt(p2ScoreInt);
             }
 	    }

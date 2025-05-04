@@ -5,7 +5,6 @@ class GameMap
     field int columns;     // Width of map in blocks (64)
     field int blockSize;   // Size of each block in pixels (8)
   
-
     constructor GameMap new() {
         let rows = 30;            // 240 pixels / 8 pixels per block = 30 blocks tall
         let columns = 64;         // 512 pixels / 8 pixels per block = 64 blocks wide
@@ -82,20 +81,48 @@ class GameMap
                         do Screen.setColor(true);
                         do Screen.drawRectangle(pixelX, pixelY, pixelX + 7, pixelY + 7);
                     }
-                    //Drawing the Spike
+                    //Drawing the ground Spike
                     if(currentObj = 2)
                     {
                         do Screen.setColor(true);
-                        do Screen.drawCircle(pixelX + 4, pixelY + 4, 3);
+                        //do Screen.drawCircle(pixelX + 4, pixelY + 4, 3);
+                        do Screen.drawRectangle(pixelX, pixelY + 7, pixelX+7, pixelY + 7);//Base of spike
+
+                        do Screen.drawRectangle(pixelX+1, pixelY + 5, pixelX+1, pixelY + 6);//far left
+                        do Screen.drawRectangle(pixelX+6, pixelY + 5, pixelX+6, pixelY + 6);//far right
+
+                        do Screen.drawRectangle(pixelX+2, pixelY + 3, pixelX+2, pixelY + 5);//2nd end of spike
+                        do Screen.drawRectangle(pixelX+5, pixelY + 3, pixelX+5, pixelY + 5);//2nd end of spike
+
+                        do Screen.drawRectangle(pixelX+3, pixelY + 1, pixelX+3, pixelY + 3);//4th end of spike
+                        do Screen.drawRectangle(pixelX+4, pixelY + 1, pixelX+4, pixelY + 3);//4th end of spike
+
+                        do Screen.drawRectangle(pixelX+3, pixelY + 5, pixelX+4, pixelY + 6);//middle block
                     }
                     //Drawing the Vic Block
                     if(currentObj = 3){
                         do Screen.setColor(true);
-                        do Screen.drawRectangle(pixelX, pixelY, pixelX, pixelY + 7);
-                        do Screen.drawRectangle(pixelX, pixelY + 7, pixelX + 7, pixelY + 7);
-                        do Screen.drawRectangle(pixelX + 7, pixelY, pixelX + 7, pixelY + 7);
-                        do Screen.drawRectangle(pixelX, pixelY, pixelX + 7, pixelY);
-                        do Screen.drawCircle(pixelX + 4, pixelY + 4, 1);
+                        do Screen.drawRectangle(pixelX, pixelY, pixelX+7, pixelY + 7);//left |
+                        //do Screen.drawRectangle(pixelX, pixelY + 6, pixelX + 7, pixelY + 7); //bottom _
+                        //do Screen.drawRectangle(pixelX + 7, pixelY, pixelX + 7, pixelY + 7);//right |
+                        //do Screen.drawRectangle(pixelX, pixelY, pixelX + 7, pixelY+1);//Top _
+                        do Screen.setColor(false);
+                        do Screen.drawRectangle(pixelX+2, pixelY+4, pixelX + 5, pixelY+4);// lon horizontal bar
+                        do Screen.drawRectangle(pixelX+4, pixelY+3, pixelX + 4, pixelY+5);// small veritcal bar
+                        //do Screen.drawRectangle(pixelX+1, pixelY+1, pixelX + 3, pixelY+4);//Top right corner fill in
+                        //do Screen.drawPixel(pixelX+4, pixelY+2);
+                        //do Screen.drawCircle(pixelX + 4, pixelY + 4, 1);
+                    }
+                    //Drawing the key for the vic block DONE
+                    if(currentObj = 4){
+                        do Screen.setColor(true);
+                        do Screen.drawRectangle(pixelX, pixelY, pixelX, pixelY + 7);// left |
+                        do Screen.drawRectangle(pixelX, pixelY + 7, pixelX + 7, pixelY + 7);//Bottom _
+                        do Screen.drawRectangle(pixelX + 7, pixelY, pixelX + 7, pixelY + 7);//right |
+                        do Screen.drawRectangle(pixelX, pixelY, pixelX + 7, pixelY);//top _
+                        //if(key not gotten)
+                        do Screen.drawRectangle(pixelX+2, pixelY+4, pixelX + 5, pixelY+4);// lon horizontal bar
+                        do Screen.drawRectangle(pixelX+4, pixelY+3, pixelX + 4, pixelY+5);// small veritcal bar
                     }
                 }
                 
@@ -115,90 +142,58 @@ class GameMap
 
 /** Returns a level design based on the level number */
     method void loadLevel(int levelNumber) {
-        var int row;
-        let row = 0;
         // First clear any existing objects
         do clearMap();
         
         // Process level based on level number
         if (levelNumber = 1) {
-            // Process row by row
-            // Row 0 - Top border
-            do processLevelRow(0, "1111111111111111111111111111111111111111111111111111111111111111");
-            let row = row + 1;
-            // Row 1-4 - Empty area with borders
-            do processLevelRow(1, "1000000000000000000000000000000000000000000000000000000000000001");
-            let row = row + 1;
-            do processLevelRow(2, "1000000000000000000000000000000000000000000000000000000000000001");
-            let row = row + 1;
-            do processLevelRow(3, "1000000000000000000000000000000000000000000000000000000000000001");
-            let row = row + 1;
-            do processLevelRow(4, "1000000000000000000000000000000000000000000000000000000000000001");
-            let row = row + 1;
-            
-            // Row 5-9 - Some platforms
-            do processLevelRow(5, "1000000000000000000000000000000000000000000000000000000000000001");
-            let row = row + 1;
-            do processLevelRow(6, "1000000000000000000110000000000000000000000000000000000000000001");
-            let row = row + 1;
-            do processLevelRow(7, "1000000000000000000110000000000000000000000000000000000000000001");
-            let row = row + 1;
-            do processLevelRow(8, "1000000000000000000000000000000000000000000000000000000000000001");
-            let row = row + 1;
-            do processLevelRow(9, "1000000000000000000000000000000000000000000000000000000000000001");
-            let row = row + 1;
-            
-            // Row 10-14 - More obstacles
+            do processLevelRow(0,  "1111111111111111111111111111111111111111111111111111111111111111");
+            do processLevelRow(1,  "1000000000000000000000000000000000000000000000000000000000000001");
+            do processLevelRow(2,  "1000000000000000000000000000000000000000000000000000000000000001");
+            do processLevelRow(3,  "1000000000000000000000000000000000000000000000000000000000000001");
+            do processLevelRow(4,  "1000000000000000000000000000000000000000000000000000000000000001");
+            do processLevelRow(5,  "1000000000000000000000000000000000000000000000000000000000000001");
+            do processLevelRow(6,  "1000000000000000000110000000000000000000000000000000000000000001");
+            do processLevelRow(7,  "1000000000000000000110000000000000000000000000000000000000000001");
+            do processLevelRow(8,  "1000000000000000000000000000000000000000000000000000000000000001");
+            do processLevelRow(9,  "1000000000000000000000000000000000000000000000000000000000000001");
             do processLevelRow(10, "1000000000000000000000000000000000000000000000000000000000000001");
-            let row = row + 1;
             do processLevelRow(11, "1000000000000200000000000000000000000000000000110000000000000001");
-            let row = row + 1;
             do processLevelRow(12, "1000000000000000000000000000000000000000000000110000000000000001");
-            let row = row + 1;
             do processLevelRow(13, "1000000000000000000000000000000000000000000000000000000000000001");
-            let row = row + 1;
             do processLevelRow(14, "1000000000000000000000000002222200000000000000000000000000000001");
-            let row = row + 1;
-            
-            // Row 15-19 - More platforms
             do processLevelRow(15, "1000000000000000000000000000000000000000000000000000000000000001");
-            let row = row + 1;
             do processLevelRow(16, "1000000000000001111100000000000000000001111100000000000000000001");
-            let row = row + 1;
             do processLevelRow(17, "1000000000000000000000000000000000000000000000000000000000000001");
-            let row = row + 1;
             do processLevelRow(18, "1000020000000000000000000000000000000000000000000000000002000001");
-            let row = row + 1;
             do processLevelRow(19, "1000000000000000000001111100000000000000000000000000000000000001");
-            let row = row + 1;
-            
-            // Row 20-24 - More obstacles
             do processLevelRow(20, "1000000000000000000000000000000000000000000000000000000000000001");
-            let row = row + 1;
             do processLevelRow(21, "1000000000022222000000000000000000000000000000002222200000000001");
-            let row = row + 1;
             do processLevelRow(22, "1000000000000000000000000000000000000000000000000000000000000001");
-            let row = row + 1;
             do processLevelRow(23, "1000000000000000000000000011111000000000000000000000000000000001");
-            let row = row + 1;
-            do processLevelRow(24, "1000000000000000000000000000000000000000000000000300000000000001");
-            let row = row + 1;
-            
-            // Row 25-29 - Bottom area and border
+            do processLevelRow(24, "1000000000000000000000000004040000000000000000004300000000000001");
             do processLevelRow(25, "1000000000000000000000000000000000000000000000000000000000000001");
-            let row = row + 1;
             do processLevelRow(26, "1000000000000000000000000000000000000000000001110000000000000001");
-            let row = row + 1;
             do processLevelRow(27, "1000000000000000000000000000011000000000000000000000000000000001");
-            let row = row + 1;
-            do processLevelRow(28, "100000000000000000000222210000000011000101000000003000000000001");
-            let row = row + 1;
+            do processLevelRow(28, "1000000000000000000002222100000000110001010000000430000000000001");
             do processLevelRow(29, "1111111111111111111111111111111111111111111111111111111111111111");
-            
-            let row = row + 1;
         }
-        
-        // Add more levels as needed by checking levelNumber
+        // Vic Block Outline Around End Game Screen
+        if(levelNumber=9){
+            do processLevelRow(11, "0000000000000003333333333333333333333333333333330000000000000000");
+            do processLevelRow(12, "0000000000000003000000000000000000000000000000030000000000000000");
+            do processLevelRow(13, "0000000000000003000000000000000000000000000000030000000000000000");
+            do processLevelRow(14, "0000000000000003000000000000000000000000000000030000000000000000");
+            do processLevelRow(15, "0000000000000003000000000000000000000000000000030000000000000000");
+            do processLevelRow(16, "0000000000000003000000000000000000000000000000030000000000000000");
+            do processLevelRow(17, "0000000000000003000000000000000000000000000000030000000000000000");
+            do processLevelRow(18, "0000000000000003000000000000000000000000000000030000000000000000");
+            do processLevelRow(19, "0000000000000003000000000000000000000000000000030000000000000000");
+            do processLevelRow(20, "0000000000000003000000000000000000000000000000030000000000000000");
+            do processLevelRow(21, "0000000000000003000000000000000000000000000000030000000000000000");
+            do processLevelRow(22, "0000000000000003000000000000000000000000000000030000000000000000");
+            do processLevelRow(23, "0000000000000003333333333333333333333333333333330000000000000000");
+        }
         return;
     }
     
@@ -241,8 +236,14 @@ class GameMap
                                 let newObject = 3;//GameObject.new(pixelX, pixelY, tileType);
                             }
                             else {
-                                // Default to empty space for unknown characters
-                                let newObject = null;
+                                if (tileChar = 52) {  // '4' - key
+                                    let tileType = "key";
+                                    let newObject = 4;//GameObject.new(pixelX, pixelY, tileType);
+                                }
+                                else{
+                                    // Default to empty space for unknown characters
+                                    let newObject = null;
+                                }
                             }
                         }
   
