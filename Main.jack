@@ -7,6 +7,9 @@
 class Main {
     /** Starts the game, and handles inputs from the user that control
      *  the bat's movement direction. */
+    static String player1Name;
+    static String player2Name;
+
     function void main() {
         //Main function local variables
         var boolean exit;       // true when the game is over
@@ -25,26 +28,40 @@ class Main {
         let player1 = Player.new(253, 100);
         let player2 = Player.new(100, 100);
 
+        //set player name to default player 1 and 2
+        let player1Name = "Player_1";
+        let player2Name = "Player_2";
+
         let gameMap = GameMap.new();
 
         // Map drawing
         do gameMap.clearMap();
+
+        //drawStartScreen method to print the start screen to prompt user for input
+        do Main.drawStartScreen();
+
+        //once user has left the start screen, clear the screen and load level 1
+        do Screen.clearScreen();
+ 
+
         do gameMap.loadLevel(1);
         do gameMap.drawMap();
 
         //Printing player 1 an 2 score;
         do Output.moveCursor(22,4);
-        do Output.printString("P1 Score: ");
+        do Output.printString(player1Name);
+        do Output.printString(" Score: ");
 
         do Output.moveCursor(22,40);
-        do Output.printString("P2 Score: ");
+        do Output.printString(player2Name);
+        do Output.printString(" Score: ");
 
         //Intializing player 1 and 2 score
         let p1ScoreInt = 10000;
         let p2ScoreInt = 10000;
 
         let exit = false;
-
+        
         //Main loop that runs until the game is over
         while (~exit) {
             //***********************PLAYER 1 LOGIC OUTSIDE OF FUNCTION CALL ***********************************************
@@ -232,10 +249,11 @@ class Main {
             //*****************************GAME RENDER logic outside of function call:**************************************
             //Scoreboard drawing for player 1 and 2
             do Screen.setColor(true);
-            do Output.moveCursor(22,14);
+            do Output.moveCursor(22,19);
+
             do Output.printInt(p1ScoreInt);
 
-            do Output.moveCursor(22,50);
+            do Output.moveCursor(22,59);
             do Output.printInt(p2ScoreInt);
 
             //Player drawing
@@ -291,6 +309,116 @@ class Main {
                 do Output.printInt(p2ScoreInt);
             }
 	    }
+        
         return;
+    }
+    function boolean drawStartScreen() {
+        var char key;   //store the value read in from the keybaord to allow the user to select to state the game, quit or choose player names
+
+        //outprint statementes to draw the screen to welcome the user        
+        do Output.moveCursor(4, 20);
+        do Output.printString("=========================");
+        do Output.moveCursor(5, 20);
+        do Output.printString("=== JackOS Platformer ===");
+        do Output.moveCursor(6,20);
+        do Output.printString("=========================");
+        do Output.moveCursor(7,18);
+        do Output.printString("By: Jacob Novak, Kyle Dramov");
+        do Output.moveCursor(8,23);
+        do Output.printString("And Dorian Quimby");
+        
+        // menu for user to select to navigate the game
+        do Output.moveCursor(11, 18);
+        do Output.printString("Press SPACE to start the game");//25
+        do Output.moveCursor(12, 20);
+        do Output.printString("Press 1 to name Player 1");
+        do Output.moveCursor(13, 20);
+        do Output.printString("Press 2 to name Player 2");
+        do Output.moveCursor(14, 24);
+        do Output.printString("Press Q to quit");
+
+        //print out the user name
+        do Output.moveCursor(16, 24);
+        do Output.printString("Player 1: ");
+        do Output.printString(player1Name);
+        do Output.moveCursor(17, 24);
+        do Output.printString("Player 2: ");
+        do Output.printString(player2Name);
+    
+    
+        while (true) {
+            //store the keypress integer value in key
+            let key = Keyboard.keyPressed();
+            //check if it is a space key, if it is, go to the game
+            if (key = 32) { // Space key
+                // Wait for key release
+                while (Keyboard.keyPressed() = 32) {
+                }
+                return true;
+            }
+            //check fi q or Q is entered and halt the system
+            if ((key = 81) | (key = 113)) { // Q key or q key to quit
+                // Halt the system
+                do Screen.clearScreen();
+                do Sys.halt();
+            }
+            
+            if (key = 49) { // 1 key - name Player 1
+                // Wait for key release otherwise a 1 will be entered
+                while (Keyboard.keyPressed() = 49) {}
+
+                //move to the row below the displayed names and prompt user input
+                do Output.moveCursor(19, 21);
+                //let c = Keyboard.readChar();
+
+                //prompt user to enter player 1 name
+                let player1Name = Keyboard.readLine("Enter Player 1 name: ");
+
+                //move back to start of user input prompt and eras
+                do Output.moveCursor(19, 21);
+
+                //clear by printing blank spaces
+                do Output.printString("                                         ");
+
+
+                // Clear the player1 display line
+                do Output.moveCursor(16, 24);
+                do Output.printString("                                         ");
+                do Output.moveCursor(16, 24);
+                do Output.printString("Player 1: ");
+                do Output.printString(player1Name);
+            }
+            
+            if (key = 50) { // 2 key - name Player 2
+                // Wait for key release otherwise a 1 will be entered
+                while (Keyboard.keyPressed() = 50) {}
+
+                //move to the row below the displayed names and prompt user input
+                do Output.moveCursor(19, 21);
+                //let c = Keyboard.readChar();
+
+                //prompt user to enter player 1 name
+                let player2Name = Keyboard.readLine("Enter Player 2 name: ");
+
+                //move back to start of user input prompt and eras
+                do Output.moveCursor(19, 21);
+
+                //clear by printing blank spaces
+                do Output.printString("                                         ");
+
+
+                // Clear the player1 display line
+                do Output.moveCursor(17, 24);
+                do Output.printString("                                         ");
+                do Output.moveCursor(17, 24);
+                do Output.printString("Player 2: ");
+                do Output.printString(player2Name);
+            }
+            
+            // Brief delay to avoid key bouncing
+            do Sys.wait(50);
+        }
+        
+        return false;
     }
 }
