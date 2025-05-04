@@ -229,10 +229,10 @@ class Main {
             //*************************END OF PLAYER 2 LOGIC****************************************************************
             
             //do renderGame(); // render game graphics after move to help with collisions
-            //GAME RENDER logic outside of function call:
+            //*****************************GAME RENDER logic outside of function call:**************************************
             //Scoreboard drawing for player 1 and 2
             do Screen.setColor(true);
-            do Output.moveCursor(22,12);
+            do Output.moveCursor(22,14);
             do Output.printInt(p1ScoreInt);
 
             do Output.moveCursor(22,50);
@@ -241,18 +241,50 @@ class Main {
             //Player drawing
             do player1.draw();
             do player2.draw();
-            //END OF RENDER GAME
+            //****************************END OF RENDER GAME**********************************
             
-            //Reduce score by 1 for player 1 and 2 until win for either player
-            let p1ScoreInt = p1ScoreInt -1;
-            let p2ScoreInt = p2ScoreInt -1;
-
+            //Reduce score by 1 for player 1 and 2 until either player has won
+            if(player1.won() = false){
+                let p1ScoreInt = p1ScoreInt -1;
+            }
+            if(player2.won() = false){
+                let p2ScoreInt = p2ScoreInt -1;
+            }
+            
+            //Checking to see if both players have one. If so exiting the game and displaying who won.
+            if(player1.won() & player2.won()){
+                let exit = true;
+            }
             do Sys.wait(5);// wait to slow down game 
         }
 
+        //Clearing the screen before printing game over
+        do Screen.clearScreen();
+
+        //If the game ended
 	    if (exit) {
-            do Output.moveCursor(10,27);
-	        do Output.printString("Game Over");
+            //printing game over
+            do Screen.setColor(true);
+            do Output.moveCursor(12,27);
+	        do Output.printString("GAME OVER");
+
+            //Determining who got the higher score and saying that player won
+            if(p1ScoreInt > p2ScoreInt){
+                do Output.moveCursor(14,24);
+	            do Output.printString("Player 1 Wins!!");
+                do Output.moveCursor(16,24);
+                do Output.printString("Score: ");
+                do Output.moveCursor(16,34);
+                do Output.printInt(p2ScoreInt);
+            }
+            else{
+                do Output.moveCursor(14,24);
+	            do Output.printString("Player 2 Wins!!");
+                do Output.moveCursor(16,24);
+                do Output.printString("Score: ");
+                do Output.moveCursor(16,34);
+                do Output.printInt(p2ScoreInt);
+            }
 	    }
         return;
     }
