@@ -33,17 +33,21 @@ class Main {
         let player2Name = "Player_2";
 
         let gameMap = GameMap.new();
-
-        // Map drawing
-        do gameMap.clearMap();
+        
+        //******************************START SCREEN**************************************
+        //Drawing Main menu blocks around words
+        do gameMap.loadLevel(10);//Loading cool box around game over screen
+        do gameMap.drawMap();
 
         //drawStartScreen method to print the start screen to prompt user for input
         do Main.drawStartScreen();
 
         //once user has left the start screen, clear the screen and load level 1
         do Screen.clearScreen();
- 
+        //******************************END START SCREEN**********************************
 
+        //******************************DRAW MAP AND SCORE****************************************
+        // Map drawing
         do gameMap.loadLevel(1);
         do gameMap.drawMap();
 
@@ -61,8 +65,9 @@ class Main {
         let p2ScoreInt = 10000;
 
         let exit = false;
-        
-        //Main loop that runs until the game is over
+        //******************************END DRAW MAP AND SCORE****************************************
+
+        //************************Main loop that runs until the game is over**************************
         while (~exit) {
             //***********************PLAYER 1 LOGIC OUTSIDE OF FUNCTION CALL ***********************************************
             //do player1Logic(player1);
@@ -282,7 +287,6 @@ class Main {
         //If the game ended
 	    if (exit) {
             // Drawing victory blocks around words
-            do gameMap.clearMap();
             do gameMap.loadLevel(9);//Loading cool box around game over screen
             do gameMap.drawMap();
 
@@ -293,16 +297,18 @@ class Main {
 
             //Determining who got the higher score and saying that player won
             if(p1ScoreInt > p2ScoreInt){
-                do Output.moveCursor(12,24);
-	            do Output.printString("Player 1 Wins!!");
-                do Output.moveCursor(14,24);
+                do Output.moveCursor(12,22);
+	            do Output.printString(player1Name);
+                do Output.printString("     Wins!!");
+                do Output.moveCursor(14,30);
                 do Output.printString("Score: ");
                 do Output.moveCursor(14,34);
                 do Output.printInt(p2ScoreInt);
             }
             else{
-                do Output.moveCursor(12,24);
-	            do Output.printString("Player 2 Wins!!");
+                do Output.moveCursor(12,22);
+	            do Output.printString(player2Name);
+                do Output.printString("     Wins!!");
                 do Output.moveCursor(14,24);
                 do Output.printString("Score: ");
                 do Output.moveCursor(14,34);
@@ -312,6 +318,7 @@ class Main {
         
         return;
     }
+
     function boolean drawStartScreen() {
         var char key;   //store the value read in from the keybaord to allow the user to select to state the game, quit or choose player names
 
