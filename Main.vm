@@ -173,7 +173,8 @@ label Main_2
     neg
     push constant 0
     push local 3
-    call Player.move 4
+    push constant 1
+    call Player.move 5
     pop temp 0
     goto Main_8
 label Main_9
@@ -181,7 +182,8 @@ label Main_9
     push constant 1
     push constant 0
     push local 3
-    call Player.move 4
+    push constant 1
+    call Player.move 5
     pop temp 0
 label Main_8
     push local 1
@@ -263,7 +265,8 @@ label Main_18
     push constant 0
     push constant 1
     push local 3
-    call Player.move 4
+    push constant 1
+    call Player.move 5
     pop temp 0
     push local 1
     push local 1
@@ -298,7 +301,8 @@ label Main_22
     push constant 1
     neg
     push local 3
-    call Player.move 4
+    push constant 1
+    call Player.move 5
     pop temp 0
     push local 1
     push local 1
@@ -402,7 +406,8 @@ label Main_28
     neg
     push constant 0
     push local 3
-    call Player.move 4
+    push constant 2
+    call Player.move 5
     pop temp 0
     goto Main_34
 label Main_35
@@ -410,7 +415,8 @@ label Main_35
     push constant 1
     push constant 0
     push local 3
-    call Player.move 4
+    push constant 2
+    call Player.move 5
     pop temp 0
 label Main_34
     push local 2
@@ -492,7 +498,8 @@ label Main_44
     push constant 0
     push constant 1
     push local 3
-    call Player.move 4
+    push constant 2
+    call Player.move 5
     pop temp 0
     push local 2
     push local 2
@@ -527,7 +534,8 @@ label Main_48
     push constant 1
     neg
     push local 3
-    call Player.move 4
+    push constant 2
+    call Player.move 5
     pop temp 0
     push local 2
     push local 2
@@ -603,27 +611,76 @@ label Main_50
     call Output.printInt 1
     pop temp 0
     push local 1
-    call Player.draw 1
+    push constant 1
+    call Player.draw 2
     pop temp 0
     push local 2
-    call Player.draw 1
+    push constant 2
+    call Player.draw 2
     pop temp 0
+    push local 1
+    call Player.won 1
+    push constant 0
+    eq
+    not
+    if-goto Main_55
     push local 8
     push constant 1
     sub
     pop local 8
+    goto Main_54
+label Main_55
+label Main_54
+    push local 2
+    call Player.won 1
+    push constant 0
+    eq
+    not
+    if-goto Main_57
     push local 9
     push constant 1
     sub
     pop local 9
+    goto Main_56
+label Main_57
+label Main_56
+    push local 1
+    call Player.won 1
+    push local 2
+    call Player.won 1
+    and
+    not
+    if-goto Main_59
+    push constant 1
+    neg
+    pop local 0
+    goto Main_58
+label Main_59
+label Main_58
     push constant 5
     call Sys.wait 1
     pop temp 0
     goto Main_0
 label Main_1
+    call Screen.clearScreen 0
+    pop temp 0
     push local 0
     not
-    if-goto Main_55
+    if-goto Main_61
+    push local 3
+    call GameMap.clearMap 1
+    pop temp 0
+    push local 3
+    push constant 9
+    call GameMap.loadLevel 2
+    pop temp 0
+    push local 3
+    call GameMap.drawMap 1
+    pop temp 0
+    push constant 1
+    neg
+    call Screen.setColor 1
+    pop temp 0
     push constant 10
     push constant 27
     call Output.moveCursor 2
@@ -632,32 +689,172 @@ label Main_1
     call String.new 1
     push constant 71
     call String.appendChar 2
-    push constant 97
+    push constant 65
     call String.appendChar 2
-    push constant 109
+    push constant 77
     call String.appendChar 2
-    push constant 101
+    push constant 69
     call String.appendChar 2
     push constant 32
     call String.appendChar 2
     push constant 79
     call String.appendChar 2
-    push constant 118
+    push constant 86
+    call String.appendChar 2
+    push constant 69
+    call String.appendChar 2
+    push constant 82
+    call String.appendChar 2
+    call Output.printString 1
+    pop temp 0
+    push local 8
+    push local 9
+    gt
+    not
+    if-goto Main_63
+    push constant 12
+    push constant 24
+    call Output.moveCursor 2
+    pop temp 0
+    push constant 15
+    call String.new 1
+    push constant 80
+    call String.appendChar 2
+    push constant 108
+    call String.appendChar 2
+    push constant 97
+    call String.appendChar 2
+    push constant 121
     call String.appendChar 2
     push constant 101
     call String.appendChar 2
     push constant 114
     call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 49
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 87
+    call String.appendChar 2
+    push constant 105
+    call String.appendChar 2
+    push constant 110
+    call String.appendChar 2
+    push constant 115
+    call String.appendChar 2
+    push constant 33
+    call String.appendChar 2
+    push constant 33
+    call String.appendChar 2
     call Output.printString 1
     pop temp 0
-    goto Main_54
-label Main_55
-label Main_54
+    push constant 14
+    push constant 24
+    call Output.moveCursor 2
+    pop temp 0
+    push constant 7
+    call String.new 1
+    push constant 83
+    call String.appendChar 2
+    push constant 99
+    call String.appendChar 2
+    push constant 111
+    call String.appendChar 2
+    push constant 114
+    call String.appendChar 2
+    push constant 101
+    call String.appendChar 2
+    push constant 58
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    call Output.printString 1
+    pop temp 0
+    push constant 14
+    push constant 34
+    call Output.moveCursor 2
+    pop temp 0
+    push local 9
+    call Output.printInt 1
+    pop temp 0
+    goto Main_62
+label Main_63
+    push constant 12
+    push constant 24
+    call Output.moveCursor 2
+    pop temp 0
+    push constant 15
+    call String.new 1
+    push constant 80
+    call String.appendChar 2
+    push constant 108
+    call String.appendChar 2
+    push constant 97
+    call String.appendChar 2
+    push constant 121
+    call String.appendChar 2
+    push constant 101
+    call String.appendChar 2
+    push constant 114
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 50
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 87
+    call String.appendChar 2
+    push constant 105
+    call String.appendChar 2
+    push constant 110
+    call String.appendChar 2
+    push constant 115
+    call String.appendChar 2
+    push constant 33
+    call String.appendChar 2
+    push constant 33
+    call String.appendChar 2
+    call Output.printString 1
+    pop temp 0
+    push constant 14
+    push constant 24
+    call Output.moveCursor 2
+    pop temp 0
+    push constant 7
+    call String.new 1
+    push constant 83
+    call String.appendChar 2
+    push constant 99
+    call String.appendChar 2
+    push constant 111
+    call String.appendChar 2
+    push constant 114
+    call String.appendChar 2
+    push constant 101
+    call String.appendChar 2
+    push constant 58
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    call Output.printString 1
+    pop temp 0
+    push constant 14
+    push constant 34
+    call Output.moveCursor 2
+    pop temp 0
+    push local 9
+    call Output.printInt 1
+    pop temp 0
+label Main_62
+    goto Main_60
+label Main_61
+label Main_60
     push constant 0
     return
-function Main.drawStartScreen 2
-    push constant 0
-    pop local 1
+function Main.drawStartScreen 1
     push constant 4
     push constant 20
     call Output.moveCursor 2
@@ -1216,32 +1413,32 @@ function Main.drawStartScreen 2
     push static 1
     call Output.printString 1
     pop temp 0
-label Main_56
-    push local 1
+label Main_64
+    push constant 1
+    neg
     not
-    not
-    if-goto Main_57
+    if-goto Main_65
     call Keyboard.keyPressed 0
     pop local 0
     push local 0
     push constant 32
     eq
     not
-    if-goto Main_59
-label Main_60
+    if-goto Main_67
+label Main_68
     call Keyboard.keyPressed 0
     push constant 32
     eq
     not
-    if-goto Main_61
-    goto Main_60
-label Main_61
+    if-goto Main_69
+    goto Main_68
+label Main_69
     push constant 1
     neg
     return
-    goto Main_58
-label Main_59
-label Main_58
+    goto Main_66
+label Main_67
+label Main_66
     push local 0
     push constant 81
     eq
@@ -1250,27 +1447,27 @@ label Main_58
     eq
     or
     not
-    if-goto Main_63
+    if-goto Main_71
     call Screen.clearScreen 0
     pop temp 0
     call Sys.halt 0
     pop temp 0
-    goto Main_62
-label Main_63
-label Main_62
+    goto Main_70
+label Main_71
+label Main_70
     push local 0
     push constant 49
     eq
     not
-    if-goto Main_65
-label Main_66
+    if-goto Main_73
+label Main_74
     call Keyboard.keyPressed 0
     push constant 49
     eq
     not
-    if-goto Main_67
-    goto Main_66
-label Main_67
+    if-goto Main_75
+    goto Main_74
+label Main_75
     push constant 19
     push constant 21
     call Output.moveCursor 2
@@ -1532,22 +1729,22 @@ label Main_67
     push static 0
     call Output.printString 1
     pop temp 0
-    goto Main_64
-label Main_65
-label Main_64
+    goto Main_72
+label Main_73
+label Main_72
     push local 0
     push constant 50
     eq
     not
-    if-goto Main_69
-label Main_70
+    if-goto Main_77
+label Main_78
     call Keyboard.keyPressed 0
     push constant 50
     eq
     not
-    if-goto Main_71
-    goto Main_70
-label Main_71
+    if-goto Main_79
+    goto Main_78
+label Main_79
     push constant 19
     push constant 21
     call Output.moveCursor 2
@@ -1809,13 +2006,13 @@ label Main_71
     push static 1
     call Output.printString 1
     pop temp 0
-    goto Main_68
-label Main_69
-label Main_68
+    goto Main_76
+label Main_77
+label Main_76
     push constant 50
     call Sys.wait 1
     pop temp 0
-    goto Main_56
-label Main_57
+    goto Main_64
+label Main_65
     push constant 0
     return

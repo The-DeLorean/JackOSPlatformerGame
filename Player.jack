@@ -83,7 +83,7 @@ class Player {
     }
 
     // Players can move with improved collision handling
-    method void move(int dx, int dy, GameMap map) {
+    method void move(int dx, int dy, GameMap map, int playerNumber) {
         var boolean check;
         
         // Store previous position
@@ -107,22 +107,58 @@ class Player {
         }
         
         // Draw player at new position
-        //do draw();
+        do draw(playerNumber);
+        /**
         //***********************DRAWING PLAYER LOGIC OUTSIDE OF FUNCTION CALL*****************
         do Screen.setColor(false);
         do Screen.drawRectangle(prevXPos, prevYPos, prevXPos + 7, prevYPos + 7);
         do Screen.setColor(true);
         do Screen.drawRectangle(xpos, ypos, xpos + 7, ypos + 7);
-        //**********************END OF DRAWING PLAYER LOGIC ****************************************
+        do Screen.setColor(false);
+        do Screen.drawRectangle(xpos+1, ypos+5, xpos + 6, ypos + 6);
+        do Screen.drawPixel(xpos + 2, ypos + 1);
+        do Screen.drawPixel(xpos + 5, ypos + 1);
+        **********************END OF DRAWING PLAYER LOGIC ****************************************
+        */
         return;
     }
 
     // Renders the player
-    method void draw() {
+    method void draw(int playerNum) {
         do Screen.setColor(false);
         do Screen.drawRectangle(prevXPos, prevYPos, prevXPos + 7, prevYPos + 7);
         do Screen.setColor(true);
         do Screen.drawRectangle(xpos, ypos, xpos + 7, ypos + 7);
+        if(playerNum = 1){
+            //SAD FACE
+            do Screen.setColor(false);
+            //mouth curve left
+            do Screen.drawPixel(xpos + 2, ypos + 5);
+            do Screen.drawPixel(xpos + 1, ypos + 6);
+            //Long bar
+            do Screen.drawRectangle(xpos+3, ypos+4, xpos + 4, ypos + 4);
+            //mouth curve right
+            do Screen.drawPixel(xpos + 5, ypos + 5);
+            do Screen.drawPixel(xpos + 6, ypos + 6);
+            //Eyes
+            do Screen.drawPixel(xpos + 2, ypos + 2);
+            do Screen.drawPixel(xpos + 5, ypos + 2);
+        }
+        else{
+            //HAPPY FACE
+            do Screen.setColor(false);
+            //mouth curve left
+            do Screen.drawPixel(xpos + 2, ypos + 5);
+            do Screen.drawPixel(xpos + 1, ypos + 4);
+            //Long bar
+            do Screen.drawRectangle(xpos+3, ypos+6, xpos + 4, ypos + 6);
+            //mouth curve right
+            do Screen.drawPixel(xpos + 5, ypos + 5);
+            do Screen.drawPixel(xpos + 6, ypos + 4);
+            //Eyes
+            do Screen.drawPixel(xpos + 2, ypos + 2);
+            do Screen.drawPixel(xpos + 5, ypos + 2);
+        }
         return;
     }
 
@@ -181,12 +217,15 @@ class Player {
         //if there is a wall or a spike, collide with the player
         if (~(gameObj = null)) {
             //if it is a spike, kill the player
-            if (gameObj = 2) {
+            if (gameObj = 2 | gameObj = 3) {
                 let death = true;
             }
             //if it is a win, set win to true
-            if (gameObj = 3) {
+            if (gameObj = 4) {
                 let win = true;
+            }
+            if (gameObj = 5) {
+                let key = true;
             }
             return true;
         }
@@ -199,12 +238,15 @@ class Player {
         //if there is a wall or a spike, collide with the player
         if (~(gameObj = null)) {
             //if it is a spike, kill the player
-            if (gameObj = 2) {
+            if (gameObj = 2 | gameObj = 3) {
                 let death = true;
             }
             //if it is a win, set win to true
-            if (gameObj = 3) {
+            if (gameObj = 4) {
                 let win = true;
+            }
+            if (gameObj = 5) {
+                let key = true;
             }
             return true;
         }
@@ -217,12 +259,15 @@ class Player {
         //if there is a wall or a spike, collide with the player
         if (~(gameObj = null)) {
             //if it is a spike, kill the player
-            if (gameObj = 2) {
+            if (gameObj = 2| gameObj = 3) {
                 let death = true;
             }
             //if it is a win, set win to true
-            if (gameObj = 3) {
+            if (gameObj = 4) {
                 let win = true;
+            }
+            if (gameObj = 5) {
+                let key = true;
             }
             return true;
         }
@@ -235,12 +280,15 @@ class Player {
         //if there is a wall or a spike, collide with the player
         if (~(gameObj = null)) {
             //if it is a spike, kill the player
-            if (gameObj = 2) {
+            if (gameObj = 2| gameObj = 3) {
                 let death = true;
             }
             //if it is a win, set win to true
-            if (gameObj = 3) {
+            if (gameObj = 4) {
                 let win = true;
+            }
+            if (gameObj = 5) {
+                let key = true;
             }
             return true;
         }

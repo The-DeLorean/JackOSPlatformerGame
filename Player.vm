@@ -137,32 +137,9 @@ label Player_0
     goto Player_2
 label Player_3
 label Player_2
-    push constant 0
-    call Screen.setColor 1
-    pop temp 0
-    push this 7
-    push this 8
-    push this 7
-    push constant 7
-    add
-    push this 8
-    push constant 7
-    add
-    call Screen.drawRectangle 4
-    pop temp 0
-    push constant 1
-    neg
-    call Screen.setColor 1
-    pop temp 0
-    push this 5
-    push this 6
-    push this 5
-    push constant 7
-    add
-    push this 6
-    push constant 7
-    add
-    call Screen.drawRectangle 4
+    push pointer 0
+    push argument 4
+    call Player.draw 2
     pop temp 0
     push constant 0
     return
@@ -196,6 +173,144 @@ function Player.draw 0
     add
     call Screen.drawRectangle 4
     pop temp 0
+    push argument 1
+    push constant 1
+    eq
+    not
+    if-goto Player_5
+    push constant 0
+    call Screen.setColor 1
+    pop temp 0
+    push this 5
+    push constant 2
+    add
+    push this 6
+    push constant 5
+    add
+    call Screen.drawPixel 2
+    pop temp 0
+    push this 5
+    push constant 1
+    add
+    push this 6
+    push constant 6
+    add
+    call Screen.drawPixel 2
+    pop temp 0
+    push this 5
+    push constant 3
+    add
+    push this 6
+    push constant 4
+    add
+    push this 5
+    push constant 4
+    add
+    push this 6
+    push constant 4
+    add
+    call Screen.drawRectangle 4
+    pop temp 0
+    push this 5
+    push constant 5
+    add
+    push this 6
+    push constant 5
+    add
+    call Screen.drawPixel 2
+    pop temp 0
+    push this 5
+    push constant 6
+    add
+    push this 6
+    push constant 6
+    add
+    call Screen.drawPixel 2
+    pop temp 0
+    push this 5
+    push constant 2
+    add
+    push this 6
+    push constant 2
+    add
+    call Screen.drawPixel 2
+    pop temp 0
+    push this 5
+    push constant 5
+    add
+    push this 6
+    push constant 2
+    add
+    call Screen.drawPixel 2
+    pop temp 0
+    goto Player_4
+label Player_5
+    push constant 0
+    call Screen.setColor 1
+    pop temp 0
+    push this 5
+    push constant 2
+    add
+    push this 6
+    push constant 5
+    add
+    call Screen.drawPixel 2
+    pop temp 0
+    push this 5
+    push constant 1
+    add
+    push this 6
+    push constant 4
+    add
+    call Screen.drawPixel 2
+    pop temp 0
+    push this 5
+    push constant 3
+    add
+    push this 6
+    push constant 6
+    add
+    push this 5
+    push constant 4
+    add
+    push this 6
+    push constant 6
+    add
+    call Screen.drawRectangle 4
+    pop temp 0
+    push this 5
+    push constant 5
+    add
+    push this 6
+    push constant 5
+    add
+    call Screen.drawPixel 2
+    pop temp 0
+    push this 5
+    push constant 6
+    add
+    push this 6
+    push constant 4
+    add
+    call Screen.drawPixel 2
+    pop temp 0
+    push this 5
+    push constant 2
+    add
+    push this 6
+    push constant 2
+    add
+    call Screen.drawPixel 2
+    pop temp 0
+    push this 5
+    push constant 5
+    add
+    push this 6
+    push constant 2
+    add
+    call Screen.drawPixel 2
+    pop temp 0
+label Player_4
     push constant 0
     return
 function Player.isOnGround 2
@@ -253,91 +368,57 @@ function Player.collides 4
     eq
     not
     not
-    if-goto Player_5
+    if-goto Player_7
     push local 2
     push constant 2
     eq
-    not
-    if-goto Player_7
-    push constant 1
-    neg
-    pop this 2
-    goto Player_6
-label Player_7
-label Player_6
     push local 2
+    or
     push constant 3
     eq
     not
     if-goto Player_9
     push constant 1
     neg
-    pop this 1
+    pop this 2
     goto Player_8
 label Player_9
 label Player_8
-    push constant 1
-    neg
-    return
-    goto Player_4
-label Player_5
-label Player_4
-    push this 6
-    push constant 8
-    call Math.divide 2
-    pop local 0
-    push this 5
-    push constant 7
-    add
-    push constant 8
-    call Math.divide 2
-    pop local 1
-    push argument 1
-    push local 0
-    push local 1
-    call GameMap.getTileAtBlock 3
-    pop local 2
     push local 2
-    push constant 0
+    push constant 4
     eq
     not
-    not
     if-goto Player_11
+    push constant 1
+    neg
+    pop this 1
+    goto Player_10
+label Player_11
+label Player_10
     push local 2
-    push constant 2
+    push constant 5
     eq
     not
     if-goto Player_13
     push constant 1
     neg
-    pop this 2
+    pop this 3
     goto Player_12
 label Player_13
 label Player_12
-    push local 2
-    push constant 3
-    eq
-    not
-    if-goto Player_15
-    push constant 1
-    neg
-    pop this 1
-    goto Player_14
-label Player_15
-label Player_14
     push constant 1
     neg
     return
-    goto Player_10
-label Player_11
-label Player_10
+    goto Player_6
+label Player_7
+label Player_6
     push this 6
-    push constant 7
-    add
     push constant 8
     call Math.divide 2
     pop local 0
     push this 5
+    push constant 7
+    add
     push constant 8
     call Math.divide 2
     pop local 1
@@ -351,35 +432,50 @@ label Player_10
     eq
     not
     not
-    if-goto Player_17
+    if-goto Player_15
     push local 2
     push constant 2
+    eq
+    push local 2
+    or
+    push constant 3
+    eq
+    not
+    if-goto Player_17
+    push constant 1
+    neg
+    pop this 2
+    goto Player_16
+label Player_17
+label Player_16
+    push local 2
+    push constant 4
     eq
     not
     if-goto Player_19
     push constant 1
     neg
-    pop this 2
+    pop this 1
     goto Player_18
 label Player_19
 label Player_18
     push local 2
-    push constant 3
+    push constant 5
     eq
     not
     if-goto Player_21
     push constant 1
     neg
-    pop this 1
+    pop this 3
     goto Player_20
 label Player_21
 label Player_20
     push constant 1
     neg
     return
-    goto Player_16
-label Player_17
-label Player_16
+    goto Player_14
+label Player_15
+label Player_14
     push this 6
     push constant 7
     add
@@ -387,8 +483,6 @@ label Player_16
     call Math.divide 2
     pop local 0
     push this 5
-    push constant 7
-    add
     push constant 8
     call Math.divide 2
     pop local 1
@@ -406,6 +500,10 @@ label Player_16
     push local 2
     push constant 2
     eq
+    push local 2
+    or
+    push constant 3
+    eq
     not
     if-goto Player_25
     push constant 1
@@ -415,7 +513,7 @@ label Player_16
 label Player_25
 label Player_24
     push local 2
-    push constant 3
+    push constant 4
     eq
     not
     if-goto Player_27
@@ -425,12 +523,89 @@ label Player_24
     goto Player_26
 label Player_27
 label Player_26
+    push local 2
+    push constant 5
+    eq
+    not
+    if-goto Player_29
+    push constant 1
+    neg
+    pop this 3
+    goto Player_28
+label Player_29
+label Player_28
     push constant 1
     neg
     return
     goto Player_22
 label Player_23
 label Player_22
+    push this 6
+    push constant 7
+    add
+    push constant 8
+    call Math.divide 2
+    pop local 0
+    push this 5
+    push constant 7
+    add
+    push constant 8
+    call Math.divide 2
+    pop local 1
+    push argument 1
+    push local 0
+    push local 1
+    call GameMap.getTileAtBlock 3
+    pop local 2
+    push local 2
+    push constant 0
+    eq
+    not
+    not
+    if-goto Player_31
+    push local 2
+    push constant 2
+    eq
+    push local 2
+    or
+    push constant 3
+    eq
+    not
+    if-goto Player_33
+    push constant 1
+    neg
+    pop this 2
+    goto Player_32
+label Player_33
+label Player_32
+    push local 2
+    push constant 4
+    eq
+    not
+    if-goto Player_35
+    push constant 1
+    neg
+    pop this 1
+    goto Player_34
+label Player_35
+label Player_34
+    push local 2
+    push constant 5
+    eq
+    not
+    if-goto Player_37
+    push constant 1
+    neg
+    pop this 3
+    goto Player_36
+label Player_37
+label Player_36
+    push constant 1
+    neg
+    return
+    goto Player_30
+label Player_31
+label Player_30
     push constant 0
     return
 function Player.won 0

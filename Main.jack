@@ -36,7 +36,11 @@ class Main {
 
         // Map drawing
         do gameMap.clearMap();
+
+        //drawStartScreen method to print the start screen to prompt user for input
         do Main.drawStartScreen();
+
+        //once user has left the start screen, clear the screen and load level 1
         do Screen.clearScreen();
  
 
@@ -83,10 +87,10 @@ class Main {
             //Move that way until changed
             if(player1.getDir())
             {
-                do player1.move(-1, 0, gameMap);
+                do player1.move(-1, 0, gameMap, 1);
             }
             else{
-                do player1.move(1, 0, gameMap);
+                do player1.move(1, 0, gameMap, 1);
             }
             
             //Checking to see if player 1 is on the ground if so checking to see if the jump key is pressed
@@ -115,7 +119,7 @@ class Main {
                 //Gravity moves player down number * 1 pixels
                 while (player1.getGravity() < player1.getNumber()){ //(gravityLoop1 < number1){
                     //moving the player down
-                    do player1.move(0, 1, gameMap);
+                    do player1.move(0, 1, gameMap, 1);
                     //incrementing through the gravity loop
                     do player1.setGravity((player1.getGravity() + 1)); //let gravityLoop1 = gravityLoop1 + 1;
                 }
@@ -127,7 +131,7 @@ class Main {
                 //Jumping a certain amount each time.
                 while(player1.getJumpLoop() < (player1.getJump()/10)){ //(jumpLoop1 < (jump1/10)){
                     //moving the player up
-                    do player1.move(0, -1, gameMap);
+                    do player1.move(0, -1, gameMap, 1);
                     //incrementing through the jump loop
                     do player1.setJumpLoop((player1.getJumpLoop()+1)); //let jumpLoop1 = jumpLoop1 + 1;
                 }
@@ -174,10 +178,10 @@ class Main {
             //Seeing which way we are moving and move it
             if(player2.getDir())
             {
-                do player2.move(-1, 0, gameMap);
+                do player2.move(-1, 0, gameMap, 2);
             }
             else{
-                do player2.move(1, 0, gameMap);
+                do player2.move(1, 0, gameMap, 2);
             }
             
             //Checking to see if player 1 is on the ground if so checking to see if the jump key is pressed
@@ -206,7 +210,7 @@ class Main {
                 //Gravity moves player down number * 1 pixels
                 while (player2.getGravity() < player2.getNumber()){ //(gravityLoop1 < number1){
                     //moving the player down
-                    do player2.move(0, 1, gameMap);
+                    do player2.move(0, 1, gameMap, 2);
                     //incrementing through the gravity loop
                     do player2.setGravity((player2.getGravity() + 1)); //let gravityLoop1 = gravityLoop1 + 1;
                 }
@@ -218,7 +222,7 @@ class Main {
                 //Jumping a certain amount each time.
                 while(player2.getJumpLoop() < (player2.getJump()/10)){ //(jumpLoop1 < (jump1/10)){
                     //moving the player up
-                    do player2.move(0, -1, gameMap);
+                    do player2.move(0, -1, gameMap, 2);
                     //incrementing through the jump loop
                     do player2.setJumpLoop((player2.getJumpLoop()+1)); //let jumpLoop1 = jumpLoop1 + 1;
                 }
@@ -242,38 +246,75 @@ class Main {
             //*************************END OF PLAYER 2 LOGIC****************************************************************
             
             //do renderGame(); // render game graphics after move to help with collisions
-            //GAME RENDER logic outside of function call:
+            //*****************************GAME RENDER logic outside of function call:**************************************
             //Scoreboard drawing for player 1 and 2
             do Screen.setColor(true);
             do Output.moveCursor(22,19);
+
             do Output.printInt(p1ScoreInt);
 
             do Output.moveCursor(22,59);
             do Output.printInt(p2ScoreInt);
 
             //Player drawing
-            do player1.draw();
-            do player2.draw();
-            //END OF RENDER GAME
+            do player1.draw(1);
+            do player2.draw(2);
+            //****************************END OF RENDER GAME**********************************
             
-            //Reduce score by 1 for player 1 and 2 until win for either player
-            let p1ScoreInt = p1ScoreInt -1;
-            let p2ScoreInt = p2ScoreInt -1;
-
+            //Reduce score by 1 for player 1 and 2 until either player has won
+            if(player1.won() = false){
+                let p1ScoreInt = p1ScoreInt -1;
+            }
+            if(player2.won() = false){
+                let p2ScoreInt = p2ScoreInt -1;
+            }
+            
+            //Checking to see if both players have one. If so exiting the game and displaying who won.
+            if(player1.won() & player2.won()){
+                let exit = true;
+            }
             do Sys.wait(5);// wait to slow down game 
         }
 
+        //Clearing the screen before printing game over
+        do Screen.clearScreen();
+
+        //If the game ended
 	    if (exit) {
+            // Drawing victory blocks around words
+            do gameMap.clearMap();
+            do gameMap.loadLevel(9);//Loading cool box around game over screen
+            do gameMap.drawMap();
+
+            //printing game over
+            do Screen.setColor(true);
             do Output.moveCursor(10,27);
-	        do Output.printString("Game Over");
+	        do Output.printString("GAME OVER");
+
+            //Determining who got the higher score and saying that player won
+            if(p1ScoreInt > p2ScoreInt){
+                do Output.moveCursor(12,24);
+	            do Output.printString("Player 1 Wins!!");
+                do Output.moveCursor(14,24);
+                do Output.printString("Score: ");
+                do Output.moveCursor(14,34);
+                do Output.printInt(p2ScoreInt);
+            }
+            else{
+                do Output.moveCursor(12,24);
+	            do Output.printString("Player 2 Wins!!");
+                do Output.moveCursor(14,24);
+                do Output.printString("Score: ");
+                do Output.moveCursor(14,34);
+                do Output.printInt(p2ScoreInt);
+            }
 	    }
         
         return;
     }
     function boolean drawStartScreen() {
         var char key;   //store the value read in from the keybaord to allow the user to select to state the game, quit or choose player names
-        var boolean quit;
-        let quit = false;
+
         //outprint statementes to draw the screen to welcome the user        
         do Output.moveCursor(4, 20);
         do Output.printString("=========================");
@@ -305,19 +346,17 @@ class Main {
         do Output.printString(player2Name);
     
     
-        while (~(quit)) {
-            // Wait for keypress
-
+        while (true) {
+            //store the keypress integer value in key
             let key = Keyboard.keyPressed();
-            
+            //check if it is a space key, if it is, go to the game
             if (key = 32) { // Space key
                 // Wait for key release
                 while (Keyboard.keyPressed() = 32) {
-                    // Wait for release
                 }
                 return true;
             }
-            
+            //check fi q or Q is entered and halt the system
             if ((key = 81) | (key = 113)) { // Q key or q key to quit
                 // Halt the system
                 do Screen.clearScreen();
