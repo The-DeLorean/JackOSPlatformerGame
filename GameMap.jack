@@ -80,9 +80,6 @@ class GameMap
                     {
                         do Screen.setColor(true);
                         do Screen.drawRectangle(pixelX, pixelY, pixelX + 7, pixelY + 7);
-                        /**do Screen.setColor(false);
-                        do Screen.drawRectangle(pixelX + 1, pixelY + 1, pixelX + 1, pixelY + 4);
-                        do Screen.drawRectangle(pixelX + 6, pixelY + 2, pixelX + 6, pixelY + 6);*/
                     }
                     //Drawing the ground Spike
                     if(currentObj = 2)
@@ -101,7 +98,7 @@ class GameMap
 
                         do Screen.drawRectangle(pixelX+3, pixelY + 5, pixelX+4, pixelY + 6);//middle block
                     }
-                    //DRawing the Ceiling SPike
+                    //Drawing the Ceiling SPike
                     if(currentObj = 3)
                     {
                         do Screen.setColor(true);
@@ -123,15 +120,9 @@ class GameMap
                     if(currentObj = 4){
                         do Screen.setColor(true);
                         do Screen.drawRectangle(pixelX, pixelY, pixelX+7, pixelY + 7);//left |
-                        //do Screen.drawRectangle(pixelX, pixelY + 6, pixelX + 7, pixelY + 7); //bottom _
-                        //do Screen.drawRectangle(pixelX + 7, pixelY, pixelX + 7, pixelY + 7);//right |
-                        //do Screen.drawRectangle(pixelX, pixelY, pixelX + 7, pixelY+1);//Top _
                         do Screen.setColor(false);
                         do Screen.drawRectangle(pixelX+2, pixelY+4, pixelX + 5, pixelY+4);// lon horizontal bar
                         do Screen.drawRectangle(pixelX+4, pixelY+3, pixelX + 4, pixelY+5);// small veritcal bar
-                        //do Screen.drawRectangle(pixelX+1, pixelY+1, pixelX + 3, pixelY+4);//Top right corner fill in
-                        //do Screen.drawPixel(pixelX+4, pixelY+2);
-                        //do Screen.drawCircle(pixelX + 4, pixelY + 4, 1);
                     }
                     //Drawing the key for the vic block DONE
                     if(currentObj = 5){

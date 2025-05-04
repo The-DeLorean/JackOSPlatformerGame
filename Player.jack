@@ -108,18 +108,6 @@ class Player {
         
         // Draw player at new position
         do draw(playerNumber);
-        /**
-        //***********************DRAWING PLAYER LOGIC OUTSIDE OF FUNCTION CALL*****************
-        do Screen.setColor(false);
-        do Screen.drawRectangle(prevXPos, prevYPos, prevXPos + 7, prevYPos + 7);
-        do Screen.setColor(true);
-        do Screen.drawRectangle(xpos, ypos, xpos + 7, ypos + 7);
-        do Screen.setColor(false);
-        do Screen.drawRectangle(xpos+1, ypos+5, xpos + 6, ypos + 6);
-        do Screen.drawPixel(xpos + 2, ypos + 1);
-        do Screen.drawPixel(xpos + 5, ypos + 1);
-        **********************END OF DRAWING PLAYER LOGIC ****************************************
-        */
         return;
     }
 
@@ -158,6 +146,8 @@ class Player {
             //Eyes
             do Screen.drawPixel(xpos + 2, ypos + 2);
             do Screen.drawPixel(xpos + 5, ypos + 2);
+        }
+        if(key){
         }
         return;
     }
