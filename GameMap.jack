@@ -84,37 +84,45 @@ class GameMap
                     //Drawing the ground Spike
                     if(currentObj = 2)
                     {
+                        //To draw spike, start with bottom lines
                         do Screen.setColor(true);
-                        do Screen.drawRectangle(pixelX, pixelY + 7, pixelX+7, pixelY + 7);//Base of spike
+                        do Screen.drawLine(pixelX, pixelY+7, pixelX+7, pixelY+7);
+                        do Screen.drawLine(pixelX, pixelY+6, pixelX+7, pixelY+6);
 
-                        do Screen.drawRectangle(pixelX+1, pixelY + 5, pixelX+1, pixelY + 6);//far left
-                        do Screen.drawRectangle(pixelX+6, pixelY + 5, pixelX+6, pixelY + 6);//far right
+                        //Base layer
+                        do Screen.drawLine(pixelX+2, pixelY+4, pixelX+2, pixelY+5);
+                        do Screen.drawLine(pixelX+4, pixelY+4, pixelX+4, pixelY+5);
+                        do Screen.drawLine(pixelX+6, pixelY+4, pixelX+6, pixelY+5);
 
-                        do Screen.drawRectangle(pixelX+2, pixelY + 2, pixelX+2, pixelY + 4);//2nd end of spike
-                        do Screen.drawRectangle(pixelX+5, pixelY + 2, pixelX+5, pixelY + 4);//2nd end of spike
+                        //Middle layer
+                        do Screen.drawLine(pixelX+3, pixelY+2, pixelX+3, pixelY+3);
+                        do Screen.drawLine(pixelX+5, pixelY+2, pixelX+5, pixelY+3);
+                        
 
-                        do Screen.drawRectangle(pixelX+3, pixelY, pixelX+3, pixelY + 1);//4th end of spike
-                        do Screen.drawRectangle(pixelX+4, pixelY, pixelX+4, pixelY + 1);//4th end of spike
+                        //Top spike
+                        do Screen.drawLine(pixelX+4, pixelY, pixelX+4, pixelY+1);
 
-                        do Screen.drawRectangle(pixelX+3, pixelY + 5, pixelX+4, pixelY + 6);//middle block
                     }
                     //DRawing the Ceiling SPike
                     if(currentObj = 3)
                     {
+                        //Top line
                         do Screen.setColor(true);
-                        //do Screen.drawCircle(pixelX + 4, pixelY + 4, 3);
-                        do Screen.drawRectangle(pixelX, pixelY, pixelX+7, pixelY);//Base of spike
+                        do Screen.drawLine(pixelX, pixelY, pixelX+7, pixelY);
+                        do Screen.drawLine(pixelX, pixelY+1, pixelX+7, pixelY+1);
 
-                        do Screen.drawRectangle(pixelX+1, pixelY + 1, pixelX+1, pixelY + 2);//far left
-                        do Screen.drawRectangle(pixelX+6, pixelY + 1, pixelX+6, pixelY + 2);//far right
+                        //Base layer
+                        do Screen.drawLine(pixelX+2, pixelY+2, pixelX+2, pixelY+3);
+                        do Screen.drawLine(pixelX+4, pixelY+2, pixelX+4, pixelY+3);
+                        do Screen.drawLine(pixelX+6, pixelY+2, pixelX+6, pixelY+3);
 
-                        do Screen.drawRectangle(pixelX+2, pixelY + 3, pixelX+2, pixelY + 5);//2nd end of spike
-                        do Screen.drawRectangle(pixelX+5, pixelY + 3, pixelX+5, pixelY + 5);//2nd end of spike
+                        //Middle layer
+                        do Screen.drawLine(pixelX+3, pixelY+4, pixelX+3, pixelY+5);
+                        do Screen.drawLine(pixelX+5, pixelY+4, pixelX+5, pixelY+5);
 
-                        do Screen.drawRectangle(pixelX+3, pixelY + 6, pixelX+3, pixelY + 7);//4th end of spike
-                        do Screen.drawRectangle(pixelX+4, pixelY + 6, pixelX+4, pixelY + 7);//4th end of spike
+                        //Top spike
+                        do Screen.drawLine(pixelX+4, pixelY+6, pixelX+4, pixelY+7);
 
-                        do Screen.drawRectangle(pixelX+3, pixelY + 1, pixelX+4, pixelY + 2);//middle block
                     }
                     //Drawing the Vic Block
                     if(currentObj = 4){
