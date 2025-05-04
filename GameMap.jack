@@ -80,6 +80,9 @@ class GameMap
                     {
                         do Screen.setColor(true);
                         do Screen.drawRectangle(pixelX, pixelY, pixelX + 7, pixelY + 7);
+                        /**do Screen.setColor(false);
+                        do Screen.drawRectangle(pixelX + 1, pixelY + 1, pixelX + 1, pixelY + 4);
+                        do Screen.drawRectangle(pixelX + 6, pixelY + 2, pixelX + 6, pixelY + 6);*/
                     }
                     //Drawing the ground Spike
                     if(currentObj = 2)

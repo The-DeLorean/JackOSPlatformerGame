@@ -70,10 +70,10 @@ class Main {
             //Move that way until changed
             if(player1.getDir())
             {
-                do player1.move(-1, 0, gameMap);
+                do player1.move(-1, 0, gameMap, 1);
             }
             else{
-                do player1.move(1, 0, gameMap);
+                do player1.move(1, 0, gameMap, 1);
             }
             
             //Checking to see if player 1 is on the ground if so checking to see if the jump key is pressed
@@ -102,7 +102,7 @@ class Main {
                 //Gravity moves player down number * 1 pixels
                 while (player1.getGravity() < player1.getNumber()){ //(gravityLoop1 < number1){
                     //moving the player down
-                    do player1.move(0, 1, gameMap);
+                    do player1.move(0, 1, gameMap, 1);
                     //incrementing through the gravity loop
                     do player1.setGravity((player1.getGravity() + 1)); //let gravityLoop1 = gravityLoop1 + 1;
                 }
@@ -114,7 +114,7 @@ class Main {
                 //Jumping a certain amount each time.
                 while(player1.getJumpLoop() < (player1.getJump()/10)){ //(jumpLoop1 < (jump1/10)){
                     //moving the player up
-                    do player1.move(0, -1, gameMap);
+                    do player1.move(0, -1, gameMap, 1);
                     //incrementing through the jump loop
                     do player1.setJumpLoop((player1.getJumpLoop()+1)); //let jumpLoop1 = jumpLoop1 + 1;
                 }
@@ -161,10 +161,10 @@ class Main {
             //Seeing which way we are moving and move it
             if(player2.getDir())
             {
-                do player2.move(-1, 0, gameMap);
+                do player2.move(-1, 0, gameMap, 2);
             }
             else{
-                do player2.move(1, 0, gameMap);
+                do player2.move(1, 0, gameMap, 2);
             }
             
             //Checking to see if player 1 is on the ground if so checking to see if the jump key is pressed
@@ -193,7 +193,7 @@ class Main {
                 //Gravity moves player down number * 1 pixels
                 while (player2.getGravity() < player2.getNumber()){ //(gravityLoop1 < number1){
                     //moving the player down
-                    do player2.move(0, 1, gameMap);
+                    do player2.move(0, 1, gameMap, 2);
                     //incrementing through the gravity loop
                     do player2.setGravity((player2.getGravity() + 1)); //let gravityLoop1 = gravityLoop1 + 1;
                 }
@@ -205,7 +205,7 @@ class Main {
                 //Jumping a certain amount each time.
                 while(player2.getJumpLoop() < (player2.getJump()/10)){ //(jumpLoop1 < (jump1/10)){
                     //moving the player up
-                    do player2.move(0, -1, gameMap);
+                    do player2.move(0, -1, gameMap, 2);
                     //incrementing through the jump loop
                     do player2.setJumpLoop((player2.getJumpLoop()+1)); //let jumpLoop1 = jumpLoop1 + 1;
                 }
@@ -239,8 +239,8 @@ class Main {
             do Output.printInt(p2ScoreInt);
 
             //Player drawing
-            do player1.draw();
-            do player2.draw();
+            do player1.draw(1);
+            do player2.draw(2);
             //****************************END OF RENDER GAME**********************************
             
             //Reduce score by 1 for player 1 and 2 until either player has won
