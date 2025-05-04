@@ -242,24 +242,30 @@ class GameMap
                         let newObject = 1; //GameObject.new(pixelX, pixelY, tileType);
                     }
                     else {
-                        if (tileChar = 50) {  // '2' - Spike
-                            let tileType = "spike";
+                        if (tileChar = 50) {  // '2' - Ground Spike
+                            let tileType = "gSpike";
                             let newObject = 2; //GameObject.new(pixelX, pixelY, tileType);
                         }
                         else
                         {
-                            if (tileChar = 51) {  // '3' - win
-                                let tileType = "win";
+                            if (tileChar = 51) {  // '3' - ceiling spike
+                                let tileType = "cSpike";
                                 let newObject = 3;//GameObject.new(pixelX, pixelY, tileType);
                             }
                             else {
-                                if (tileChar = 52) {  // '4' - key
-                                    let tileType = "key";
+                                if (tileChar = 52) {  // '4' - win
+                                    let tileType = "win";
                                     let newObject = 4;//GameObject.new(pixelX, pixelY, tileType);
                                 }
                                 else{
+                                    if (tileChar = 53) {  // '5' - key
+                                        let tileType = "key";
+                                        let newObject = 5;//GameObject.new(pixelX, pixelY, tileType);
+                                    }
+                                    else{
                                     // Default to empty space for unknown characters
-                                    let newObject = null;
+                                        let newObject = null;
+                                    }
                                 }
                             }
                         }
