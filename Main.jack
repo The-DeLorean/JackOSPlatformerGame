@@ -31,7 +31,7 @@ class Main {
 
         //Intialization of game variables
         let player1 = Player.new(100, 200);
-        let player2 = Player.new(300, 210);
+        let player2 = Player.new(300, 190);
 
         //set player name to default player 1 and 2
         let player1Name = "Player_1";
