@@ -32,8 +32,8 @@ class Main {
         let spaceKey = 0;
 
         //Intialization of game variables
-        let player1 = Player.new(253, 100);
-        let player2 = Player.new(100, 100);
+        let player1 = Player.new(100, 200);
+        let player2 = Player.new(300, 200);
 
         //set player name to default player 1 and 2
         let player1Name = "Player_1";
@@ -174,110 +174,19 @@ class Main {
 
         //************************Main loop that runs until the game is over**************************
         while (~exit) {
-            //***********************PLAYER 1 LOGIC OUTSIDE OF FUNCTION CALL ***********************************************
-            //do player1Logic(player1);
-            //Checking to see what key is pressed continually
-            let key1 = Keyboard.keyPressed();
-
-            //player movement logic logic gets called
-            if (key1 = 130) { // leftArrow
-                //make move left
-                do player1.setDir(true);
-            }
-            else {
-                if (key1 = 132) { // rightArrow
-                    //make move right 
-                    do player1.setDir(false);
-                }
-                else {
-                    if (key1 = 140) { let exit = true; }
-                }
-            }
-
-            //Move that way until changed
-            if(player1.getDir())
-            {
-                do player1.move(-1, 0, gameMap, 1);
-            }
-            else{
-                do player1.move(1, 0, gameMap, 1);
-            }
-            
-            //Checking to see if player 1 is on the ground if so checking to see if the jump key is pressed
-            let p1OnGround = player1.isOnGround(gameMap);
-
-            if(key1 = 131 & p1OnGround){ // Up Arrow
-                //Store jump value and reset number
-                do player1.setJump(400);  //let jump1 = 200;
-                do player1.setNumber(1);  // let number1 = 1;
-                do player1.setJumpLoop(0); //let jumpLoop1 = 0;
-            }
-
-            //If up arrow is not pressed on ground reset tick and number
-            if (p1OnGround = true){
-                do player1.setNumber(1);  // let number1 = 1;
-                do player1.setTick(0);    //let tick1 = 0;
-            }
-
-            if(p1OnGround = false) {//If not on ground run gravity logic
-                //If the player hits cieling kill jump momentum
-                if(player1.hitsCieling(gameMap) = true){
-                    do player1.setJump(0);  //let jump1 = 200;//let jump1=0;
-                }
-                //Resetting the gravity loop variable before it is run
-                do player1.setGravity(0);  //let gravityLoop1 = 0;
-                //Gravity moves player down number * 1 pixels
-                while (player1.getGravity() < player1.getNumber()){ //(gravityLoop1 < number1){
-                    //moving the player down
-                    do player1.move(0, 1, gameMap, 1);
-                    //incrementing through the gravity loop
-                    do player1.setGravity((player1.getGravity() + 1)); //let gravityLoop1 = gravityLoop1 + 1;
-                }
-            }
-
-            //Checking to see if the jump ahs been triggered
-            if(player1.getJump() > 0) { //(jump1 > 0){
-            
-                //Jumping a certain amount each time.
-                while(player1.getJumpLoop() < (player1.getJump()/10)){ //(jumpLoop1 < (jump1/10)){
-                    //moving the player up
-                    do player1.move(0, -1, gameMap, 1);
-                    //incrementing through the jump loop
-                    do player1.setJumpLoop((player1.getJumpLoop()+1)); //let jumpLoop1 = jumpLoop1 + 1;
-                }
-                //Making the player move up less as jump decreases
-                do player1.setJump(player1.getJump() - 1); //let jump1 = jump1 - 1;
-            }
-
-            //Cycling every 20 ticks to make player fall back down more and more  adding in acceleration
-            if(player1.getTick() = 20) //(tick1 =20)
-            {
-                //Increasing the speed the palyer falls each 20 ticks
-                do player1.setTick(1); //let tick1 =1;
-                if(player1.getNumber() < 8){ //(number1 < 8){
-                    do player1.setNumber(player1.getNumber() + 1);//let number1 = number1 + 1;
-                }
-            }
-            else{
-                //Counting the ticks
-                do player1.setTick(player1.getTick() + 1); //let tick1 = tick1 + 1;
-            }
-            //*************************END OF PLAYER 1 LOGIC****************************************************************
-
             //***********************PLAYER 2 LOGIC OUTSIDE OF FUNCTION CALL ***********************************************
-            //do player2Logic(player2);
-            //a = 97, d =100, w =119
+            //do player1Logic(player1);
             //Checking to see what key is pressed continually
             let key2 = Keyboard.keyPressed();
 
             //player movement logic logic gets called
-            if (key2 = 97) { // a key
-                //making the player move left
+            if (key2 = 130) { // leftArrow
+                //make move left
                 do player2.setDir(true);
             }
             else {
-                if (key2 = 100) { // d key
-                    //making the player move right
+                if (key2 = 132) { // rightArrow
+                    //make move right 
                     do player2.setDir(false);
                 }
                 else {
@@ -285,21 +194,21 @@ class Main {
                 }
             }
 
-            //Seeing which way we are moving and move it
+            //Move that way until changed
             if(player2.getDir())
             {
-                do player2.move(-1, 0, gameMap, 2);
+                do player2.move(-1, 0, gameMap, 1);
             }
             else{
-                do player2.move(1, 0, gameMap, 2);
+                do player2.move(1, 0, gameMap, 1);
             }
             
             //Checking to see if player 1 is on the ground if so checking to see if the jump key is pressed
             let p2OnGround = player2.isOnGround(gameMap);
 
-            if(key2 = 119 & p2OnGround){ // w key
+            if(key2 = 131 & p2OnGround){ // Up Arrow
                 //Store jump value and reset number
-                do player2.setJump(300);  //let jump1 = 200;
+                do player2.setJump(400);  //let jump1 = 200;
                 do player2.setNumber(1);  // let number1 = 1;
                 do player2.setJumpLoop(0); //let jumpLoop1 = 0;
             }
@@ -320,7 +229,7 @@ class Main {
                 //Gravity moves player down number * 1 pixels
                 while (player2.getGravity() < player2.getNumber()){ //(gravityLoop1 < number1){
                     //moving the player down
-                    do player2.move(0, 1, gameMap, 2);
+                    do player2.move(0, 1, gameMap, 1);
                     //incrementing through the gravity loop
                     do player2.setGravity((player2.getGravity() + 1)); //let gravityLoop1 = gravityLoop1 + 1;
                 }
@@ -332,7 +241,7 @@ class Main {
                 //Jumping a certain amount each time.
                 while(player2.getJumpLoop() < (player2.getJump()/10)){ //(jumpLoop1 < (jump1/10)){
                     //moving the player up
-                    do player2.move(0, -1, gameMap, 2);
+                    do player2.move(0, -1, gameMap, 1);
                     //incrementing through the jump loop
                     do player2.setJumpLoop((player2.getJumpLoop()+1)); //let jumpLoop1 = jumpLoop1 + 1;
                 }
@@ -354,6 +263,97 @@ class Main {
                 do player2.setTick(player2.getTick() + 1); //let tick1 = tick1 + 1;
             }
             //*************************END OF PLAYER 2 LOGIC****************************************************************
+
+            //***********************PLAYER 1 LOGIC OUTSIDE OF FUNCTION CALL ***********************************************
+            //do player2Logic(player2);
+            //a = 97, d =100, w =119
+            //Checking to see what key is pressed continually
+            let key1 = Keyboard.keyPressed();
+
+            //player movement logic logic gets called
+            if (key1 = 97) { // a key
+                //making the player move left
+                do player1.setDir(true);
+            }
+            else {
+                if (key1 = 100) { // d key
+                    //making the player move right
+                    do player1.setDir(false);
+                }
+                else {
+                    if (key1 = 140) { let exit = true; }
+                }
+            }
+
+            //Seeing which way we are moving and move it
+            if(player1.getDir())
+            {
+                do player1.move(-1, 0, gameMap, 2);
+            }
+            else{
+                do player1.move(1, 0, gameMap, 2);
+            }
+            
+            //Checking to see if player 1 is on the ground if so checking to see if the jump key is pressed
+            let p1OnGround = player1.isOnGround(gameMap);
+
+            if(key1 = 119 & p1OnGround){ // w key
+                //Store jump value and reset number
+                do player1.setJump(300);  //let jump1 = 200;
+                do player1.setNumber(1);  // let number1 = 1;
+                do player1.setJumpLoop(0); //let jumpLoop1 = 0;
+            }
+
+            //If up arrow is not pressed on ground reset tick and number
+            if (p1OnGround = true){
+                do player1.setNumber(1);  // let number1 = 1;
+                do player1.setTick(0);    //let tick1 = 0;
+            }
+
+            if(p1OnGround = false) {//If not on ground run gravity logic
+                //If the player hits cieling kill jump momentum
+                if(player1.hitsCieling(gameMap) = true){
+                    do player1.setJump(0);  //let jump1 = 200;//let jump1=0;
+                }
+                //Resetting the gravity loop variable before it is run
+                do player1.setGravity(0);  //let gravityLoop1 = 0;
+                //Gravity moves player down number * 1 pixels
+                while (player1.getGravity() < player1.getNumber()){ //(gravityLoop1 < number1){
+                    //moving the player down
+                    do player1.move(0, 1, gameMap, 2);
+                    //incrementing through the gravity loop
+                    do player1.setGravity((player1.getGravity() + 1)); //let gravityLoop1 = gravityLoop1 + 1;
+                }
+            }
+
+            //Checking to see if the jump ahs been triggered
+            if(player1.getJump() > 0) { //(jump1 > 0){
+            
+                //Jumping a certain amount each time.
+                while(player1.getJumpLoop() < (player1.getJump()/10)){ //(jumpLoop1 < (jump1/10)){
+                    //moving the player up
+                    do player1.move(0, -1, gameMap, 2);
+                    //incrementing through the jump loop
+                    do player1.setJumpLoop((player1.getJumpLoop()+1)); //let jumpLoop1 = jumpLoop1 + 1;
+                }
+                //Making the player move up less as jump decreases
+                do player1.setJump(player1.getJump() - 1); //let jump1 = jump1 - 1;
+            }
+
+            //Cycling every 20 ticks to make player fall back down more and more  adding in acceleration
+            if(player1.getTick() = 20) //(tick1 =20)
+            {
+                //Increasing the speed the palyer falls each 20 ticks
+                do player1.setTick(1); //let tick1 =1;
+                if(player1.getNumber() < 8){ //(number1 < 8){
+                    do player1.setNumber(player1.getNumber() + 1);//let number1 = number1 + 1;
+                }
+            }
+            else{
+                //Counting the ticks
+                do player1.setTick(player1.getTick() + 1); //let tick1 = tick1 + 1;
+            }
+            //*************************END OF PLAYER 1 LOGIC****************************************************************
             
             //*************************START OF IF A PLAYER HITS A SPIKE MOVE BACK TO SPAWN*********************************
             if(player1.died())
