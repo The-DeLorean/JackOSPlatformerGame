@@ -70,12 +70,12 @@ class Main {
         let printString = " ";
     
 
-        let printString = "Player 1 can be controlled using the W A D keys";
+        let printString = "Player 1 is controlled using the LEFT UP RIGHT Arrows";
         let printStringLength = printString.length();
         do Output.moveCursor(9,((64-printStringLength)/2));
         do Output.printString(printString);
 
-        let printString = "Player 2 can be controlled using the LEFT UP RIGHT keys";
+        let printString = "Player 2 is controlled using the A W D keys";
         let printStringLength = printString.length();
         do Output.moveCursor(10,((64-printStringLength)/2));
         do Output.printString(printString);
@@ -86,19 +86,19 @@ class Main {
         do Output.printString(printString);
 
 
-        let printString = "Reach the victory block before";
+        let printString = "Reach the victory block ( ) as fast as possible ";
         let printStringLength = printString.length();
         do Output.printString(printStringLength);
         do Output.moveCursor(13,((64-printStringLength)/2));
         do Output.printString(printString);
 
-        let printString = "the other player does by navigating";
+        let printString = "to get the highest score by navigating";
         let printStringLength = printString.length();
         do Output.printString(printStringLength);
         do Output.moveCursor(14,((64-printStringLength)/2));
         do Output.printString(printString);
         
-        let printString = "the maze and collecting the key";
+        let printString = "the maze and collecting the key ( )";
         let printStringLength = printString.length();
         do Output.printString(printStringLength);
         do Output.moveCursor(15,((64-printStringLength)/2));
@@ -108,11 +108,11 @@ class Main {
         do Output.moveCursor(17,((64-printString.length())/2));
         do Output.printString(printString);
 
-        let printString = "Player must collect the key before they win";
+        let printString = "Each player must collect the key before they can win";
         do Output.moveCursor(18,((64-printString.length())/2));
         do Output.printString(printString);
 
-        let printString = "Hitting a spike trap will send you back to start";
+        let printString = "Hitting a spike will send you back to start";
         do Output.moveCursor(19,((64-printString.length())/2));
         do Output.printString(printString);
 
@@ -120,6 +120,24 @@ class Main {
         // menu for user to select to navigate the game
         do Output.moveCursor(21, 18);
         do Output.printString("Press SPACE to start the game");//25
+
+        //Drawing the vic block for refernece
+        do Screen.setColor(true);
+        do Screen.drawRectangle((32*8)+7, (18*8), (32*8)+14, (18*8) + 7);//left |
+        do Screen.setColor(false);
+        do Screen.drawRectangle((32*8)+9, (18*8)+4, (32*8) + 12, (18*8)+4);// lon horizontal bar
+        do Screen.drawRectangle((32*8)+11, (18*8)+3, (32*8) + 11, (18*8)+5);// small veritcal bar
+        
+        //Drawing the Key block for reference
+        do Screen.setColor(true);
+        do Screen.drawRectangle((47*8)-1, (21*8)-3, (47*8) - 1, (21*8) + 4);// left |
+        do Screen.drawRectangle((47*8)-1, (21*8) + 4, (47*8) + 6, (21*8) + 4);//Bottom _
+        do Screen.drawRectangle((47*8) + 6, (21*8)-3, (47*8) + 6, (21*8) + 4);//right |
+        do Screen.drawRectangle((47*8)-1, (21*8)-3, (47*8) + 6, (21*8) - 3);//top _
+        //if(key not gotten)
+        do Screen.drawRectangle((47*8)+1, (21*8)+1, (47*8) + 4, (21*8) + 1);// lon horizontal bar
+        do Screen.drawRectangle((47*8)+3, (21*8), (47*8) + 3, (21*8) + 2);// small veritcal bar
+
         //display the instructions while the keyboard is not pressed
         while(~(spaceKey = 32))
         {
