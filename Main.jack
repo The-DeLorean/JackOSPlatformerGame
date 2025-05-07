@@ -16,6 +16,8 @@ class Main {
         var Player player1;
         var Player player2;
         var GameMap gameMap;
+        var String printString;
+        var int printStringLength;
         //Player 1 local variables
         var char key1;
         var boolean p1OnGround;
@@ -23,6 +25,11 @@ class Main {
         var char key2;
         var boolean p2OnGround;
         var int p1ScoreInt, p2ScoreInt;
+
+        //key to store the space for the instruction scree
+        var char spaceKey;
+
+        let spaceKey = 0;
 
         //Intialization of game variables
         let player1 = Player.new(253, 100);
@@ -45,6 +52,86 @@ class Main {
         //once user has left the start screen, clear the screen and load level 1
         do Screen.clearScreen();
         //******************************END START SCREEN**********************************
+
+        //******************************START INSTRUCTION SCREEN**********************************
+        
+        //outprint statementes to draw the screen to welcome the user    
+        //do gameMap.loadLevel(10);//Loading cool box around game over screen
+    
+        do Output.moveCursor(4, 20);
+        do Output.printString("=========================");
+        do Output.moveCursor(5, 20);
+        do Output.printString("===   INSTRUCTIONS    ===");
+        do Output.moveCursor(6,20);
+        do Output.printString("=========================");
+        do Output.moveCursor(8,27);
+        do Output.printString("== Keys ==");
+
+        let printString = " ";
+    
+
+        let printString = "Player 1 can be controlled using the W A D keys";
+        let printStringLength = printString.length();
+        do Output.moveCursor(9,((64-printStringLength)/2));
+        do Output.printString(printString);
+
+        let printString = "Player 2 can be controlled using the LEFT UP RIGHT keys";
+        let printStringLength = printString.length();
+        do Output.moveCursor(10,((64-printStringLength)/2));
+        do Output.printString(printString);
+
+        let printString = "== Goal ==";
+        let printStringLength = printString.length();
+        do Output.moveCursor(12,((64-printStringLength)/2));
+        do Output.printString(printString);
+
+
+        let printString = "Reach the victory block before";
+        let printStringLength = printString.length();
+        do Output.printString(printStringLength);
+        do Output.moveCursor(13,((64-printStringLength)/2));
+        do Output.printString(printString);
+
+        let printString = "the other player does by navigating";
+        let printStringLength = printString.length();
+        do Output.printString(printStringLength);
+        do Output.moveCursor(14,((64-printStringLength)/2));
+        do Output.printString(printString);
+        
+        let printString = "the maze and collecting the key";
+        let printStringLength = printString.length();
+        do Output.printString(printStringLength);
+        do Output.moveCursor(15,((64-printStringLength)/2));
+        do Output.printString(printString);
+
+        let printString = "== Rules ==";
+        do Output.moveCursor(17,((64-printString.length())/2));
+        do Output.printString(printString);
+
+        let printString = "Player must collect the key before they win";
+        do Output.moveCursor(18,((64-printString.length())/2));
+        do Output.printString(printString);
+
+        let printString = "Hitting a spike trap will send you back to start";
+        do Output.moveCursor(19,((64-printString.length())/2));
+        do Output.printString(printString);
+
+
+        // menu for user to select to navigate the game
+        do Output.moveCursor(21, 18);
+        do Output.printString("Press SPACE to start the game");//25
+        //display the instructions while the keyboard is not pressed
+        while(~(spaceKey = 32))
+        {
+            let spaceKey =  Keyboard.keyPressed();
+
+        }
+
+        do Screen.clearScreen();
+
+
+        //******************************END INSTRUCTION SCREEN**********************************
+
 
         //******************************DRAW MAP AND SCORE****************************************
         // Map drawing
@@ -396,17 +483,17 @@ class Main {
                 
                 //prompt user to enter player 1 name
                 let player1Name = Keyboard.readLine("Enter Player 1 name: ");
-
+                                                    
                 //move back to start of user input prompt and eras
                 do Output.moveCursor(19, 21);
 
                 //clear by printing blank spaces
-                do Output.printString("                                            ");
+                do Output.printString("                            ");
 
 
                 // Clear the player1 display line
                 do Output.moveCursor(16, 24);
-                do Output.printString("                                            ");
+                do Output.printString("                            ");
                 do Output.moveCursor(16, 24);
                 do Output.printString("Player 1: ");
                 do Output.printString(player1Name);
@@ -427,12 +514,12 @@ class Main {
                 do Output.moveCursor(19, 21);
 
                 //clear by printing blank spaces
-                do Output.printString("                                         ");
- 
+                do Output.printString("                            ");
 
                 // Clear the player1 display line
                 do Output.moveCursor(17, 24);
-                do Output.printString("                                       ");
+                do Output.printString("                            ");
+
                 do Output.moveCursor(17, 24);
                 do Output.printString("Player 2: ");
                 do Output.printString(player2Name);

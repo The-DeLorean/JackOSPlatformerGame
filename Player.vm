@@ -1,7 +1,11 @@
 function Player.new 0
-    push constant 14
+    push constant 16
     call Memory.alloc 1
     pop pointer 0
+    push argument 0
+    pop this 9
+    push argument 1
+    pop this 10
     push argument 0
     pop this 5
     push argument 1
@@ -9,75 +13,75 @@ function Player.new 0
     push constant 5
     pop static 0
     push constant 0
-    pop this 9
-    push constant 0
-    pop this 10
-    push constant 0
     pop this 11
     push constant 0
     pop this 12
     push constant 0
     pop this 13
+    push constant 0
+    pop this 14
+    push constant 0
+    pop this 15
     push pointer 0
     return
 function Player.getGravity 0
     push argument 0
     pop pointer 0
-    push this 9
-    return
-function Player.setGravity 0
-    push argument 0
-    pop pointer 0
-    push argument 1
-    pop this 9
-    push constant 0
-    return
-function Player.getJump 0
-    push argument 0
-    pop pointer 0
-    push this 13
-    return
-function Player.setJump 0
-    push argument 0
-    pop pointer 0
-    push argument 1
-    pop this 13
-    push constant 0
-    return
-function Player.getJumpLoop 0
-    push argument 0
-    pop pointer 0
-    push this 10
-    return
-function Player.setJumpLoop 0
-    push argument 0
-    pop pointer 0
-    push argument 1
-    pop this 10
-    push constant 0
-    return
-function Player.getNumber 0
-    push argument 0
-    pop pointer 0
     push this 11
     return
-function Player.setNumber 0
+function Player.setGravity 0
     push argument 0
     pop pointer 0
     push argument 1
     pop this 11
     push constant 0
     return
-function Player.getTick 0
+function Player.getJump 0
+    push argument 0
+    pop pointer 0
+    push this 15
+    return
+function Player.setJump 0
+    push argument 0
+    pop pointer 0
+    push argument 1
+    pop this 15
+    push constant 0
+    return
+function Player.getJumpLoop 0
     push argument 0
     pop pointer 0
     push this 12
+    return
+function Player.setJumpLoop 0
+    push argument 0
+    pop pointer 0
+    push argument 1
+    pop this 12
+    push constant 0
+    return
+function Player.getNumber 0
+    push argument 0
+    pop pointer 0
+    push this 13
+    return
+function Player.setNumber 0
+    push argument 0
+    pop pointer 0
+    push argument 1
+    pop this 13
+    push constant 0
+    return
+function Player.getTick 0
+    push argument 0
+    pop pointer 0
+    push this 14
     return
 function Player.setTick 0
     push argument 0
     pop pointer 0
     push argument 1
-    pop this 12
+    pop this 14
     push constant 0
     return
 function Player.getDir 0
@@ -90,6 +94,23 @@ function Player.setDir 0
     pop pointer 0
     push argument 1
     pop this 4
+    push constant 0
+    return
+function Player.reSpawn 0
+    push argument 0
+    pop pointer 0
+    push this 5
+    pop this 7
+    push this 6
+    pop this 8
+    push this 9
+    pop this 5
+    push this 10
+    pop this 6
+    push pointer 0
+    push argument 1
+    call Player.draw 2
+    pop temp 0
     push constant 0
     return
 function Player.move 1
@@ -311,6 +332,12 @@ label Player_5
     call Screen.drawPixel 2
     pop temp 0
 label Player_4
+    push this 3
+    not
+    if-goto Player_7
+    goto Player_6
+label Player_7
+label Player_6
     push constant 0
     return
 function Player.isOnGround 2
@@ -368,121 +395,70 @@ function Player.collides 4
     eq
     not
     not
-    if-goto Player_7
+    if-goto Player_9
     push local 2
     push constant 2
-    eq
-    push local 2
-    or
-    push constant 3
-    eq
-    not
-    if-goto Player_9
-    push constant 1
-    neg
-    pop this 2
-    goto Player_8
-label Player_9
-label Player_8
-    push local 2
-    push constant 4
     eq
     not
     if-goto Player_11
     push constant 1
     neg
-    pop this 1
+    pop this 2
     goto Player_10
 label Player_11
 label Player_10
     push local 2
-    push constant 5
+    push constant 3
     eq
     not
     if-goto Player_13
     push constant 1
     neg
-    pop this 3
+    pop this 2
     goto Player_12
 label Player_13
 label Player_12
-    push constant 1
-    neg
-    return
-    goto Player_6
-label Player_7
-label Player_6
-    push this 6
-    push constant 8
-    call Math.divide 2
-    pop local 0
-    push this 5
-    push constant 7
-    add
-    push constant 8
-    call Math.divide 2
-    pop local 1
-    push argument 1
-    push local 0
-    push local 1
-    call GameMap.getTileAtBlock 3
-    pop local 2
     push local 2
-    push constant 0
+    push constant 4
     eq
-    not
     not
     if-goto Player_15
-    push local 2
-    push constant 2
-    eq
-    push local 2
-    or
-    push constant 3
-    eq
+    push this 3
     not
     if-goto Player_17
     push constant 1
     neg
-    pop this 2
+    pop this 1
     goto Player_16
 label Player_17
 label Player_16
+    goto Player_14
+label Player_15
+label Player_14
     push local 2
-    push constant 4
+    push constant 5
     eq
     not
     if-goto Player_19
     push constant 1
     neg
-    pop this 1
+    pop this 3
     goto Player_18
 label Player_19
 label Player_18
-    push local 2
-    push constant 5
-    eq
-    not
-    if-goto Player_21
-    push constant 1
-    neg
-    pop this 3
-    goto Player_20
-label Player_21
-label Player_20
     push constant 1
     neg
     return
-    goto Player_14
-label Player_15
-label Player_14
+    goto Player_8
+label Player_9
+label Player_8
     push this 6
-    push constant 7
-    add
     push constant 8
     call Math.divide 2
     pop local 0
     push this 5
+    push constant 7
+    add
     push constant 8
     call Math.divide 2
     pop local 1
@@ -496,12 +472,19 @@ label Player_14
     eq
     not
     not
-    if-goto Player_23
+    if-goto Player_21
     push local 2
     push constant 2
     eq
+    not
+    if-goto Player_23
+    push constant 1
+    neg
+    pop this 2
+    goto Player_22
+label Player_23
+label Player_22
     push local 2
-    or
     push constant 3
     eq
     not
@@ -517,9 +500,15 @@ label Player_24
     eq
     not
     if-goto Player_27
+    push this 3
+    not
+    if-goto Player_29
     push constant 1
     neg
     pop this 1
+    goto Player_28
+label Player_29
+label Player_28
     goto Player_26
 label Player_27
 label Player_26
@@ -527,19 +516,96 @@ label Player_26
     push constant 5
     eq
     not
-    if-goto Player_29
+    if-goto Player_31
     push constant 1
     neg
     pop this 3
-    goto Player_28
-label Player_29
-label Player_28
+    goto Player_30
+label Player_31
+label Player_30
     push constant 1
     neg
     return
-    goto Player_22
-label Player_23
-label Player_22
+    goto Player_20
+label Player_21
+label Player_20
+    push this 6
+    push constant 7
+    add
+    push constant 8
+    call Math.divide 2
+    pop local 0
+    push this 5
+    push constant 8
+    call Math.divide 2
+    pop local 1
+    push argument 1
+    push local 0
+    push local 1
+    call GameMap.getTileAtBlock 3
+    pop local 2
+    push local 2
+    push constant 0
+    eq
+    not
+    not
+    if-goto Player_33
+    push local 2
+    push constant 2
+    eq
+    not
+    if-goto Player_35
+    push constant 1
+    neg
+    pop this 2
+    goto Player_34
+label Player_35
+label Player_34
+    push local 2
+    push constant 3
+    eq
+    not
+    if-goto Player_37
+    push constant 1
+    neg
+    pop this 2
+    goto Player_36
+label Player_37
+label Player_36
+    push local 2
+    push constant 4
+    eq
+    not
+    if-goto Player_39
+    push this 3
+    not
+    if-goto Player_41
+    push constant 1
+    neg
+    pop this 1
+    goto Player_40
+label Player_41
+label Player_40
+    goto Player_38
+label Player_39
+label Player_38
+    push local 2
+    push constant 5
+    eq
+    not
+    if-goto Player_43
+    push constant 1
+    neg
+    pop this 3
+    goto Player_42
+label Player_43
+label Player_42
+    push constant 1
+    neg
+    return
+    goto Player_32
+label Player_33
+label Player_32
     push this 6
     push constant 7
     add
@@ -562,50 +628,63 @@ label Player_22
     eq
     not
     not
-    if-goto Player_31
+    if-goto Player_45
     push local 2
     push constant 2
     eq
-    push local 2
-    or
-    push constant 3
-    eq
     not
-    if-goto Player_33
+    if-goto Player_47
     push constant 1
     neg
     pop this 2
-    goto Player_32
-label Player_33
-label Player_32
+    goto Player_46
+label Player_47
+label Player_46
+    push local 2
+    push constant 3
+    eq
+    not
+    if-goto Player_49
+    push constant 1
+    neg
+    pop this 2
+    goto Player_48
+label Player_49
+label Player_48
     push local 2
     push constant 4
     eq
     not
-    if-goto Player_35
+    if-goto Player_51
+    push this 3
+    not
+    if-goto Player_53
     push constant 1
     neg
     pop this 1
-    goto Player_34
-label Player_35
-label Player_34
+    goto Player_52
+label Player_53
+label Player_52
+    goto Player_50
+label Player_51
+label Player_50
     push local 2
     push constant 5
     eq
     not
-    if-goto Player_37
+    if-goto Player_55
     push constant 1
     neg
     pop this 3
-    goto Player_36
-label Player_37
-label Player_36
+    goto Player_54
+label Player_55
+label Player_54
     push constant 1
     neg
     return
-    goto Player_30
-label Player_31
-label Player_30
+    goto Player_44
+label Player_45
+label Player_44
     push constant 0
     return
 function Player.won 0
