@@ -70,12 +70,12 @@ class Main {
         let printString = " ";
     
 
-        let printString = "Player 1 is controlled using the LEFT UP RIGHT Arrows";
+        let printString = "Player 1 is controlled using the A W D keys";
         let printStringLength = printString.length();
         do Output.moveCursor(9,((64-printStringLength)/2));
         do Output.printString(printString);
 
-        let printString = "Player 2 is controlled using the A W D keys";
+        let printString = "Player 2 is controlled using the LEFT UP RIGHT Arrows";
         let printStringLength = printString.length();
         do Output.moveCursor(10,((64-printStringLength)/2));
         do Output.printString(printString);
