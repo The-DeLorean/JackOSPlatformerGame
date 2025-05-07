@@ -53,88 +53,92 @@ class Main {
 
         //******************************START INSTRUCTION SCREEN**********************************
         
-        //outprint statementes to draw the screen to welcome the user    
-        //do gameMap.loadLevel(10);//Loading cool box around game over screen
-    
-        do Output.moveCursor(4, 20);
+        //outprint statementes to draw the instruction screen for the user    
+        do Output.moveCursor(1, 20);
         do Output.printString("=========================");
-        do Output.moveCursor(5, 20);
+        do Output.moveCursor(2, 20);
         do Output.printString("===   INSTRUCTIONS    ===");
-        do Output.moveCursor(6,20);
+        do Output.moveCursor(3,20);
         do Output.printString("=========================");
-        do Output.moveCursor(8,27);
+        do Output.moveCursor(5,27);
         do Output.printString("== Keys ==");
 
         let printString = " ";
-    
 
+        //All instructions for user
         let printString = "Player 1 is controlled using the A W D keys";
         let printStringLength = printString.length();
-        do Output.moveCursor(9,((64-printStringLength)/2));
+        do Output.moveCursor(6,((64-printStringLength)/2));
         do Output.printString(printString);
 
         let printString = "Player 2 is controlled using the LEFT UP RIGHT Arrows";
         let printStringLength = printString.length();
-        do Output.moveCursor(10,((64-printStringLength)/2));
+        do Output.moveCursor(7,((64-printStringLength)/2));
         do Output.printString(printString);
 
         let printString = "== Goal ==";
         let printStringLength = printString.length();
-        do Output.moveCursor(12,((64-printStringLength)/2));
+        do Output.moveCursor(9,((64-printStringLength)/2));
         do Output.printString(printString);
 
 
         let printString = "Reach the victory block ( ) as fast as possible ";
         let printStringLength = printString.length();
         do Output.printString(printStringLength);
-        do Output.moveCursor(13,((64-printStringLength)/2));
+        do Output.moveCursor(10,((64-printStringLength)/2));
         do Output.printString(printString);
 
         let printString = "to get the highest score by navigating";
         let printStringLength = printString.length();
         do Output.printString(printStringLength);
-        do Output.moveCursor(14,((64-printStringLength)/2));
+        do Output.moveCursor(11,((64-printStringLength)/2));
         do Output.printString(printString);
         
         let printString = "the maze and collecting the key ( )";
         let printStringLength = printString.length();
         do Output.printString(printStringLength);
-        do Output.moveCursor(15,((64-printStringLength)/2));
+        do Output.moveCursor(12,((64-printStringLength)/2));
         do Output.printString(printString);
 
         let printString = "== Rules ==";
-        do Output.moveCursor(17,((64-printString.length())/2));
+        do Output.moveCursor(14,((64-printString.length())/2));
         do Output.printString(printString);
 
         let printString = "Each player must collect the key before they can win";
-        do Output.moveCursor(18,((64-printString.length())/2));
+        do Output.moveCursor(15,((64-printString.length())/2));
         do Output.printString(printString);
 
         let printString = "Hitting a spike will send you back to start";
-        do Output.moveCursor(19,((64-printString.length())/2));
+        do Output.moveCursor(16,((64-printString.length())/2));
         do Output.printString(printString);
 
+        // Note about giving up for player 1
+        do Output.moveCursor(18, 18);
+        do Output.printString("If player 1 wants to give up press G");
+        // Note about giving up for player 2
+        do Output.moveCursor(19, 18);
+        do Output.printString("If player 2 wants to give up press P");
 
         // menu for user to select to navigate the game
         do Output.moveCursor(21, 18);
-        do Output.printString("Press SPACE to start the game");//25
+        do Output.printString("Press SPACE to start the game");
 
         //Drawing the vic block for refernece
         do Screen.setColor(true);
-        do Screen.drawRectangle((32*8)+7, (18*8), (32*8)+14, (18*8) + 7);//left |
+        do Screen.drawRectangle((32*8)+7, (14*8), (32*8)+14, (14*8) + 7);//left |
         do Screen.setColor(false);
-        do Screen.drawRectangle((32*8)+9, (18*8)+4, (32*8) + 12, (18*8)+4);// lon horizontal bar
-        do Screen.drawRectangle((32*8)+11, (18*8)+3, (32*8) + 11, (18*8)+5);// small veritcal bar
+        do Screen.drawRectangle((32*8)+9, (14*8)+4, (32*8) + 12, (14*8)+4);// lon horizontal bar
+        do Screen.drawRectangle((32*8)+11, (14*8)+3, (32*8) + 11, (14*8)+5);// small veritcal bar
         
         //Drawing the Key block for reference
         do Screen.setColor(true);
-        do Screen.drawRectangle((47*8)-1, (21*8)-3, (47*8) - 1, (21*8) + 4);// left |
-        do Screen.drawRectangle((47*8)-1, (21*8) + 4, (47*8) + 6, (21*8) + 4);//Bottom _
-        do Screen.drawRectangle((47*8) + 6, (21*8)-3, (47*8) + 6, (21*8) + 4);//right |
-        do Screen.drawRectangle((47*8)-1, (21*8)-3, (47*8) + 6, (21*8) - 3);//top _
+        do Screen.drawRectangle((47*8)-1, (17*8)-3, (47*8) - 1, (17*8) + 4);// left |
+        do Screen.drawRectangle((47*8)-1, (17*8) + 4, (47*8) + 6, (17*8) + 4);//Bottom _
+        do Screen.drawRectangle((47*8) + 6, (17*8)-3, (47*8) + 6, (17*8) + 4);//right |
+        do Screen.drawRectangle((47*8)-1, (17*8)-3, (47*8) + 6, (17*8) - 3);//top _
         //if(key not gotten)
-        do Screen.drawRectangle((47*8)+1, (21*8)+1, (47*8) + 4, (21*8) + 1);// lon horizontal bar
-        do Screen.drawRectangle((47*8)+3, (21*8), (47*8) + 3, (21*8) + 2);// small veritcal bar
+        do Screen.drawRectangle((47*8)+1, (17*8)+1, (47*8) + 4, (17*8) + 1);// lon horizontal bar
+        do Screen.drawRectangle((47*8)+3, (17*8), (47*8) + 3, (17*8) + 2);// small veritcal bar
 
         //display the instructions while the keyboard is not pressed
         while(~(spaceKey = 32))
@@ -144,8 +148,6 @@ class Main {
         }
 
         do Screen.clearScreen();
-
-
         //******************************END INSTRUCTION SCREEN**********************************
 
 
@@ -188,7 +190,14 @@ class Main {
                     do player2.setDir(false);
                 }
                 else {
-                    if (key2 = 140) { let exit = true; }
+                    if (key2 = 80) { // capital P for ending player 2 
+                        //Give up for player 2.
+                        do player2.giveUp();
+                        let p2ScoreInt = null;
+                    }
+                    else {
+                        if (key2 = 140) { let exit = true; }//escape key to end game
+                    }
                 }
             }
 
@@ -279,7 +288,13 @@ class Main {
                     do player1.setDir(false);
                 }
                 else {
-                    if (key1 = 140) { let exit = true; }
+                    if (key1 = 71) { // capital G to give up for player 1
+                        do player1.giveUp();
+                        let p1ScoreInt = null;
+                    }
+                    else {
+                        if (key2 = 140) { let exit = true; }//escape key to end game
+                    }
                 }
             }
 
@@ -415,15 +430,25 @@ class Main {
 
             //Determining who got the higher score and saying that player won
             if(p1ScoreInt > p2ScoreInt){
+                //player 1 wins
                 do Output.moveCursor(12,22);
 	            do Output.printString(player1Name);
                 do Output.printString("     Wins!!");
                 do Output.moveCursor(14,24);
                 do Output.printString("Score: ");
                 do Output.moveCursor(14,34);
+                do Output.printInt(p1ScoreInt);
+                //Player 2 loosing
+                do Output.moveCursor(16,22);
+	            do Output.printString(player2Name);
+                do Output.printString("     sucks");
+                do Output.moveCursor(18,24);
+                do Output.printString("Score: ");
+                do Output.moveCursor(18,34);
                 do Output.printInt(p2ScoreInt);
             }
             else{
+                //Player 2 won
                 do Output.moveCursor(12,22);
 	            do Output.printString(player2Name);
                 do Output.printString("     Wins!!");
@@ -431,6 +456,14 @@ class Main {
                 do Output.printString("Score: ");
                 do Output.moveCursor(14,34);
                 do Output.printInt(p2ScoreInt);
+                //Player 1 lost
+                do Output.moveCursor(16,22);
+	            do Output.printString(player1Name);
+                do Output.printString("     sucks");
+                do Output.moveCursor(18,24);
+                do Output.printString("Score: ");
+                do Output.moveCursor(18,34);
+                do Output.printInt(p1ScoreInt);
             }
             //************************************END OF DRAW END SCREEN*******************************
 	    }

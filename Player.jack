@@ -1,26 +1,23 @@
 // This file is part of JackOSPlatformerGame
-// by Dorian Quimby
+// by Dorian Quimby, Kyle Dramov, and Jacob Novak
 /**
- *  A child class of GameObject, which contains the functionality of a Player
- *  Players can move, collect KeyBlocks, die when the touch spikeblocks, and reach the VictoryBlock
+ *  Players can move, collect KeyBlocks, go back to spawn when the touch spikes, and reach the VictoryBlock 
+ *  This is the
  */
 class Player {
-    field int livesRemaining; //keeps track of deaths, will work with spikeblock
-    static int speed; //
-    field boolean win;
-    field boolean death;
-    field boolean key, dir;
-    field int xpos, ypos, prevXPos, prevYPos, spawnX, spawnY;
-    field int gravityLoop, jumpLoop, number, tick, jump;
+    field boolean win; // A variable to determine weather a player has won or not
+    field boolean death; // A variable to see if the player has died by hitting a pike
+    field boolean key, dir;// Variables to see if the p;layer has reached the key block or what direction they are currently moving(left or right)
+    field int xpos, ypos, prevXPos, prevYPos, spawnX, spawnY;//All player x & y positon variables
+    field int gravityLoop, jumpLoop, number, tick, jump;// Loop variables to make the player jump and have gravity
 
     constructor Player new(int xin, int yin) {
-        //Compose a child member data into parent game object
+        //Initalize player position variables
         let spawnX = xin;
         let spawnY = yin;
         let xpos = xin;
         let ypos = yin;
-        let speed = 5;
-        //Intailizing loop variables
+        //Intailizing loop variables for jump and gravity
         let gravityLoop = 0;
         let jumpLoop = 0; 
         let number = 0; 
@@ -92,12 +89,14 @@ class Player {
         let prevYPos = ypos;
         let xpos = spawnX;
         let ypos = spawnY;
+        //Redrawing the player in the new position
         do draw(playerNumber);
         return;
     }
 
     // Players can move with improved collision handling
     method void move(int dx, int dy, GameMap map, int playerNumber) {
+        //variable to check for collisions
         var boolean check;
         
         // Store previous position
@@ -107,6 +106,7 @@ class Player {
         // First move horizontally and check collision
         let xpos = xpos + dx;
         let check = collides(map);
+        //Moving player back if a collision occured
         if(check = true) {
             // Restore previous x position if collision detected
             let xpos = prevXPos;
@@ -115,6 +115,7 @@ class Player {
         // Then move vertically and check collision
         let ypos = ypos + dy;
         let check = collides(map);
+        //Moving player back if a collision occured
         if(check = true) {
             // Restore previous y position if collision detected
             let ypos = prevYPos;
@@ -127,10 +128,12 @@ class Player {
 
     // Renders the player
     method void draw(int playerNum) {
+        //Drawing the player box
         do Screen.setColor(false);
         do Screen.drawRectangle(prevXPos, prevYPos, prevXPos + 7, prevYPos + 7);
         do Screen.setColor(true);
         do Screen.drawRectangle(xpos, ypos, xpos + 7, ypos + 7);
+        //Creating the faces of the player depending on if they are player 1 or 2
         if(playerNum = 1){
             //SAD FACE
             do Screen.setColor(false);
@@ -168,6 +171,7 @@ class Player {
 
     //method to check if the player is on the ground
     method boolean isOnGround(GameMap map){
+        //variables to check player on ground
         var boolean check;
         var int originalY;
         
@@ -186,6 +190,7 @@ class Player {
 
     //Checking to see if the player hits the ceiling
     method boolean hitsCieling(GameMap map){
+        //Variables to check if the player hits the cieling
         var boolean check;
         var int originalY;
         
@@ -233,6 +238,7 @@ class Player {
                     let win = true;
                 }
             }
+            //if it is a key, set key to true
             if (gameObj = 5) {
                 let key = true;
             }
@@ -259,6 +265,7 @@ class Player {
                     let win = true;
                 }
             }
+            //if it is a key, set key to true
             if (gameObj = 5) {
                 let key = true;
             }
@@ -285,6 +292,7 @@ class Player {
                     let win = true;
                 }
             }
+            //if it is a key, set key to true
             if (gameObj = 5) {
                 let key = true;
             }
@@ -311,12 +319,12 @@ class Player {
                     let win = true;
                 }
             }
+            //if it is a key, set key to true
             if (gameObj = 5) {
                 let key = true;
             }
             return true;
         }
-        
         // No collision detected
         return false;
     }
@@ -324,6 +332,12 @@ class Player {
     //Accessor for the win boolean variable
     method boolean won() {
         return win;
+    }
+    
+    //Making the win variable true if a player gives up
+    method void giveUp(){
+        let win = true;
+        return;
     }
     
     //Accessor for the death boolean variable
@@ -340,9 +354,5 @@ class Player {
     method void newLife() {
         let death = false;
         return;
-    }
-
-    method String instanceof() {
-        return "Player";
     }
 }

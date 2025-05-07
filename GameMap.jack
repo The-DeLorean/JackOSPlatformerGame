@@ -1,7 +1,7 @@
 // This file is part of JackOSPlatformerGame
 class GameMap
 {
-    field Array map;       // 1D array to store GameObjects
+    field Array map;       // 1D array to store GameObjects as integers
     field int rows;        // Height of map in blocks (30)
     field int columns;     // Width of map in blocks (64)
     field int blockSize;   // Size of each block in pixels (8)
@@ -196,7 +196,7 @@ class GameMap
             do processLevelRow(28, "1000222220000000000000000000001100000000000000000000022222000001");
             do processLevelRow(29, "1111111111111111111111111111111111111111111111111111111111111111");
         }
-        // Vic Block Outline Around End Game Screen
+        // Block Outline Around End Game Screen
         if(levelNumber=9){
             do processLevelRow(11, "0000000000000001111111111111111111111111111111110000000000000000");
             do processLevelRow(12, "0000000000000001000000000000000000000000000000010000000000000000");
@@ -210,9 +210,13 @@ class GameMap
             do processLevelRow(20, "0000000000000001000000000000000000000000000000010000000000000000");
             do processLevelRow(21, "0000000000000001000000000000000000000000000000010000000000000000");
             do processLevelRow(22, "0000000000000001000000000000000000000000000000010000000000000000");
-            do processLevelRow(23, "0000000000000001111111111111111111111111111111110000000000000000");
+            do processLevelRow(23, "0000000000000001000000000000000000000000000000010000000000000000");
+            do processLevelRow(24, "0000000000000001000000000000000000000000000000010000000000000000");
+            do processLevelRow(25, "0000000000000001000000000000000000000000000000010000000000000000");
+            do processLevelRow(26, "0000000000000001000000000000000000000000000000010000000000000000");
+            do processLevelRow(27, "0000000000000001111111111111111111111111111111110000000000000000");
         }
-        // Vic Block Outline Around Start Menu
+        // Block Outline Around Start Menu
         if(levelNumber=10){
             do processLevelRow( 3, "0000000001111111111111111111111111111111111111111111111000000000");
             do processLevelRow( 4, "0000000001000000000000000000000000000000000000000000001000000000");
@@ -306,6 +310,7 @@ class GameMap
                 let index = (rowNum * columns) + col;
                 let map[index] = newObject;
             }
+            //incrementing through the column
             let col = col + 1;
         }
         return;
